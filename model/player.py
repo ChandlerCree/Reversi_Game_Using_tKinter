@@ -1,9 +1,11 @@
-from game import Game
 from enum import IntEnum
 
 class Player(IntEnum):
-    def __init__(self):
-        pass
+    X=1
+    O=2
 
-    X = 1
-    X = 2
+# Dictionary that maps the integer into a symbol for display purposes
+player_symbol = {
+    Player.X:'X',
+    Player.O:'O'
+}
