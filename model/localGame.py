@@ -1,4 +1,4 @@
-from game import Game
+from model.game import Game
 
 
 class LocalGame(Game):
