@@ -16,8 +16,10 @@ class BoardConsoleView(BoardView):
                     cell = " "
                 elif self.board[row, col] == 1:
                     cell = "X"
-                else:
+                elif self.board[row, col] == 2:
                     cell = "O"
+                else:
+                    cell = "."
 
                 print(f"| {cell} ", end="")
             print("|")

@@ -47,6 +47,16 @@ class Game:
     def inBounds(self, x, y):
         return 0 <= x <= self.bSize - 1 and 0 <= y <= self.bSize - 1
 
+    def showLegalMoves(self, validMoves):
+        for x, y in validMoves:
+            self.board[x][y] = 3
+
+    def resetBoard(self):
+        for x in range(self.bSize):
+            for y in range(self.bSize):
+                if self.board[x][y] == 3:
+                    self.board[x][y] = 0
+
     def findLegalMoves(self):
         validMoves = []
         flips = []
@@ -159,4 +169,6 @@ class Game:
             return True, self.player1
         elif playerOneCount < playerTwoCount:
             return True, self.player2
-        return False, None
+
+        drawPlayer = p.Player(-1)
+        return True, drawPlayer

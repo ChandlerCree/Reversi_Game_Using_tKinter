@@ -23,7 +23,7 @@ class GameConsoleView(GameView):
         print("This move is illegal. Try again.")
 
     def display_winner(self, winner):
-        if winner == 0:
+        if winner.x == -1:
             print("DRAW")
         else:
             print(f"Player {winner.symbol} has won the game")
