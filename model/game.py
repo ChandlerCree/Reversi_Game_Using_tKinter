@@ -31,6 +31,9 @@ class Game:
         self.board[int((size / 2) - 1)][int((size / 2))] = (self.curPlayer.x) % 2 + 1
         self.board[int((size / 2))][int((size / 2) - 1)] = (self.curPlayer.x) % 2 + 1
 
+        self.playerOneCount = 0
+        self.playerTwoCount = 0
+
     # coin flip for who goes first
     def whoGoesFirst(self):
         return random.randint(1, 2)
@@ -153,21 +156,19 @@ class Game:
         # make sure board is full
         if not self.isBoardFull():
             return False, None
-        playerOneCount = 0
-        playerTwoCount = 0
 
         # loop through board and count amount of disks for each player
         for i in range(self.bSize):
             for j in range(self.bSize):
                 if self.board[i][j] == 1:
-                    playerOneCount += 1
+                    self.playerOneCount += 1
                 else:
-                    playerTwoCount += 1
+                    self.playerTwoCount += 1
 
         # if one player has more disks then the other, they win. draw otherwise
-        if playerOneCount > playerTwoCount:
+        if self.playerOneCount > self.playerTwoCount:
             return True, self.player1
-        elif playerOneCount < playerTwoCount:
+        elif self.playerOneCount < self.playerTwoCount:
             return True, self.player2
 
         drawPlayer = p.Player(-1)
