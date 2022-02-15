@@ -140,13 +140,15 @@ class Game:
         return not np.any(self.board == 0)
 
     def whoWins(self):
-        rows, cols = self.board.shape()
+        # make sure board is full
+        if not self.isBoardFull():
+            return False, None
         playerOneCount = 0
         playerTwoCount = 0
 
         # loop through board and count amount of disks for each player
-        for i in range(rows):
-            for j in range(cols):
+        for i in range(self.bSize):
+            for j in range(self.bSize):
                 if self.board[i][j] == 1:
                     playerOneCount += 1
                 else:
@@ -154,7 +156,7 @@ class Game:
 
         # if one player has more disks then the other, they win. draw otherwise
         if playerOneCount > playerTwoCount:
-            return self.player1
+            return True, self.player1
         elif playerOneCount < playerTwoCount:
-            return self.player2
-        return 0
+            return True, self.player2
+        return False, None
