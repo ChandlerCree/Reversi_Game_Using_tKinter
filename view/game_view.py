@@ -1,9 +1,5 @@
 from abc import ABC, abstractmethod
 
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 class GameView(ABC):
     def __init__(self, board_view):
         self.board_view = board_view
@@ -24,18 +20,9 @@ class GameView(ABC):
         pass
 
     @abstractmethod
-<<<<<<< HEAD
     def display_illegal_moves(self):
-=======
-    def display_illegal_move(self):
->>>>>>> main
         pass
 
     @abstractmethod
     def display_winner(self, winner):
         pass
-<<<<<<< HEAD
-=======
-
-    
->>>>>>> main

@@ -1,5 +1,4 @@
 import numpy as np
-<<<<<<< HEAD
 import model.player as p
 import random
 
@@ -31,6 +30,9 @@ class Game:
         # second person to move will always go in top right and bottom left of middle
         self.board[int((size / 2) - 1)][int((size / 2))] = (self.curPlayer.x) % 2 + 1
         self.board[int((size / 2))][int((size / 2) - 1)] = (self.curPlayer.x) % 2 + 1
+
+        self.playerOneCount = 0
+        self.playerTwoCount = 0
 
     # coin flip for who goes first
     def whoGoesFirst(self):
@@ -140,12 +142,11 @@ class Game:
     def isBoardFull(self):
         return not np.any(self.board == 0)
 
+
     def whoWins(self):
         # make sure board is full
         if not self.isBoardFull():
             return False, None
-        playerOneCount = 0
-        playerTwoCount = 0
 
         # loop through board and count amount of disks for each player
         for i in range(self.bSize):
@@ -156,63 +157,12 @@ class Game:
                     playerTwoCount += 1
 
         # if one player has more disks then the other, they win. draw otherwise
-        if playerOneCount > playerTwoCount:
+        if self.playerOneCount > self.playerTwoCount:
             return True, self.player1
-        elif playerOneCount < playerTwoCount:
+        elif self.playerOneCount < self.playerTwoCount:
             return True, self.player2
         return False, None
-=======
-from model.player import Player
 
-class Game:
-    def __init__(self, board_size) :
-        self.board = np.zeros((board_size, board_size), dtype=np.int)
-        self.board[3][3] = 1
-        self.board[3][4] = 2
-        self.board[4][3] = 2
-        self.board[4][4] = 1
-        self.curr_player=Player.X
 
-    def is_legal_move(self, row, col):
-        if row < 0 or row >= len(self.board):
-            return False
-        if col < 0 or col >= len(self.board):
-            return False
-        if self.board[row, col] != 0:
-            return False
-        #THERE ARE MORE CONDITIONS TO FLIP A SQUARE
-        return True
-
-    def make_move(self, row, col):
-        self.board[row, col]= int (self.curr_player)
-        #FLIP SQUARES
-
-    def is_game_terminated(self):
-        return self.has_player_won() or self.is_board_full()
-
-    def has_player_won(self):
-        player = int(self.curr_player)
-        if np.any(np.all(self.board == player, axis=0)):
-            return True
-        if np.any(np.all(self.board == player, axis=1)):
-            return True
-        main_diag = np.diag_indices(len(self.board))
-        if np.all(self.board[main_diag] == player):
-            return True
-        secondary_diag = (main_diag[0], main_diag[1][::-1])
-        if np.all(self.board[secondary_diag] == player):
-            return True
-        return False
-
-    def is_board_full (self):
-        return not np.any(self.board == 0)
-
-    def change_turn(self):
-        self.curr_player = Player(len(Player) + 1 - self.curr_player)
-
-    def get_winner(self):
-        if self.has_player_won():
-            return self.curr_player
-        else:
-            return 0 # DRAW
->>>>>>> main
+    def getScore(self):
+        return (self.playerOneCount, self.playerTwoCount)

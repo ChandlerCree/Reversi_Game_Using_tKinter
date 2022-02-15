@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 from view.board_view import BoardView
 from model.player import Player
 
-=======
-from email import header
-from view.board_view import BoardView
-from model.player import Player, player_symbol
->>>>>>> main
 
 class BoardConsoleView(BoardView):
     def __init__(self, board):
@@ -15,9 +9,13 @@ class BoardConsoleView(BoardView):
     def display(self):
         board_size = len(self.board)
         header_len = board_size * 4 + 1
-<<<<<<< HEAD
+        print('    1   2   3   4   5   6   7   8  ')
+        print('  ', end='')
         print("-" * header_len)
+        x = 0
         for row in range(board_size):
+            x += 1
+            print(x, end=' ')
             for col in range(board_size):
                 if self.board[row, col] == 0:
                     cell = " "
@@ -28,17 +26,6 @@ class BoardConsoleView(BoardView):
 
                 print(f"| {cell} ", end="")
             print("|")
-        print("-" * header_len)
-=======
-        print('-' * header_len)
-        for row in range(board_size):
-            for col in range(board_size):
-                if self.board[row, col] == 0:
-                    cell = ' '
-                else: 
-                    cell = player_symbol[self.board[row, col]]
-                print('| {} '.format(cell), end='')
-            print('|')
-            print('-' * header_len)
-
->>>>>>> main
+            print('  ', end='')
+            print("-" * header_len)
+        print('  ', end='')
