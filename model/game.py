@@ -50,6 +50,16 @@ class Game:
     def inBounds(self, x, y):
         return 0 <= x <= self.bSize - 1 and 0 <= y <= self.bSize - 1
 
+    def showLegalMoves(self, validMoves):
+        for x, y in validMoves:
+            self.board[x][y] = 3
+
+    def resetBoard(self):
+        for x in range(self.bSize):
+            for y in range(self.bSize):
+                if self.board[x][y] == 3:
+                    self.board[x][y] = 0
+
     def findLegalMoves(self):
         validMoves = []
         flips = []
@@ -152,17 +162,23 @@ class Game:
         for i in range(self.bSize):
             for j in range(self.bSize):
                 if self.board[i][j] == 1:
-                    playerOneCount += 1
+                    self.playerOneCount += 1
                 else:
-                    playerTwoCount += 1
+                    self.playerTwoCount += 1
 
         # if one player has more disks then the other, they win. draw otherwise
         if self.playerOneCount > self.playerTwoCount:
             return True, self.player1
         elif self.playerOneCount < self.playerTwoCount:
             return True, self.player2
+<<<<<<< HEAD
         return False, None
 
 
     def getScore(self):
         return (self.playerOneCount, self.playerTwoCount)
+=======
+
+        drawPlayer = p.Player(-1)
+        return True, drawPlayer
+>>>>>>> origin/development

@@ -15,6 +15,7 @@ class GameManager:
 
             # find legal moves and display board
             moveFlipMap = self.model.findLegalMoves()
+            self.model.showLegalMoves(moveFlipMap["valid_moves"])
             self.view.display_board()
             self.view.display_curr_player(self.model.curPlayer)
             #self.model.display_curr_score()
@@ -32,6 +33,7 @@ class GameManager:
             # make move
             i = moveFlipMap["valid_moves"].index(move)
             self.model.makeMove(moveFlipMap["flips"][i])
+            self.model.resetBoard()
 
             # make sure no one has one
             game_terminated, winner = self.model.whoWins()
