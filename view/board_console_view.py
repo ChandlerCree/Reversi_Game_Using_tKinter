@@ -9,9 +9,11 @@ class BoardConsoleView(BoardView):
     def display(self):
         board_size = len(self.board)
         header_len = board_size * 4 + 1
-        print('    1   2   3   4   5   6   7   8  ')
-        print('  ', end='')
-        print("-" * header_len)
+        #print('    1   2   3   4   5   6   7   8  ')
+        print('\n ', end='')
+        for x in range(board_size):
+            print('   {}'.format(x + 1), end='')
+        print("\n  " +"-" * header_len)
         x = 0
         for row in range(board_size):
             x += 1

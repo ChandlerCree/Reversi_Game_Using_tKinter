@@ -1,8 +1,4 @@
 
 # Default ignored files
 /workspace.xml
-controller/__pycache__/gameManager.cpython-38.pyc
-model/__pycache__/game.cpython-38.pyc
-model/__pycache__/player.cpython-38.pyc
-view/__pycache__/board_console_view.cpython-38.pyc
-view/__pycache__/game_view.cpython-38.pyc
+__pycache__/
