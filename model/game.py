@@ -152,6 +152,7 @@ class Game:
     def isBoardFull(self):
         return not np.any(self.board == 0)
 
+
     def whoWins(self):
         # make sure board is full
         if not self.isBoardFull():
@@ -170,6 +171,9 @@ class Game:
             return True, self.player1
         elif self.playerOneCount < self.playerTwoCount:
             return True, self.player2
-
         drawPlayer = p.Player(-1)
         return True, drawPlayer
+
+
+    def getScore(self):
+        return (self.playerOneCount, self.playerTwoCount)

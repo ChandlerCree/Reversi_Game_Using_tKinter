@@ -18,6 +18,7 @@ class GameManager:
             self.model.showLegalMoves(moveFlipMap["valid_moves"])
             self.view.display_board()
             self.view.display_curr_player(self.model.curPlayer)
+            #self.model.display_curr_score()
 
             row, col = self.view.get_move()
 
