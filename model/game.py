@@ -171,14 +171,9 @@ class Game:
             return True, self.player1
         elif self.playerOneCount < self.playerTwoCount:
             return True, self.player2
-<<<<<<< HEAD
-        return False, None
+        drawPlayer = p.Player(-1)
+        return True, drawPlayer
 
 
     def getScore(self):
         return (self.playerOneCount, self.playerTwoCount)
-=======
-
-        drawPlayer = p.Player(-1)
-        return True, drawPlayer
->>>>>>> origin/development
