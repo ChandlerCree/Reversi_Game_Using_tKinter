@@ -16,7 +16,7 @@ class Game:
         self.player2 = p.Player(2)
 
         # determine who the first player is randomly
-        if self.player1.x == self.whoGoesFirst():
+        if self.player1.x == self.who_goes_first():
             self.curPlayer = self.player1
         else:
             self.curPlayer = self.player2
@@ -35,11 +35,11 @@ class Game:
         self.playerTwoCount = 2
 
     # coin flip for who goes first
-    def whoGoesFirst(self):
+    def who_goes_first(self):
         return random.randint(1, 2)
 
     # change who the current player is
-    def changeCurPlayer(self):
+    def change_curr_player(self):
 
         # check who's the current player before changing
         if self.curPlayer.x == 1:
@@ -48,21 +48,21 @@ class Game:
             self.curPlayer = self.player1
 
     # checks if this location is on the board
-    def inBounds(self, x, y):
+    def in_bounds(self, x, y):
         return 0 <= x <= self.bSize - 1 and 0 <= y <= self.bSize - 1
 
     # set the board value to 3 on each spot the player can go
-    def showLegalMoves(self, validMoves):
+    def show_legal_moves(self, validMoves):
         for x, y in validMoves:
             self.board[x][y] = 3
     # takes the "legal moves" off the board
-    def resetBoard(self):
+    def reset_board(self):
         for x in range(self.bSize):
             for y in range(self.bSize):
                 if self.board[x][y] == 3:
                     self.board[x][y] = 0
 
-    def findLegalMoves(self):
+    def find_legal_moves(self):
         validMoves = []
         flips = []
 
@@ -92,19 +92,19 @@ class Game:
                     # create copies to keep track of original starting point
                     x, y = i, j
 
-                    # move tp adjacent piece
+                    # move to adjacent piece
                     x += xdir
                     y += ydir
 
                     # if you are at another players piece, continue moving
-                    if self.inBounds(x, y) and (
+                    if self.in_bounds(x, y) and (
                         self.board[x][y] != self.curPlayer.x and self.board[x][y] != 0
                     ):
                         x += xdir
                         y += ydir
 
                         # reach the end of the board, try another direction
-                        if not self.inBounds(x, y):
+                        if not self.in_bounds(x, y):
                             continue
 
                         # while you still see other player pieces, continue moving in the same direction
@@ -113,10 +113,10 @@ class Game:
                             y += ydir
 
                             # if you reach the end of the board, no valid move possible
-                            if not self.inBounds(x, y):
+                            if not self.in_bounds(x, y):
                                 break
 
-                        if not self.inBounds(x, y):
+                        if not self.in_bounds(x, y):
                             continue
 
                         # if you find one of your own pieces, it is a valid move
@@ -146,24 +146,24 @@ class Game:
         return movesToFlipsMap
 
     # make move and then flip corresponding. Assumes move is legal
-    def makeMove(self, flipPieces):
+    def make_move(self, flipPieces):
         for x, y in flipPieces:
             self.board[x][y] = self.curPlayer.x
 
     # find if any empty pieces
-    def isBoardFull(self):
+    def is_board_full(self):
         return not np.any(self.board == 0)
 
     # checks to see if there are ANY legal moves
     # assumes the current player has been determined to not have any moves
-    def ensureLegalMoves(self):
+    def ensure_legal_moves(self):
 
         # look for legal moves for other player
-        self.changeCurPlayer()
-        legalMovesOtherPlayer = self.findLegalMoves()
+        self.change_curr_player()
+        legalMovesOtherPlayer = self.find_legal_moves()
 
         # make sure to turn curPlayer back orginal
-        self.changeCurPlayer()
+        self.change_curr_player()
 
         # if there are no legal moves for other player, there are no moves possible
         if len(legalMovesOtherPlayer["valid_moves"]) == 0:
@@ -182,12 +182,12 @@ class Game:
                 else:
                     pass
 
-    def whoWins(self, gameOverBoardNotFull=False):
+    def who_wins(self, gameOverBoardNotFull=False):
 
         # check for special case where no more legal moves but board isn't full
         if not gameOverBoardNotFull:
             # make sure board is full
-            if not self.isBoardFull():
+            if not self.is_board_full():
                 return False, None
 
         self.update_score()
@@ -200,5 +200,5 @@ class Game:
         drawPlayer = p.Player(-1)
         return True, drawPlayer
 
-    def getScore(self):
+    def get_score(self):
         return (self.playerOneCount, self.playerTwoCount)
