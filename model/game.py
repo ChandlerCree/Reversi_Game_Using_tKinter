@@ -152,6 +152,21 @@ class Game:
     def isBoardFull(self):
         return not np.any(self.board == 0)
 
+    # checks to see if there are ANY legal moves
+    # assumes the current player has been determined to not have any moves
+    def ensureLegalMoves(self):
+
+        # look for legal moves for other player
+        self.changeCurPlayer()
+        legalMovesOtherPlayer = self.findLegalMoves()
+
+        # make sure to turn curPlayer back orginal
+        self.changeCurPlayer()
+
+        # if there are no legal moves for other player, there are no moves possible
+        if len(legalMovesOtherPlayer["valid_moves"] == 0):
+            return False
+        return True
 
     def whoWins(self):
         # make sure board is full
@@ -173,7 +188,6 @@ class Game:
             return True, self.player2
         drawPlayer = p.Player(-1)
         return True, drawPlayer
-
 
     def getScore(self):
         return (self.playerOneCount, self.playerTwoCount)

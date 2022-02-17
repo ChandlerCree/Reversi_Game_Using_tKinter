@@ -18,7 +18,7 @@ class GameManager:
                 self.model.showLegalMoves(moveFlipMap["valid_moves"])
                 self.view.display_board()
                 self.view.display_curr_player(self.model.curPlayer)
-                #self.model.display_curr_score()
+                # self.model.display_curr_score()
 
                 row, col = self.view.get_move()
 
@@ -43,4 +43,10 @@ class GameManager:
                     self.view.display_board()
                     self.view.display_winner(winner)
             else:
-                self.model.changeCurPlayer()
+                if self.model.ensureLegalMoves():
+                    self.model.changeCurPlayer()
+                else:
+                    game_terminated = True
+                    __, winner = self.model.whoWins()
+                    self.view.display_board()
+                    self.view.display_winner(winner)
