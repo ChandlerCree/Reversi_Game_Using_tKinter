@@ -6,6 +6,7 @@ class GameManager:
     def __init__(self, model: Game, view: GameView):
         self.model = model
         self.view = view
+        self.starting_player = self.model.curPlayer.symbol
 
     def run_game(self):
         game_terminated = False
@@ -14,11 +15,16 @@ class GameManager:
         while not game_terminated:
             moveFlipMap = self.model.findLegalMoves()
             if not len(moveFlipMap["valid_moves"]) == 0:
+
                 # find legal moves and display board
                 self.model.showLegalMoves(moveFlipMap["valid_moves"])
                 self.view.display_board()
                 self.view.display_curr_player(self.model.curPlayer)
-                # self.model.display_curr_score()
+                self.view.display_curr_score(
+                    self.model.playerOneCount,
+                    self.model.playerTwoCount,
+                    self.starting_player,
+                )
 
                 row, col = self.view.get_move()
 
@@ -41,12 +47,28 @@ class GameManager:
                     self.model.changeCurPlayer()
                 else:
                     self.view.display_board()
+                    print("\n")
+                    self.view.display_curr_score(
+                        self.model.playerOneCount,
+                        self.model.playerTwoCount,
+                        self.starting_player,
+                    )
                     self.view.display_winner(winner)
+
+                self.model.update_score()
             else:
+                # make sure there are legal moves
                 if self.model.ensureLegalMoves():
                     self.model.changeCurPlayer()
                 else:
+                    # if there are none, game is over, use special whoWins
                     game_terminated = True
-                    __, winner = self.model.whoWins()
+                    __, winner = self.model.whoWins(gameOverBoardNotFull=True)
                     self.view.display_board()
+                    print("\n")
+                    self.view.display_curr_score(
+                        self.model.playerOneCount,
+                        self.model.playerTwoCount,
+                        self.starting_player,
+                    )
                     self.view.display_winner(winner)

@@ -31,8 +31,8 @@ class Game:
         self.board[int((size / 2) - 1)][int((size / 2))] = (self.curPlayer.x) % 2 + 1
         self.board[int((size / 2))][int((size / 2) - 1)] = (self.curPlayer.x) % 2 + 1
 
-        self.playerOneCount = 0
-        self.playerTwoCount = 0
+        self.playerOneCount = 2
+        self.playerTwoCount = 2
 
     # coin flip for who goes first
     def whoGoesFirst(self):
@@ -164,22 +164,31 @@ class Game:
         self.changeCurPlayer()
 
         # if there are no legal moves for other player, there are no moves possible
-        if len(legalMovesOtherPlayer["valid_moves"] == 0):
+        if len(legalMovesOtherPlayer["valid_moves"]) == 0:
             return False
         return True
 
-    def whoWins(self):
-        # make sure board is full
-        if not self.isBoardFull():
-            return False, None
-
-        # loop through board and count amount of disks for each player
+    def update_score(self):
+        self.playerOneCount = 0
+        self.playerTwoCount = 0
         for i in range(self.bSize):
             for j in range(self.bSize):
                 if self.board[i][j] == 1:
                     self.playerOneCount += 1
-                else:
+                elif self.board[i][j] == 2:
                     self.playerTwoCount += 1
+                else:
+                    pass
+
+    def whoWins(self, gameOverBoardNotFull=False):
+
+        # check for special case where no more legal moves but board isnt full
+        if not gameOverBoardNotFull:
+            # make sure board is full
+            if not self.isBoardFull():
+                return False, None
+
+        self.update_score()
 
         # if one player has more disks then the other, they win. draw otherwise
         if self.playerOneCount > self.playerTwoCount:

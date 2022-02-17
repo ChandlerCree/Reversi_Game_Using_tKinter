@@ -12,6 +12,10 @@ class GameView(ABC):
         pass
 
     @abstractmethod
+    def display_curr_score(self, p1_score, p2_score):
+        pass
+
+    @abstractmethod
     def show_legal_moves(self):
         pass
 

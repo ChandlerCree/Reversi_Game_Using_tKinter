@@ -1,6 +1,6 @@
 from view.game_view import GameView
-from model.player import Player
-from model.game import Game
+#from model.player import Player
+#from model.game import Game
 
 
 class GameConsoleView(GameView):
@@ -10,11 +10,17 @@ class GameConsoleView(GameView):
     def display_curr_player(self, player):
         print(f"\nPlayer {player.symbol}: It's your turn.")
 
-    #def display_curr_score(self, scores):
-    #    print(f"Player 1 has: {scores[0]} points.\nPlayer2 has: {scores[1]} points.")
+    def display_curr_score(self, p1_score, p2_score, starting_player):
+        if starting_player == 'X':
+            print(f"Player 'X' has: {p1_score} points.\nPlayer 'O' has: {p2_score} points.")
+        elif starting_player == 'O':
+            print(f"Player 'O' has: {p2_score} points.\nPlayer 'X' has: {p1_score} points.")
+        else:
+            print('SCORE ERROR')
 
     def show_legal_moves(self):
         pass
+
 
     def get_move(self):
         move = input("Enter your move (row, col): ")
