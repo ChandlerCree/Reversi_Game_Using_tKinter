@@ -1,10 +1,5 @@
 from view.game_view import GameView
 
-
-# from model.player import Player
-# from model.game import Game
-
-
 class GameConsoleView(GameView):
     def __init__(self, board_View):
         super().__init__(board_View)

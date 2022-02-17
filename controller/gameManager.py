@@ -1,4 +1,3 @@
-from model import game
 from model.game import Game
 from view.game_view import GameView
 
