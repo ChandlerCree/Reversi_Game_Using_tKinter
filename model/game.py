@@ -41,19 +41,21 @@ class Game:
     # change who the current player is
     def changeCurPlayer(self):
 
-        # check whose the current player before changing
+        # check who's the current player before changing
         if self.curPlayer.x == 1:
             self.curPlayer = self.player2
         else:
             self.curPlayer = self.player1
 
+    # checks if this location is on the board
     def inBounds(self, x, y):
         return 0 <= x <= self.bSize - 1 and 0 <= y <= self.bSize - 1
 
+    # set the board value to 3 on each spot the player can go
     def showLegalMoves(self, validMoves):
         for x, y in validMoves:
             self.board[x][y] = 3
-
+    # takes the "legal moves" off the board
     def resetBoard(self):
         for x in range(self.bSize):
             for y in range(self.bSize):
@@ -70,7 +72,7 @@ class Game:
 
                 listOfFlips = []
 
-                # skip any non empty pieces
+                # skip any non-empty pieces
                 if self.board[i][j] != 0:
                     continue
 
@@ -87,7 +89,7 @@ class Game:
                     [-1, 0],
                     [-1, 1],
                 ]:
-                    # create copies to keep track of orginal starting point
+                    # create copies to keep track of original starting point
                     x, y = i, j
 
                     # move tp adjacent piece
@@ -123,11 +125,11 @@ class Game:
                                 x -= xdir
                                 y -= ydir
                                 listOfFlips.append([x, y])
-                                # once you get back to orginal piece break loop
+                                # once you get back to original piece break loop
                                 if x == i and y == j:
                                     break
 
-                # reset piece in case it wasnt a valid move
+                # reset piece in case it wasn't a valid move
                 self.board[i][j] = 0
 
                 # if it was a valid move, keep track of it and its corresponding flips
@@ -182,7 +184,7 @@ class Game:
 
     def whoWins(self, gameOverBoardNotFull=False):
 
-        # check for special case where no more legal moves but board isnt full
+        # check for special case where no more legal moves but board isn't full
         if not gameOverBoardNotFull:
             # make sure board is full
             if not self.isBoardFull():
@@ -190,7 +192,7 @@ class Game:
 
         self.update_score()
 
-        # if one player has more disks then the other, they win. draw otherwise
+        # if one player has more disks than the other, they win. draw otherwise
         if self.playerOneCount > self.playerTwoCount:
             return True, self.player1
         elif self.playerOneCount < self.playerTwoCount:

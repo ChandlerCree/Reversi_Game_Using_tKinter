@@ -5,6 +5,7 @@ class BoardView(ABC):
         self.board=board
 
     @abstractmethod
+    #creates the board GUI
     def display(self):
         pass
     

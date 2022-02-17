@@ -1,3 +1,4 @@
+from model import game
 from model.game import Game
 from view.game_view import GameView
 
@@ -41,7 +42,7 @@ class GameManager:
                 self.model.makeMove(moveFlipMap["flips"][i])
                 self.model.resetBoard()
 
-                # make sure no one has one
+                # make sure no one has won
                 game_terminated, winner = self.model.whoWins()
                 if not game_terminated:
                     self.model.changeCurPlayer()

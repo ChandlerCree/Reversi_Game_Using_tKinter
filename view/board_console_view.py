@@ -6,6 +6,7 @@ class BoardConsoleView(BoardView):
     def __init__(self, board):
         super().__init__(board)
 
+    # creates the board GUI
     def display(self):
         board_size = len(self.board)
         header_len = board_size * 4 + 1
