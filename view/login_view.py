@@ -93,11 +93,6 @@ class LoginView():
         self.login_screen.geometry("300x250")
         tk.Label(self.login_screen, text = "Please enter details below to login").pack()
         tk.Label(self.login_screen, text = "").pack()
-        
-        #global username_verify_login
-        #global password_verify_login
-        #global username_entry_login
-        #global password_entry_login
 
         self.username_verify_login = tk.StringVar()
         self.password_verify_login = tk.StringVar()
