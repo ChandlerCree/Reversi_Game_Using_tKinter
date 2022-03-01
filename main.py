@@ -1,6 +1,7 @@
 from model.game import Game
 from view.board_console_view import BoardConsoleView
 from view.game_console_view import GameConsoleView
+
 from controller.gameManager import GameManager
 
 # Get user input for board size
