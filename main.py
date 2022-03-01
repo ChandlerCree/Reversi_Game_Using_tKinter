@@ -1,3 +1,5 @@
+from mysql.connector import connect, Error
+from getpass import getpass
 from model.game import Game
 from view.board_console_view import BoardConsoleView
 from view.game_console_view import GameConsoleView
@@ -6,7 +8,8 @@ from controller.gameManager import GameManager
 
 if __name__ == "__main__":
     # Get user input for board size
-    board_size = input("Please designate a board size: \n(An even number between 4-10) ")
+    #board_size = input("Please designate a board size: \n(An even number between 4-10) ")
+    board_size = 2
     game = Game(size=int(board_size))  # create the game
 
     # add the views
@@ -23,4 +26,7 @@ if __name__ == "__main__":
         controller.run_game()
     else:
         print("Error logging in.")
+
+    
+
 
