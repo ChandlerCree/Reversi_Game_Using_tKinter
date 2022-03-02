@@ -3,13 +3,6 @@ from mysql.connector import connect, Error
 from getpass import getpass
 import tkinter as tk
 
-'''
-bg_1 = "#FECEAB"
-bg_2 = "#FF847C"
-fg_1 = "#2A363B"
-cor_1 = "#99B898"
-incor_1 = "#E84A5F"
-'''
 
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
@@ -19,42 +12,27 @@ fg_1 = "#253237"
 
 
 class LoginView():
-    def __init__(self):
+    def __init__(self, my_connect):
         #init function called when new object LoginView is created
         self.first_attempt = True
         self.successful_login = False
+        self.my_connect = my_connect
 
 
     def register_user(self): 
         try:
-            my_connect = connect(
-                host="localhost",
-                #user=input('Enter username: '),
-                #passwd=getpass('Enter password:'),
-                user="root",
-                passwd="NU22ms0cc3rGK",
-                database="reversi"
-            )
-
             #my_conn = my_connect.cursor()
             #register a user into the database
             self.username_info = self.username_register.get()
             self.password_info = self.password_register.get()
-
-            '''
-            file = open("temp_accounts/"+username_info, "w")
-            file.write(username_info + "\n")
-            file.write(password_info)
-            file.close
-            '''
-
             
             print("insert into player (username, password, elo) values ('{}', '{}', 1500);".format(self.username_info, self.password_info))
             quer = "insert into player (username, password, elo) values ('{}', '{}', 1500);".format(self.username_info, self.password_info)
 
-            with my_connect.cursor() as cursor:
+            with self.my_connect.cursor() as cursor:
                 cursor.execute(quer)
                 result = cursor.fetchall()
+                self.my_connect.commit()
                 for row in result:
                     print(row)
 
@@ -112,6 +90,12 @@ class LoginView():
 
         self.username_entry_login.delete(0, tk.END)
         self.password_entry_login.delete(0, tk.END)
+
+        '''
+        quer = []
+        some query here that check blah
+        quer = "Select from *" # full list of users
+        '''
 
         list_of_files = os.listdir("temp_accounts/")
         if self.username_login in list_of_files:
@@ -178,7 +162,7 @@ class LoginView():
         #two labels and buttons are created and display the user with otpions for 
         #loging in or registering a new user
         self.entry_login_screen = tk.Tk()
-        self.entry_login_screen.geometry("300x250")
+        self.entry_login_screen.geometry("300x350")
         self.entry_login_screen.title("Reversi")
         self.entry_login_screen.configure(bg=bg_1)
         self.entry_login_screen.resizable(False, False)
@@ -187,6 +171,9 @@ class LoginView():
         tk.Button(text="Login", height="1", width="12", command=self.login, bg=bg_2, fg=fg_1, font=("Calibri", 18, "bold"), activebackground=cor_1).pack()
         tk.Label(text="", height="2", bg=bg_1, font=("Calibri", 6)).pack()
         tk.Button(text="Register", height="1", width="12", command=self.register, bg=bg_2, fg=fg_1, font=("Calibri", 18, "bold"), activebackground=cor_1).pack()
+        tk.Label(text="", height="2", bg=bg_1, font=("Calibri", 6)).pack()
+        tk.Button(text="Guest Login", height="1", width="12", command=self.register, bg=bg_2, fg=fg_1, font=("Calibri", 18, "bold"), activebackground=cor_1).pack()
 
         self.entry_login_screen.mainloop()
         return self.successful_login
+

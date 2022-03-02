@@ -9,9 +9,9 @@ class GameManager:
         self.view = view
         self.starting_player = self.model.curPlayer.symbol
 
-    def login(self):
+    def login(self, my_connect):
         successful_login = False
-        c = LoginView()
+        c = LoginView(my_connect)
         successful_login = c.main_screen()
         return successful_login
 
