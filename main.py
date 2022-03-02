@@ -1,11 +1,11 @@
 from mysql.connector import connect, Error
 from getpass import getpass
+
 from model.game import Game
 from view.board_console_view import BoardConsoleView
 from view.game_console_view import GameConsoleView
-import tkinter as tk
 from view.main_menu import MainMenu
-from view.login_view import LoginView
+from view.gui import Gui
 from controller.gameManager import GameManager
 
 
@@ -14,20 +14,6 @@ bg_2 = "#C2DFE3"
 cor_1 = "#9DB4C0"
 incor_1 = "#5C6B73"
 fg_1 = "#253237"
-
-
-class Gui(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        # configure the root window
-        self.title('Reversi')
-        self.geometry('300x250')
-        self.configure(bg=bg_1)
-
-        # label
-        title_label = tk.Label(text="REVERSI", bg=bg_2, width="300", height="1", font=("Calibri", 24, "bold"), fg=fg_1,
-                               borderwidth=4, relief="groove", pady="10")
-        title_label.pack()
 
 
 if __name__ == "__main__":
@@ -56,7 +42,13 @@ if __name__ == "__main__":
         login_success = False
         login_success = controller.login(my_connect)
         # runs the game
-        if login_success:
+        if login_success == True:
+            print('Logged in as User!')
+            gui = Gui()
+            frame = MainMenu(gui)
+            gui.mainloop()
+        elif login_success == 'guest':
+            print('Logged in as guest!')
             gui = Gui()
             frame = MainMenu(gui)
             gui.mainloop()
@@ -69,7 +61,7 @@ if __name__ == "__main__":
 
 
 
-# run the game
-controller = GameManager(game, game_view)
-controller.run_game()
+### run the game
+#controller = GameManager(game, game_view)
+#controller.run_game()
 

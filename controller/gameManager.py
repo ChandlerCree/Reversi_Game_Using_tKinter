@@ -12,8 +12,9 @@ class GameManager:
     def login(self, my_connect):
         successful_login = False
         c = LoginView(my_connect)
-        successful_login = c.main_screen()
-        return successful_login
+        login_status = c.main_screen()
+        print('successful login: ' + str(login_status))
+        return login_status
 
     def run_game(self):
         game_terminated = False
