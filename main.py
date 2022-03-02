@@ -3,7 +3,10 @@ from getpass import getpass
 from model.game import Game
 from view.board_console_view import BoardConsoleView
 from view.game_console_view import GameConsoleView
+
+
 from view.login_view import LoginView
+
 from controller.gameManager import GameManager
 
 if __name__ == "__main__":
@@ -29,4 +32,9 @@ if __name__ == "__main__":
 
     
 
+
+
+# run the game
+controller = GameManager(game, game_view)
+controller.run_game()
 
