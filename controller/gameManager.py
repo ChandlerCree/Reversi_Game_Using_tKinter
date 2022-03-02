@@ -1,6 +1,6 @@
-from model import game
 from model.game import Game
 from view.game_view import GameView
+from view.login_view import LoginView
 
 
 class GameManager:
@@ -8,6 +8,12 @@ class GameManager:
         self.model = model
         self.view = view
         self.starting_player = self.model.curPlayer.symbol
+
+    def login(self):
+        successful_login = False
+        c = LoginView()
+        successful_login = c.main_screen()
+        return successful_login
 
     def run_game(self):
         game_terminated = False
@@ -73,3 +79,5 @@ class GameManager:
                         self.starting_player,
                     )
                     self.view.display_winner(winner)
+ 
+ 
