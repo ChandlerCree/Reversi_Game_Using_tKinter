@@ -35,7 +35,6 @@ class GameManager:
                     self.view.display_illegal_moves()
                     row, col = self.view.get_move()
                     move = [row, col]
-                    self.view.update()
 
                 # make move
                 i = moveFlipMap["valid_moves"].index(move)

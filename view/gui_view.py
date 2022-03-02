@@ -68,6 +68,7 @@ class GUIView(tk.Frame, GameView):
         pass
 
     def get_move(self):
+        self.update()
         return self.move
 
     def display_illegal_moves(self):
