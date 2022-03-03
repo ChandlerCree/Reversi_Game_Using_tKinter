@@ -1,6 +1,6 @@
-from model import game
 from model.game import Game
 from view.game_view import GameView
+from view.login_view import LoginView
 
 
 class GameManager:
@@ -9,16 +9,23 @@ class GameManager:
         self.view = view
         self.starting_player = self.model.curPlayer.symbol
 
+    def login(self, my_connect):
+        successful_login = False
+        c = LoginView(my_connect)
+        login_status = c.main_screen()
+        print('successful login: ' + str(login_status))
+        return login_status
+
     def run_game(self):
         game_terminated = False
 
         # loop that runs the entire game
         while not game_terminated:
-            moveFlipMap = self.model.findLegalMoves()
+            moveFlipMap = self.model.find_legal_moves()
             if not len(moveFlipMap["valid_moves"]) == 0:
 
                 # find legal moves and display board
-                self.model.showLegalMoves(moveFlipMap["valid_moves"])
+                self.model.show_legal_moves(moveFlipMap["valid_moves"])
                 self.view.display_board()
                 self.view.display_curr_player(self.model.curPlayer)
                 self.view.display_curr_score(
@@ -39,13 +46,13 @@ class GameManager:
 
                 # make move
                 i = moveFlipMap["valid_moves"].index(move)
-                self.model.makeMove(moveFlipMap["flips"][i])
-                self.model.resetBoard()
+                self.model.make_move(moveFlipMap["flips"][i])
+                self.model.reset_board()
 
                 # make sure no one has won
-                game_terminated, winner = self.model.whoWins()
+                game_terminated, winner = self.model.who_wins()
                 if not game_terminated:
-                    self.model.changeCurPlayer()
+                    self.model.change_curr_player()
                 else:
                     self.view.display_board()
                     print("\n")
@@ -59,12 +66,12 @@ class GameManager:
                 self.model.update_score()
             else:
                 # make sure there are legal moves
-                if self.model.ensureLegalMoves():
-                    self.model.changeCurPlayer()
+                if self.model.ensure_legal_moves():
+                    self.model.change_curr_player()
                 else:
-                    # if there are none, game is over, use special whoWins
+                    # if there are none, game is over, use special who_wins
                     game_terminated = True
-                    __, winner = self.model.whoWins(gameOverBoardNotFull=True)
+                    __, winner = self.model.who_wins(gameOverBoardNotFull=True)
                     self.view.display_board()
                     print("\n")
                     self.view.display_curr_score(
@@ -73,3 +80,5 @@ class GameManager:
                         self.starting_player,
                     )
                     self.view.display_winner(winner)
+ 
+ 
