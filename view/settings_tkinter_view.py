@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class SettingsView(ttk.Frame):
+class SettingsView(tk.Frame):
     def __init__(self, container):
         super().__init__(container)
         self.label = tk.Label(text='Settings', font=('Calibri Bold', 50))

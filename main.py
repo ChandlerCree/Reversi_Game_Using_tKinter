@@ -5,8 +5,11 @@ from model.game import Game
 from view.board_console_view import BoardConsoleView
 from view.game_console_view import GameConsoleView
 from view.main_menu import MainMenu
+from view.gui_view import GUIView
 from view.gui import Gui
 from controller.gameManager import GameManager
+
+import tkinter as tk
 
 
 bg_1 = "#E0FBFC"
@@ -28,8 +31,8 @@ if __name__ == "__main__":
                 )
 
         # Get user input for board size
-        #board_size = input("Please designate a board size: \n(An even number between 4-10) ")
-        board_size = 2
+        board_size = input("Please designate a board size: \n(An even number between 4-10) ")
+        #board_size = 2
         game = Game(size=int(board_size))  # create the game
 
         # add the views
@@ -48,10 +51,16 @@ if __name__ == "__main__":
             frame = MainMenu(gui)
             gui.mainloop()
         elif login_success == 'guest':
-            print('Logged in as guest!')
+            '''print('Logged in as guest!')
             gui = Gui()
             frame = MainMenu(gui)
-            gui.mainloop()
+            gui.mainloop()'''
+
+            root = tk.Tk()
+            game_view = GUIView(root, game.board)
+            controller = GameManager(game, game_view)
+            controller.run_game()
+            root.mainloop()         
         else:
             print("Error logging in.")
     except Error as e:
