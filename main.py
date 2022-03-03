@@ -4,8 +4,8 @@ from getpass import getpass
 from model.game import Game
 from view.board_console_view import BoardConsoleView
 from view.game_console_view import GameConsoleView
-from view.main_menu import MainMenu
-from view.gui_view import GUIView
+from view.main_menu_view import MainMenu
+from view.gui_game_view import GUIView
 from view.gui import Gui
 from controller.gameManager import GameManager
 

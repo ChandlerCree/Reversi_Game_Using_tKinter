@@ -1,5 +1,5 @@
 import tkinter as tk
-from main_menu import MainMenu
+from view.main_menu_view import MainMenu
 
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"

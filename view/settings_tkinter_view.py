@@ -1,5 +1,11 @@
 import tkinter as tk
 
+bg_1 = "#E0FBFC"
+bg_2 = "#C2DFE3"
+cor_1 = "#9DB4C0"
+incor_1 = "#5C6B73"
+fg_1 = "#253237"
+
 class SettingsView(tk.Frame):
     def __init__(self, container):
         super().__init__(container)
