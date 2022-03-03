@@ -12,7 +12,7 @@ class GameView(ABC):
         pass
 
     @abstractmethod
-    def display_curr_score(self, p1_score, p2_score):
+    def display_curr_score(self, p1_score, p2_score, starting_player):
         pass
 
     @abstractmethod
