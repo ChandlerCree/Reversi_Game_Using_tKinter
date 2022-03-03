@@ -64,4 +64,3 @@ if __name__ == "__main__":
 ### run the game
 #controller = GameManager(game, game_view)
 #controller.run_game()
-

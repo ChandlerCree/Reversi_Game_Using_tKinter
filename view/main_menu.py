@@ -34,3 +34,4 @@ class MainMenu(ttk.Frame):
                                         font=("Calibri", 11, "bold"), fg=fg_1, borderwidth=4, relief="groove",
                                         pady="10")
         button_clicked_label.pack()
+
