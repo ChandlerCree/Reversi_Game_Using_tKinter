@@ -1,5 +1,3 @@
-from mysql.connector import connect, Error
-
 from model.game import Game
 from view.app import App
 
@@ -13,30 +11,11 @@ fg_1 = "#253237"
 
 
 if __name__ == "__main__":
-    try:
-
-        my_connect = connect(
-            host="localhost",
-            # user=input('Enter username: '),
-            # passwd=getpass('Enter password:'),
-            user="root",
-            passwd="NU22ms0cc3rGK",
-            database="reversi"
-        )
 
 
-        # Get user input for board size
-        board_size = input("Please designate a board size: \n(An even number between 4-10) ")
-        # board_size = 2
-        game = Game(size=int(board_size))  # create the game
-
-        # add the views
-        app = App()
-        app.mainloop()
+    # add the views
+    app = App()
+    app.mainloop()
 
 
-        # creates game manager object
-        controller = GameManager(game, app)
-        controller.run_game()
-    except Error as e:
-        print(e)
+

@@ -1,21 +1,13 @@
 from model.game import Game
-from view.gui import Gui
-from view.login_view import LoginView
-from view.main_menu_view import MainMenu
+from view.game_view import GameView
 
 
 class GameManager:
-    def __init__(self, model: Game, view: Gui):
+    def __init__(self, model: Game, view: GameView):
         self.model = model
         self.view = view
         self.starting_player = self.model.curPlayer.symbol
 
-    def login(self, my_connect):
-        successful_login = False
-        c = LoginView(my_connect)
-        login_status = c.main_screen()
-        print('successful login: ' + str(login_status))
-        return login_status
 
     def run_game(self):
         game_terminated = False

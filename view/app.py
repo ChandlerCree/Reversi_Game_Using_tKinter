@@ -1,9 +1,12 @@
 import tkinter as tk
 from view.leaderboard_tkinter_view import LeaderboardView
-from settings_tkinter_view import SettingsView
+from view.settings_tkinter_view import SettingsView
+from model.game import Game
+from controller.gameManager import GameManager
+from view.board_console_view import BoardConsoleView
 
 # from view.login_view import LoginView
-from gui_game_view import GUIView
+from view.gui_game_view import GUIView
 
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
@@ -49,7 +52,12 @@ class App(tk.Tk):
         self.frame.pack()
 
     def new_game(self):
-        game_win = GUIView(self)
+        board_size = input("Please designate a board size: \n(An even number between 4-10) ")
+        game = Game(size=int(board_size))  # create the game
+
+        game_win = GUIView(self.master,game.board)
+        controller = GameManager(game, game_win)
+        controller.run_game()
         game_win.focus_force()
         self.withdraw()
 
