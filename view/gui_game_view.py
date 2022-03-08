@@ -9,10 +9,15 @@ incor_1 = "#5C6B73"
 fg_1 = "#253237"
 
 
-class GUIView(tk.Frame, GameView):
+class GUIView(tk.Toplevel, GameView):
 
     def __init__(self, parent, board):
         super().__init__(parent)
+        self.title('Reversi')
+        self.geometry('300x250')
+        self.configure(bg=bg_1)
+        self.frame = tk.Frame(self)
+
         self.board = board
         self.boardSize = board.shape[0]
         self.buttons = [None] * (self.boardSize * self.boardSize)

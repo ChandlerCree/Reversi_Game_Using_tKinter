@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from main_menu_view import MainMenu
+#from main_menu_view import MainMenu
 
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
@@ -9,17 +9,22 @@ incor_1 = "#5C6B73"
 fg_1 = "#253237"
 
 
-class LeaderboardView(tk.Frame):
-    def __init__(self, container):
-        super().__init__(container)
-        self.leaderboard_title = tk.Label(text="Leaderboard", bg=bg_2, width="300", height="1",
-                                          font=("Calibri", 11, "bold"), fg=fg_1, borderwidth=4, relief="groove",
+class LeaderboardView(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title('Reversi')
+        self.geometry('300x250')
+        self.configure(bg=bg_1)
+        self.frame = tk.Frame(self)
+
+        self.leaderboard_title = tk.Label(self.frame, text="Leaderboard", bg=bg_2, width="300", height="1",
+                                          font=("Calibri", 24, "bold"), fg=fg_1, borderwidth=4, relief="groove",
                                           pady="10")
         self.leaderboard_title.pack()
-        self.main_button = tk.Button(text='Main Menu', command=self.open_main)
+        self.main_button = tk.Button(self.frame, text='Main Menu', command=self.open_main)
         self.main_button.pack()
 
-        self.leaderboard = ttk.Treeview()
+        self.leaderboard = ttk.Treeview(self.frame)
 
         self.leaderboard['columns'] = ('rank', 'player_Name', 'elo')
         self.leaderboard.column("#0", width=0, stretch=False)
@@ -55,9 +60,8 @@ class LeaderboardView(tk.Frame):
 
         self.leaderboard.pack()
         # show the frame on the container
-        self.pack()
+        self.frame.pack()
 
     def open_main(self):
-        main_win = MainMenu(self)
-        main_win.focus_force()
-        self.withdraw()
+        self.destroy()
+        self.master.deiconify()

@@ -1,12 +1,9 @@
 from mysql.connector import connect, Error
-from getpass import getpass
 
 from model.game import Game
-from app import App
+from view.app import App
 
 from controller.gameManager import GameManager
-
-import tkinter as tk
 
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
@@ -17,6 +14,7 @@ fg_1 = "#253237"
 
 if __name__ == "__main__":
     try:
+
         my_connect = connect(
             host="localhost",
             # user=input('Enter username: '),
@@ -25,6 +23,7 @@ if __name__ == "__main__":
             passwd="NU22ms0cc3rGK",
             database="reversi"
         )
+
 
         # Get user input for board size
         board_size = input("Please designate a board size: \n(An even number between 4-10) ")
@@ -37,7 +36,7 @@ if __name__ == "__main__":
 
 
         # creates game manager object
-        controller = GameManager(game, tkinter_gui_view)
+        controller = GameManager(game, app)
         controller.run_game()
     except Error as e:
         print(e)
