@@ -38,13 +38,13 @@ class LeaderboardView(tk.Toplevel):
         self.leaderboard.heading("elo", text="ELO", anchor=tk.CENTER)
 
         self.leaderboard.insert(parent='', index='end', iid=0, text='',
-                                values=('1', 'john', '00'))
+                                values=('1', 'user1', '1500'))
         self.leaderboard.insert(parent='', index='end', iid=1, text='',
-                                values=('2', 'john', '00'))
+                                values=('2', 'user2', '1500'))
         self.leaderboard.insert(parent='', index='end', iid=2, text='',
-                                values=('3', 'john', '00'))
+                                values=('3', 'user3', '1500'))
         self.leaderboard.insert(parent='', index='end', iid=3, text='',
-                                values=('4', 'john', '00'))
+                                values=('4', 'user4', '1500'))
         self.leaderboard.insert(parent='', index='end', iid=4, text='',
                                 values=('5', 'john', '00'))
         self.leaderboard.insert(parent='', index='end', iid=5, text='',
