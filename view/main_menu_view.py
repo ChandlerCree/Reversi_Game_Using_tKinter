@@ -26,7 +26,7 @@ class MainMenu(ttk.Frame):
         self.leaderboard_button = tk.Button(text="Leaderboard", height="1", width="12", command=self.open_leaderboard, bg=bg_2, fg=fg_1,
                                        font=("Calibri", 18, "bold"), activebackground=cor_1)
         self.leaderboard_button.pack()
-        self.logout_button = tk.Button(text="Login", height="1", width="12", command=self.open_login, bg=bg_2, fg=fg_1,
+        self.logout_button = tk.Button(text="Logout", height="1", width="12", command=self.open_login, bg=bg_2, fg=fg_1,
                                   font=("Calibri", 18, "bold"), activebackground=cor_1)
         self.logout_button.pack()
 
