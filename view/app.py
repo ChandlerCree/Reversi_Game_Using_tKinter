@@ -4,8 +4,9 @@ from view.settings_tkinter_view import SettingsView
 from model.game import Game
 from controller.gameManager import GameManager
 from view.board_console_view import BoardConsoleView
+from controller.connector_controller import ConnectorController
 
-# from view.login_view import LoginView
+from view.login_view import LoginView
 from view.gui_game_view import GUIView
 
 bg_1 = "#E0FBFC"
@@ -43,10 +44,10 @@ class App(tk.Tk):
                                             command=self.open_leaderboard, bg=bg_2, fg=fg_1,
                                             font=("Calibri", 18, "bold"), activebackground=cor_1)
         self.leaderboard_button.pack()
-        self.logout_button = tk.Button(self.frame, text="Login", height="1", width="12", command=self.open_login,
+        self.login_button = tk.Button(self.frame, text="Login", height="1", width="12", command=self.open_login,
                                        bg=bg_2, fg=fg_1,
                                        font=("Calibri", 18, "bold"), activebackground=cor_1)
-        self.logout_button.pack()
+        self.login_button.pack()
 
         # show the frame on the container
         self.frame.pack()
@@ -72,6 +73,11 @@ class App(tk.Tk):
         self.withdraw()
 
     def open_login(self):
-        # login_win = LoginView(self)
-        # login_win.focus_force()
+
+        login_controller = ConnectorController()
+        self.my_conn = login_controller.connect_mysql()
+        login_win = LoginView(self.my_conn)
+        login_win.main_screen()
+        #print(login_success)
+
         self.withdraw()

@@ -1,5 +1,6 @@
 from model.game import Game
 from view.game_view import GameView
+from view.login_view import LoginView
 
 
 class GameManager:

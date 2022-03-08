@@ -11,11 +11,16 @@ fg_1 = "#253237"
 
 
 class LoginView():
-    def __init__(self, my_connect):
+    def __init__(self,  my_connect):
         # init function called when new object LoginView is created
         self.first_attempt = True
         self.successful_login = False
         self.my_connect = my_connect
+
+    def login_control(self, connector):
+        successful_login = False
+        self.main_screen()
+        return successful_login
 
     def main_screen(self):
         # Builds the main screen of the game displaying to the user the graphics
