@@ -2,15 +2,11 @@ from mysql.connector import connect, Error
 from getpass import getpass
 
 from model.game import Game
-from view.board_console_view import BoardConsoleView
-from view.game_console_view import GameConsoleView
-from view.main_menu_view import MainMenu
-from view.gui_game_view import GUIView
-from view.gui import Gui
+from app import App
+
 from controller.gameManager import GameManager
 
 import tkinter as tk
-
 
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
@@ -22,54 +18,26 @@ fg_1 = "#253237"
 if __name__ == "__main__":
     try:
         my_connect = connect(
-                    host="localhost",
-                    #user=input('Enter username: '),
-                    #passwd=getpass('Enter password:'),
-                    user="root",
-                    passwd="NU22ms0cc3rGK",
-                    database="reversi"
-                )
+            host="localhost",
+            # user=input('Enter username: '),
+            # passwd=getpass('Enter password:'),
+            user="root",
+            passwd="NU22ms0cc3rGK",
+            database="reversi"
+        )
 
         # Get user input for board size
         board_size = input("Please designate a board size: \n(An even number between 4-10) ")
-        #board_size = 2
+        # board_size = 2
         game = Game(size=int(board_size))  # create the game
 
         # add the views
-        board_view = BoardConsoleView(game.board)
-        game_view = GameConsoleView(board_view)
+        app = App()
+        app.mainloop()
+
 
         # creates game manager object
-        controller = GameManager(game, game_view)
-        # prompts user to login
-        login_success = False
-        login_success = controller.login(my_connect)
-        # runs the game
-        if login_success == True:
-            print('Logged in as User!')
-            gui = Gui()
-            frame = MainMenu(gui)
-            gui.mainloop()
-        elif login_success == 'guest':
-            '''print('Logged in as guest!')
-            gui = Gui()
-            frame = MainMenu(gui)
-            gui.mainloop()'''
-
-            root = tk.Tk()
-            game_view = GUIView(root, game.board)
-            controller = GameManager(game, game_view)
-            controller.run_game()
-            root.mainloop()         
-        else:
-            print("Error logging in.")
+        controller = GameManager(game, tkinter_gui_view)
+        controller.run_game()
     except Error as e:
         print(e)
-
-    
-
-
-
-### run the game
-#controller = GameManager(game, game_view)
-#controller.run_game()

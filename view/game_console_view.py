@@ -1,5 +1,6 @@
 from view.game_view import GameView
 
+
 class GameConsoleView(GameView):
     def __init__(self, board_View):
         super().__init__(board_View)

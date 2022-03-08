@@ -1,10 +1,11 @@
 from model.game import Game
-from view.game_view import GameView
+from view.gui import Gui
 from view.login_view import LoginView
+from view.main_menu_view import MainMenu
 
 
 class GameManager:
-    def __init__(self, model: Game, view: GameView):
+    def __init__(self, model: Game, view: Gui):
         self.model = model
         self.view = view
         self.starting_player = self.model.curPlayer.symbol
@@ -80,5 +81,3 @@ class GameManager:
                         self.starting_player,
                     )
                     self.view.display_winner(winner)
- 
- 
