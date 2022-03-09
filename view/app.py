@@ -18,6 +18,8 @@ fg_1 = "#253237"
 
 class App(tk.Tk):
     board_size = "6"
+    p1 = '#000000'
+    p2 = '#FFFFFF'
 
     def __init__(self):
         super().__init__()
@@ -58,6 +60,8 @@ class App(tk.Tk):
         game = Game(size=int(self.board_size))  # create the game
 
         game_win = GUIView(self.master, game.board)
+        game_win.p1 = self.p1
+        game_win.p1 = self.p2
         controller = GameManager(game, game_win)
         controller.run_game()
         game_win.focus_force()

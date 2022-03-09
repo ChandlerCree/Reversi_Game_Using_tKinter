@@ -13,7 +13,7 @@ class SettingsView(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title('Reversi')
-        self.geometry('300x350')
+        self.geometry('300x450')
         self.configure(bg=bg_1)
         self.frame = tk.Frame(self)
 
@@ -25,12 +25,24 @@ class SettingsView(tk.Toplevel):
         self.main_button = tk.Button(self.frame, text='Main Menu', command=self.open_main)
         self.main_button.pack()
 
-        self.label = tk.Label(self.frame, text='Choose Disk Color: ', font=('Calibri', 11))
-        self.label.pack()
+        self.p1_listbox_label = tk.Label(self.frame, text='Choose Player 1 Disk Color: ', font=('Calibri', 11))
+        self.p1_listbox_label.pack()
         colors = ('Red', 'Green', 'Blue', 'Yellow', 'Purple')
         colors_var = tk.StringVar(value=colors)
-        self.listbox = tk.Listbox(self.frame, listvariable=colors_var, height='8')
-        self.listbox.pack()
+        self.p1_listbox = tk.Listbox(self.frame, listvariable=colors_var, height='5', exportselection=False)
+        self.p1_listbox.pack()
+
+        self.p1_listbox.bind('<<ListboxSelect>>', self.p1_color_selected)
+        
+
+        self.p2_listbox_label = tk.Label(self.frame, text='Choose Player 2 Disk Color: ', font=('Calibri', 11))
+        self.p2_listbox_label.pack()
+        colors = ('Red', 'Green', 'Blue', 'Yellow', 'Purple')
+        colors_var = tk.StringVar(value=colors)
+        self.p2_listbox = tk.Listbox(self.frame, listvariable=colors_var, height='5', exportselection=False)
+        self.p2_listbox.pack()
+
+        self.p2_listbox.bind('<<ListboxSelect>>', self.p2_color_selected)
 
         self.board_size_label = tk.Label(self.frame,
                                          text='Please designate a board size:\n (An even number between 4-10) ',
@@ -52,4 +64,16 @@ class SettingsView(tk.Toplevel):
         number = self.entry.get()
         self.master.board_size = int(number)
         self.entry.delete(0, 'end')
+
+    def p1_color_selected(self, event):
+        selected_index = self.p1_listbox.curselection()[0]
+        color = self.p1_listbox.get(selected_index)
+        self.master.p1=color
+
+    def p2_color_selected(self, event):
+        selected_index = self.p2_listbox.curselection()[0]
+        color = self.p2_listbox.get(selected_index)
+        self.master.p2=color
+
+
 
