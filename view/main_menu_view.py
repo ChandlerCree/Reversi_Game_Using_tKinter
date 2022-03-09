@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from controller.connector_controller import ConnectorController
 from leaderboard_tkinter_view import LeaderboardView
 from settings_tkinter_view import SettingsView
 from view.login_view import LoginView
@@ -49,7 +50,9 @@ class MainMenu(ttk.Frame):
         self.withdraw()
 
     def open_login(self):
-        login_win = LoginView(self)
+        connection = ConnectorController()
+        my_connect = connection.connect_mysql()
+        login_win = LoginView(self, my_connect)
         login_win.focus_force()
         self.withdraw()
 

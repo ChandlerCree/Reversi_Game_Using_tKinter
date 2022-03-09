@@ -76,7 +76,7 @@ class App(tk.Tk):
 
         login_controller = ConnectorController()
         self.my_conn = login_controller.connect_mysql()
-        login_win = LoginView(self.my_conn)
+        login_win = LoginView(self.master, self.my_conn)
         login_win.main_screen()
         #print(login_success)
 

@@ -1,4 +1,6 @@
 import os
+import tkinter as tk
+from tkinter import ttk
 from mysql.connector import connect, Error
 from getpass import getpass
 import tkinter as tk
@@ -10,19 +12,49 @@ incor_1 = "#5C6B73"
 fg_1 = "#253237"
 
 
-class LoginView():
-    def __init__(self,  my_connect):
+class LoginView(tk.Toplevel):
+    def __init__(self, parent, my_connect):
+        super().__init__(parent)
+
         # init function called when new object LoginView is created
         self.first_attempt = True
         self.successful_login = False
         self.my_connect = my_connect
 
+        
+        self.geometry("300x350")
+        self.title("Reversi")
+        self.configure(bg=bg_1)
+        #self.resizable(False, False)
+        self.frame = tk.Frame(self)
+        self.login_title = tk.Label(self.frame, text="REVERSI", bg=bg_2, width="300", height="1", font=("Calibri", 24, "bold"), fg=fg_1, borderwidth=4,
+                 relief="groove", pady="10")
+        self.login_title.pack()
+        self.spacer_1 = tk.Label(self.frame, text="", height="2", bg=bg_1, font=("Calibri", 6))
+        self.spacer_1.pack()
+        self.login_button = tk.Button(self.frame, text="Login", height="1", width="12", command=self.login, bg=bg_2, fg=fg_1,
+                  font=("Calibri", 18, "bold"), activebackground=cor_1)
+        self.login_button.pack()
+        self.spacer_2 = tk.Label(self.frame, text="", height="2", bg=bg_1, font=("Calibri", 6))
+        self.spacer_2.pack()
+        self.register_button = tk.Button(self.frame, text="Register", height="1", width="12", command=self.register, bg=bg_2, fg=fg_1,
+                  font=("Calibri", 18, "bold"), activebackground=cor_1)
+        self.register_button.pack()
+        self.spacer_3 = tk.Label(self.frame, text="", height="2", bg=bg_1, font=("Calibri", 6))
+        self.spacer_3.pack()
+        self.guest_login_button = tk.Button(self.frame, text="Guest Login", height="1", width="12", command=self.logged_as_guest, bg=bg_2, fg=fg_1,
+                  font=("Calibri", 18, "bold"), activebackground=cor_1)
+        self.guest_login_button.pack()
+
+        self.frame.pack()
+    '''
     def login_control(self, connector):
         successful_login = False
         self.main_screen()
         return successful_login
+        '''
 
-    def main_screen(self):
+    '''def main_screen(self):
         # Builds the main screen of the game displaying to the user the graphics
         # two labels and buttons are created and display the user with otpions for
         # loging in or registering a new user
@@ -44,13 +76,13 @@ class LoginView():
                   font=("Calibri", 18, "bold"), activebackground=cor_1).pack()
 
         self.entry_login_screen.mainloop()
-        return self.successful_login
+        return self.successful_login'''
 
     def login(self):
         # builds the login screen from the toplevel main screen
         # displays the information for the login screen and the general structure of the page
         # the entry values will be passed to the login_verify() function when the button is pressed
-        self.login_screen = tk.Toplevel(self.entry_login_screen)
+        self.login_screen = tk.Toplevel(self.frame)
         self.login_screen.title("Login")
         self.login_screen.geometry("300x350")
         self.login_screen.configure(bg=bg_1)
@@ -138,14 +170,15 @@ class LoginView():
         # When a successful login has been completed destroy all the windows on the screen
         # Print to the terminal that you have logged in
         self.login_screen.destroy()
-        self.entry_login_screen.destroy()
+        self.frame.destroy()
+        self.master.deiconify()
         print('You have successfully logged in.')
         self.successful_login = True
 
     def register(self):
         # display the register page to the user and take in the variables from the username and password
         # entry fields. When button is pressed call the register function.
-        self.register_screen = tk.Toplevel(self.entry_login_screen)
+        self.register_screen = tk.Toplevel(self.frame)
         self.register_screen.title("Register")
         self.register_screen.geometry("300x350")
         self.register_screen.configure(bg=bg_1)
