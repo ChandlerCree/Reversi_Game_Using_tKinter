@@ -74,11 +74,9 @@ class SettingsView(tk.Toplevel):
     def p1_color_selected(self, event):
         selected_index = self.p1_listbox.curselection()[0]
         color = self.p1_listbox.get(selected_index)
-        print(color)
         self.master.p1 = color
 
     def p2_color_selected(self, event):
         selected_index = self.p2_listbox.curselection()[0]
         color = self.p2_listbox.get(selected_index)
-        print(color)
         self.master.p2 = color
