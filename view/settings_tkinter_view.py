@@ -29,11 +29,11 @@ class SettingsView(tk.Toplevel):
         self.label.pack()
         colors = ('Red', 'Green', 'Blue', 'Yellow', 'Purple')
         colors_var = tk.StringVar(value=colors)
-        self.listbox = tk.Listbox(self.frame, listvariable=colors_var)
+        self.listbox = tk.Listbox(self.frame, listvariable=colors_var, height='8')
         self.listbox.pack()
 
         self.board_size_label = tk.Label(self.frame,
-                                         text='Please designate a board size: (An even number between 4-10) ',
+                                         text='Please designate a board size:\n (An even number between 4-10) ',
                                          font=('Calibri', 11))
         self.board_size_label.pack()
         self.entry = tk.Entry(self.frame)
