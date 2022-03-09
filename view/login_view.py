@@ -122,20 +122,22 @@ class LoginView(tk.Toplevel):
         # quer = []
         # some query here that check blah
         # quer = "Select from *" # full list of users
+        
+        self.username_login_tuple = (self.username_login,)
 
-        quer_user = "SELECT COUNT(1) FROM player WHERE username = '{}'".format(self.username_login)
-        quer_pass = "SELECT password FROM player WHERE username = '{}'".format(self.username_login)
+        quer_user = "SELECT COUNT(1) FROM player WHERE username = %s"
+        quer_pass = "SELECT password FROM player WHERE username = %s"
 
-        print(quer_user)
+        print(quer_user, self.username_login_tuple)
 
         with self.my_connect.cursor(buffered=True) as cursor:
-            cursor.execute(quer_user)
+            cursor.execute(quer_user, self.username_login_tuple)
             result = cursor.fetchall()
             for row in result:
                 user_temp = row[0]
 
         with self.my_connect.cursor(buffered=True) as cursor:
-            cursor.execute(quer_pass)
+            cursor.execute(quer_pass, self.username_login_tuple)
             result = cursor.fetchall()
             for row in result:
                 pass_temp = row[0]
@@ -171,7 +173,7 @@ class LoginView(tk.Toplevel):
         # Print to the terminal that you have logged in
         self.login_screen.destroy()
         self.frame.destroy()
-        self.master.deiconify()
+        self.frame.deiconify()
         print('You have successfully logged in.')
         self.successful_login = True
 
@@ -212,13 +214,16 @@ class LoginView(tk.Toplevel):
             self.username_info = self.username_register.get()
             self.password_info = self.password_register.get()
 
-            print("insert into player (username, password, elo) values ('{}', '{}', 1500);".format(self.username_info,
-                                                                                                   self.password_info))
-            quer = "insert into player (username, password, elo) values ('{}', '{}', 1500);".format(self.username_info,
-                                                                                                    self.password_info)
+            self.info_tuple = (self.username_info, self.password_info)
+
+
+            #print("insert into player (username, password, elo) values (%s, %s, 1500);"
+            quer = "insert into player (username, password, elo) values (%s, %s, 1500)"
+
+            #print(quer, self.username_info_tuple, self.password_info_tuple)
 
             with self.my_connect.cursor() as cursor:
-                cursor.execute(quer)
+                cursor.execute(quer, self.info_tuple)
                 result = cursor.fetchall()
                 self.my_connect.commit()
                 for row in result:
@@ -236,7 +241,7 @@ class LoginView(tk.Toplevel):
 
     def logged_as_guest(self):
         # self.login_screen.destroy()
-        self.entry_login_screen.destroy()
+        self.frame.destroy()
         print('You have successfully logged in as a guest.')
         self.successful_login = 'guest'
 
