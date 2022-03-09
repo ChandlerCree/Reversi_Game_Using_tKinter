@@ -7,6 +7,10 @@ bg_2 = "#C2DFE3"
 cor_1 = "#9DB4C0"
 incor_1 = "#5C6B73"
 fg_1 = "#253237"
+p1 = '#000000'
+p2 = '#FFFFFF'
+avail_move = '#f5ef42'
+bc_grnd = '#7d7d7d'
 
 
 class GUIView(tk.Toplevel, GameView):
@@ -14,7 +18,7 @@ class GUIView(tk.Toplevel, GameView):
     def __init__(self, parent, board):
         super().__init__(parent)
         self.title('Reversi')
-        self.geometry('300x250')
+        self.geometry('300x350')
         self.configure(bg=bg_1)
         self.frame = tk.Frame(self)
 
@@ -67,13 +71,13 @@ class GUIView(tk.Toplevel, GameView):
         for i in range(self.boardSize):  # row variable
             for j in range(self.boardSize):
                 if self.board[i, j] == 1:
-                    self.buttons[i * self.boardSize + j]['text'] = 'X'
+                    self.buttons[i * self.boardSize + j]['bg'] = p1
                 elif self.board[i, j] == 2:
-                    self.buttons[i * self.boardSize + j]['text'] = 'O'
+                    self.buttons[i * self.boardSize + j]['bg'] = p2
                 elif self.board[i, j] == 3:
-                    self.buttons[i * self.boardSize + j]['text'] = '.'
+                    self.buttons[i * self.boardSize + j]['bg'] = avail_move
                 else:
-                    self.buttons[i * self.boardSize + j]['text'] = ' '
+                    self.buttons[i * self.boardSize + j]['bg'] = bc_grnd
 
     def display_curr_player(self, player):
         self.curPlayerLabel.config(text=f"The current Player is {player.symbol}")

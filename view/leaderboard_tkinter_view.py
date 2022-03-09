@@ -13,7 +13,7 @@ class LeaderboardView(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title('Reversi')
-        self.geometry('300x250')
+        self.geometry('300x350')
         self.configure(bg=bg_1)
         self.frame = tk.Frame(self)
 

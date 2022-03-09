@@ -21,7 +21,7 @@ class App(tk.Tk):
         super().__init__()
 
         self.title('Reversi')
-        self.geometry('300x250')
+        self.geometry('300x350')
         self.configure(bg=bg_1)
 
         # label
