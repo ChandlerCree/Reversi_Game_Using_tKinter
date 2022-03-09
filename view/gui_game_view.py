@@ -7,14 +7,13 @@ bg_2 = "#C2DFE3"
 cor_1 = "#9DB4C0"
 incor_1 = "#5C6B73"
 fg_1 = "#253237"
-p1 = '#000000'
-p2 = '#FFFFFF'
 avail_move = '#f5ef42'
 bc_grnd = '#7d7d7d'
 
 
 class GUIView(tk.Toplevel, GameView):
-
+    p1 = '#000000'
+    p2 = '#FFFFFF'
     def __init__(self, parent, board):
         super().__init__(parent)
         self.title('Reversi')
