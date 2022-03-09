@@ -61,7 +61,7 @@ class App(tk.Tk):
 
         game_win = GUIView(self.master, game.board)
         game_win.p1 = self.p1
-        game_win.p1 = self.p2
+        game_win.p2 = self.p2
         controller = GameManager(game, game_win)
         controller.run_game()
         game_win.focus_force()

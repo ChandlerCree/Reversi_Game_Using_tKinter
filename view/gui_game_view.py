@@ -14,6 +14,7 @@ bc_grnd = '#7d7d7d'
 class GUIView(tk.Toplevel, GameView):
     p1 = '#000000'
     p2 = '#FFFFFF'
+
     def __init__(self, parent, board):
         super().__init__(parent)
         self.title('Reversi')
