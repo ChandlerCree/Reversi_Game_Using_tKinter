@@ -17,6 +17,8 @@ fg_1 = "#253237"
 
 
 class App(tk.Tk):
+    board_size = "6"
+
     def __init__(self):
         super().__init__()
 
@@ -53,10 +55,9 @@ class App(tk.Tk):
         self.frame.pack()
 
     def new_game(self):
-        board_size = input("Please designate a board size: \n(An even number between 4-10) ")
-        game = Game(size=int(board_size))  # create the game
+        game = Game(size=int(self.board_size))  # create the game
 
-        game_win = GUIView(self.master,game.board)
+        game_win = GUIView(self.master, game.board)
         controller = GameManager(game, game_win)
         controller.run_game()
         game_win.focus_force()
