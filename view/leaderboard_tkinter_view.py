@@ -16,15 +16,20 @@ class LeaderboardView(tk.Toplevel):
         self.geometry('300x350')
         self.configure(bg=bg_1)
         self.frame = tk.Frame(self)
+        self.frame.configure(bg=bg_1)
 
         self.leaderboard_title = tk.Label(self.frame, text="Leaderboard", bg=bg_2, width="300", height="1",
                                           font=("Calibri", 24, "bold"), fg=fg_1, borderwidth=4, relief="groove",
                                           pady="10")
         self.leaderboard_title.pack()
-        self.main_button = tk.Button(self.frame, text='Main Menu', command=self.open_main)
+        self.main_button = tk.Button(self.frame, text='Main Menu', command=self.open_main, bg=bg_1)
         self.main_button.pack()
 
-        self.leaderboard = ttk.Treeview(self.frame)
+        #style = ttk.Style()
+        #style.configure("mystyle.Treeview", font=("Calibri", 12), bg=bg_1, fg=fg_1)
+        #style.configure("mystyle.Treeview.Heading", font=("Calibri", 14, "Bold"))
+
+        self.leaderboard = ttk.Treeview(self.frame) #, style="mystyle.Treeview"
 
         self.leaderboard['columns'] = ('rank', 'player_Name', 'elo')
         self.leaderboard.column("#0", width=0, stretch=False)

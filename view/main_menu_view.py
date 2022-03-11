@@ -17,9 +17,14 @@ class MainMenu(ttk.Frame):
     def __init__(self, container):
         super().__init__(container)
 
+        self.spacer_1 = tk.Label(text="", height="1", fg="fg_1")
+        self.spacer_1.pack()
+
         self.new_game_button = tk.Button(text="New Game", height="1", width="12", command=self.new_game, bg=bg_2, fg=fg_1,
                                     font=("Calibri", 18, "bold"), activebackground=cor_1)
         self.new_game_button.pack()
+        #self.spacer_1 = tk.Label(text="", height="1", fg="fg_1")
+        self.spacer_1.pack()
         self.settings_button = tk.Button(text="Settings", height="1", width="12", command=self.open_settings, bg=bg_2, fg=fg_1,
                                     font=("Calibri", 18, "bold"), activebackground=cor_1)
         self.settings_button.pack()

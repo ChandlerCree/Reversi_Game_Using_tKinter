@@ -22,27 +22,26 @@ class LoginView(tk.Toplevel):
         self.my_connect = my_connect
 
         
-        self.geometry("300x350")
+        self.geometry("300x250")
         self.title("Reversi")
         self.configure(bg=bg_1)
-        #self.resizable(False, False)
+        self.resizable(False, False)
         self.frame = tk.Frame(self)
+        self.frame.configure(bg=bg_1)
+
         self.login_title = tk.Label(self.frame, text="REVERSI", bg=bg_2, width="300", height="1", font=("Calibri", 24, "bold"), fg=fg_1, borderwidth=4,
                  relief="groove", pady="10")
-        self.login_title.pack()
-        self.spacer_1 = tk.Label(self.frame, text="", height="2", bg=bg_1, font=("Calibri", 6))
-        self.spacer_1.pack()
+        self.login_title.pack(pady=(0,12))
+
         self.login_button = tk.Button(self.frame, text="Login", height="1", width="12", command=self.login, bg=bg_2, fg=fg_1,
                   font=("Calibri", 18, "bold"), activebackground=cor_1)
-        self.login_button.pack()
-        self.spacer_2 = tk.Label(self.frame, text="", height="2", bg=bg_1, font=("Calibri", 6))
-        self.spacer_2.pack()
+        self.login_button.pack(pady=12)
+
         self.register_button = tk.Button(self.frame, text="Register", height="1", width="12", command=self.register, bg=bg_2, fg=fg_1,
                   font=("Calibri", 18, "bold"), activebackground=cor_1)
-        self.register_button.pack()
-        self.spacer_3 = tk.Label(self.frame, text="", height="2", bg=bg_1, font=("Calibri", 6))
-        self.spacer_3.pack()
-        self.guest_login_button = tk.Button(self.frame, text="Guest Login", height="1", width="12", command=self.logged_as_guest, bg=bg_2, fg=fg_1,
+        self.register_button.pack(pady=12)
+
+        self.guest_login_button = tk.Button(self.frame, text="Main Menu", height="1", width="12", command=self.logged_as_guest, bg=bg_2, fg=fg_1,
                   font=("Calibri", 18, "bold"), activebackground=cor_1)
         self.guest_login_button.pack()
 
@@ -171,9 +170,12 @@ class LoginView(tk.Toplevel):
     def return_successful_login(self):
         # When a successful login has been completed destroy all the windows on the screen
         # Print to the terminal that you have logged in
+        self.master.user_info = self.username_login_tuple
+        print(self.master.user_info)
+
         self.login_screen.destroy()
         self.frame.destroy()
-        self.frame.deiconify()
+        self.master.deiconify()
         print('You have successfully logged in.')
         self.successful_login = True
 
@@ -241,7 +243,8 @@ class LoginView(tk.Toplevel):
 
     def logged_as_guest(self):
         # self.login_screen.destroy()
-        self.frame.destroy()
+        self.destroy()
+        self.master.deiconify()
         print('You have successfully logged in as a guest.')
         self.successful_login = 'guest'
 

@@ -7,8 +7,8 @@ bg_2 = "#C2DFE3"
 cor_1 = "#9DB4C0"
 incor_1 = "#5C6B73"
 fg_1 = "#253237"
-avail_move = '#f5ef42'
-bc_grnd = '#7d7d7d'
+avail_move = '#b0b0b0'
+bc_grnd = '#404040'
 
 
 class GUIView(tk.Toplevel, GameView):

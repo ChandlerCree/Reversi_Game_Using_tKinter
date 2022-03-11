@@ -20,13 +20,18 @@ class App(tk.Tk):
     board_size = "6"
     p1 = '#000000'
     p2 = '#FFFFFF'
+    user_name = "Guest"
+    user_elo = 1500
+    user_info = "Welcome {}!\nCurrent Elo: {}".format(user_name, str(user_elo))
+
 
     def __init__(self):
         super().__init__()
 
         self.title('Reversi')
-        self.geometry('300x350')
+        self.geometry('300x410')
         self.configure(bg=bg_1)
+        self.resizable(False, False)
 
         # label
         title_label = tk.Label(text="REVERSI", bg=bg_2, width="300", height="1", font=("Calibri", 24, "bold"), fg=fg_1,
@@ -34,24 +39,31 @@ class App(tk.Tk):
         title_label.pack()
 
         self.frame = tk.Frame(self)
+        self.frame.configure(bg=bg_1)
+
+        self.username_label = tk.Label(self.frame, text=self.user_info, height="2", font=("Calibri", 12), 
+                                            bg=bg_1, fg=fg_1)
+        self.username_label.pack(pady=8)
 
         self.new_game_button = tk.Button(self.frame, text="New Game", height="1", width="12", command=self.new_game,
                                          bg=bg_2, fg=fg_1,
                                          font=("Calibri", 18, "bold"), activebackground=cor_1)
-        self.new_game_button.pack()
+        self.new_game_button.pack(pady=8)
+
         self.settings_button = tk.Button(self.frame, text="Settings", height="1", width="12",
                                          command=self.open_settings, bg=bg_2, fg=fg_1,
                                          font=("Calibri", 18, "bold"), activebackground=cor_1)
-        self.settings_button.pack()
+        self.settings_button.pack(pady=8)
 
         self.leaderboard_button = tk.Button(self.frame, text="Leaderboard", height="1", width="12",
                                             command=self.open_leaderboard, bg=bg_2, fg=fg_1,
                                             font=("Calibri", 18, "bold"), activebackground=cor_1)
-        self.leaderboard_button.pack()
+        self.leaderboard_button.pack(pady=8)
+        
         self.login_button = tk.Button(self.frame, text="Login", height="1", width="12", command=self.open_login,
                                        bg=bg_2, fg=fg_1,
                                        font=("Calibri", 18, "bold"), activebackground=cor_1)
-        self.login_button.pack()
+        self.login_button.pack(pady=8)
 
         # show the frame on the container
         self.frame.pack()
@@ -78,11 +90,8 @@ class App(tk.Tk):
         self.withdraw()
 
     def open_login(self):
-
         login_controller = ConnectorController()
         self.my_conn = login_controller.connect_mysql()
         login_win = LoginView(self.master, self.my_conn)
-        login_win.main_screen()
-        #print(login_success)
-
+        login_win.focus_force()
         self.withdraw()
