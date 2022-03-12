@@ -18,9 +18,10 @@ class GUIView(tk.Toplevel, GameView):
     def __init__(self, parent, board):
         super().__init__(parent)
         self.title('Reversi')
-        self.geometry('300x350')
+        #self.geometry('300x350')
         self.configure(bg=bg_1)
         self.frame = tk.Frame(self)
+        self.resizable(False, False)
 
         self.board = board
         self.boardSize = board.shape[0]
@@ -35,27 +36,30 @@ class GUIView(tk.Toplevel, GameView):
 
     def makeBoard(self):
         # main labels
-        # self.reversi_label = tk.Label(text="  REVERSI  ", bg=bg_2, height="1" , font=("Calibri", 24, "bold"), fg=fg_1, borderwidth=4, relief="groove", pady="10")
-        # self.reversi_label.grid(row=0, columnspan=self.boardSize, sticky='ew')
-        self.main_button = tk.Button(self, text='Main Menu', command=self.open_main)
+        self.game_frame = tk.Frame(self)
+        self.reversi_label = tk.Label(self.frame, text="REVERSI", bg=bg_2, height="1" , font=("Calibri", 24, "bold"), fg=fg_1, borderwidth=4, relief="groove", pady="10")
+        self.reversi_label.grid(row=0, column=0, sticky='ew')
+        self.main_button = tk.Button(self.game_frame, text='Main Menu', command=self.open_main, bg=bg_2, fg=fg_1, activebackground=cor_1, font=("Calibri", 12, "bold"))
         self.main_button.grid(row=self.boardSize * 3 + 1, columnspan=self.boardSize, sticky='ew')
-        self.player1Label = tk.Label(self, text="Player 1's score is: 2", padx=10, pady=10,
+        self.player1Label = tk.Label(self.game_frame, text="Player 1's score is: 2", padx=10, pady=10,
                                      font=("Calibri", 12, "bold"), bg=bg_1, fg=fg_1)
         self.player1Label.grid(row=1, columnspan=self.boardSize, sticky='ew')
 
-        self.player2Label = tk.Label(self, text="Player 2's score is: 2", padx=10, pady=10,
+        self.player2Label = tk.Label(self.game_frame, text="Player 2's score is: 2", padx=10, pady=10,
                                      font=("Calibri", 12, "bold"), bg=bg_1, fg=fg_1)
         self.player2Label.grid(row=self.boardSize * 3, columnspan=self.boardSize, sticky='ew')
 
         # current player
-        self.curPlayerLabel = tk.Label(self, text="The current player is Player 1", font=("Calibri", 12, "bold"),
+        self.curPlayerLabel = tk.Label(self.game_frame, text="The current player is Player 1", font=("Calibri", 12, "bold"),
                                        bg=bg_1, fg=fg_1)
         self.curPlayerLabel.grid(row=0, columnspan=self.boardSize, sticky='ew')
+        self.frame.grid(row=0, column=0)
+        self.game_frame.grid(row=1, column=0)
 
         # buttons
         for i in range(self.boardSize):  # row variable
             for j in range(self.boardSize):  # column variable
-                self.buttons[i * self.boardSize + j] = tk.Button(self, width=5, height=1,
+                self.buttons[i * self.boardSize + j] = tk.Button(self.game_frame, width=5, height=1,
                                                                  command=lambda arg=(i, j): [self.set_row(arg[0]),
                                                                                              self.set_col(arg[1])],
                                                                  font=("Calibri", 12, "bold"), bg=bg_2, fg=fg_1)
@@ -80,11 +84,16 @@ class GUIView(tk.Toplevel, GameView):
                     self.buttons[i * self.boardSize + j]['bg'] = bc_grnd
 
     def display_curr_player(self, player):
-        self.curPlayerLabel.config(text=f"The current Player is {player.symbol}")
+        if player.symbol =='X':
+            self.curPlayerLabel.config(text="The current Player is {}".format(self.p1))
+        elif player.symbol =='O':
+            self.curPlayerLabel.config(text="The current Player is {}".format(self.p2))
+        else:
+            pass
 
     def display_curr_score(self, p1_score, p2_score, startingPlayer):
-        self.player1Label.config(text=f"Player 1's score is: {p1_score}")
-        self.player2Label.config(text=f"Player 2's score is: {p2_score}")
+        self.player1Label.config(text="{}'s score is: {}".format(self.p1, p1_score))
+        self.player2Label.config(text="{}'s score is: {}".format(self.p2, p2_score))
 
     def show_legal_moves(self):
         pass
@@ -97,7 +106,14 @@ class GUIView(tk.Toplevel, GameView):
         pass
 
     def display_winner(self, winner):
-        self.curPlayerLabel.configure(text=f"THE WINNNER IS {winner.symbol}")
+        if winner.symbol == 'X':
+            self.curPlayerLabel.configure(text="THE WINNER IS {}".format(self.p1))
+        elif winner.symbol == 'O':
+            self.curPlayerLabel.configure(text="THE WINNER IS {}".format(self.p2))
+        else:
+            pass
+
+
 
     def open_main(self):
         self.destroy()
