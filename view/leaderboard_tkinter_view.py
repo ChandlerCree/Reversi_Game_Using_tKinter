@@ -1,3 +1,4 @@
+from calendar import c
 import tkinter as tk
 from tkinter import ttk
 #from main_menu_view import MainMenu
@@ -10,24 +11,31 @@ fg_1 = "#253237"
 
 
 class LeaderboardView(tk.Toplevel):
-    def __init__(self, parent):
+    def __init__(self, parent, my_connect):
         super().__init__(parent)
+
+        self.my_connect = my_connect
+
         self.title('Reversi')
-        self.geometry('300x350')
+        self.resizable
+        #self.geometry('300x350')
         self.configure(bg=bg_1)
         self.frame = tk.Frame(self)
         self.frame.configure(bg=bg_1)
 
-        self.leaderboard_title = tk.Label(self.frame, text="Leaderboard", bg=bg_2, width="300", height="1",
+        self.leaderboard_title = tk.Label(self.frame, text="Leaderboard", bg=bg_2, width="20", height="1",
                                           font=("Calibri", 24, "bold"), fg=fg_1, borderwidth=4, relief="groove",
                                           pady="10")
-        self.leaderboard_title.pack()
-        self.main_button = tk.Button(self.frame, text='Main Menu', command=self.open_main, bg=bg_1)
-        self.main_button.pack()
+        self.leaderboard_title.pack(pady=(0,4))
+        self.main_button = tk.Button(self.frame, text='Main Menu', command=self.open_main, bg=bg_2, 
+                                    font=('Calibri', 12, "bold"), activebackground=cor_1)
+        self.main_button.pack(pady=4)
 
         #style = ttk.Style()
         #style.configure("mystyle.Treeview", font=("Calibri", 12), bg=bg_1, fg=fg_1)
         #style.configure("mystyle.Treeview.Heading", font=("Calibri", 14, "Bold"))
+
+        leaderboard_query = "Select username, elo from player order by elo desc limit 10;"
 
         self.leaderboard = ttk.Treeview(self.frame) #, style="mystyle.Treeview"
 
@@ -42,7 +50,18 @@ class LeaderboardView(tk.Toplevel):
         self.leaderboard.heading("player_Name", text="Player Name", anchor=tk.CENTER)
         self.leaderboard.heading("elo", text="ELO", anchor=tk.CENTER)
 
-        self.leaderboard.insert(parent='', index='end', iid=0, text='',
+        with self.my_connect.cursor() as cursor:
+            cursor.execute(leaderboard_query)
+            result = cursor.fetchall()
+            self.my_connect.commit()
+            count = 0
+            for row in result:
+                self.leaderboard.insert(parent='', index='end', iid=count, text='',
+                                values=(str(count + 1), str(row[0]), str(row[1])))
+                count += 1
+                print(row)
+
+        '''self.leaderboard.insert(parent='', index='end', iid=0, text='',
                                 values=('1', 'user1', '1500'))
         self.leaderboard.insert(parent='', index='end', iid=1, text='',
                                 values=('2', 'user2', '1500'))
@@ -61,9 +80,9 @@ class LeaderboardView(tk.Toplevel):
         self.leaderboard.insert(parent='', index='end', iid=8, text='',
                                 values=('9', 'john', '00'))
         self.leaderboard.insert(parent='', index='end', iid=9, text='',
-                                values=('10', 'john', '00'))
+                                values=('10', 'john', '00'))'''
 
-        self.leaderboard.pack()
+        self.leaderboard.pack(pady=14)
         # show the frame on the container
         self.frame.pack()
 
