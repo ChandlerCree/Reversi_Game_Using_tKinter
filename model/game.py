@@ -2,12 +2,11 @@ import numpy as np
 import model.player as p
 import random
 
-
 class Game:
     def __init__(self, size):
 
         self.bSize = size
-        if size % 2 != 0:
+        if int(size) % 2 != 0:
             raise ValueError("Size of board must be even")
 
         # initialize empty board and players
