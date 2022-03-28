@@ -2,9 +2,7 @@ import tkinter as tk
 from view.leaderboard_tkinter_view import LeaderboardView
 from view.settings_tkinter_view import SettingsView
 from model.game import Game
-from controller.gameManager import GameManager
-from view.board_console_view import BoardConsoleView
-from controller.connector_controller import ConnectorController
+from controller.game_manager import GameManager
 
 from view.login_view import LoginView
 from view.gui_game_view import GUIView
@@ -96,15 +94,15 @@ class App(tk.Tk):
         self.withdraw()
 
     def open_leaderboard(self):
-        login_controller = ConnectorController()
-        self.my_conn = login_controller.connect_mysql()
-        leaderboard_win = LeaderboardView(self.master, self.my_conn)
+        '''login_controller = ConnectorController()
+        self.my_conn = login_controller.connect_mysql()'''
+        leaderboard_win = LeaderboardView(self.master)
         leaderboard_win.focus_force()
         self.withdraw()
 
     def open_login(self):
-        login_controller = ConnectorController()
-        self.my_conn = login_controller.connect_mysql()
-        login_win = LoginView(self.master, self.my_conn)
+        '''login_controller = ConnectorController()
+        self.my_conn = login_controller.connect_mysql()'''
+        login_win = LoginView(self.master)
         login_win.focus_force()
         self.withdraw()
