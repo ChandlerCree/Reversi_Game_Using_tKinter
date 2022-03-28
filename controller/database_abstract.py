@@ -9,11 +9,11 @@ class DatabaseAbstract(ABC):
 
     def connect_to_database(self):
         self.my_connect = connect(
-            host="localhost",
+            host="reversigroup4.cm0trrj52t1s.us-east-1.rds.amazonaws.com",
             #user=input('Enter username: '),
             #passwd=getpass('Enter password:'),
-            user="root",
-            passwd="NU22ms0cc3rGK",
+            user="admin",
+            passwd="admin123",
             database="reversi"
         )
 

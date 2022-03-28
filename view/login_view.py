@@ -79,7 +79,7 @@ class LoginView(tk.Toplevel):
         self.password_entry_login.pack(pady=8)
 
         self.login_button = tk.Button(self.login_screen, text="Login", width=12, height=1, fg=fg_1, bg=bg_2, font=("Calibri", 18, "bold"),
-                  command=lambda: [self.remove_verify_text(), self.login_verify()], activebackground=cor_1)
+                  command=lambda: [self.remove_verify_text(), self.login_verify(), self.open_main()], activebackground=cor_1)
         self.login_button.pack(pady=(8, 24))
 
 
@@ -238,3 +238,7 @@ class LoginView(tk.Toplevel):
             self.result_label.config(text="")
             self.result_label.after(0, self.result_label.destroy())
         self.first_attempt = False
+
+    def open_main(self):
+        self.destroy()
+        self.master.deiconify()
