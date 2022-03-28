@@ -1,9 +1,9 @@
-import os
 import tkinter as tk
-from tkinter import ttk
 from mysql.connector import connect, Error
 from getpass import getpass
 import tkinter as tk
+from controller.database_login import DatabaseLogin
+from controller.database_register import DatabaseRegister
 
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
@@ -13,14 +13,12 @@ fg_1 = "#253237"
 
 
 class LoginView(tk.Toplevel):
-    def __init__(self, parent, my_connect):
+    def __init__(self, parent):
         super().__init__(parent)
 
         # init function called when new object LoginView is created
         self.first_attempt = True
         self.successful_login = False
-        self.my_connect = my_connect
-
         
         #self.geometry("300x250")
         self.title("Reversi")
@@ -97,7 +95,7 @@ class LoginView(tk.Toplevel):
         
         self.username_login_tuple = (self.username_login,)
 
-        quer_user = "SELECT COUNT(1) FROM player WHERE username = %s"
+        '''quer_user = "SELECT COUNT(1) FROM player WHERE username = %s"
         quer_elo = "SELECT elo FROM player WHERE username = %s"
         quer_pass = "SELECT password FROM player WHERE username = %s"
 
@@ -123,7 +121,11 @@ class LoginView(tk.Toplevel):
             cursor.execute(quer_pass, self.username_login_tuple)
             result = cursor.fetchall()
             for row in result:
-                pass_temp = row[0]
+                pass_temp = row[0]'''
+
+        login = DatabaseLogin(self.username_login_tuple, self.password_login)
+        login.connect_to_database()
+        user_temp, self.master.logged_elo, pass_temp = login.execute_query()
     
 
         if user_temp == 1:
@@ -197,20 +199,18 @@ class LoginView(tk.Toplevel):
 
             self.info_tuple = (self.username_info, self.password_info)
 
-
-            #print("insert into player (username, password, elo) values (%s, %s, 1500);"
-            quer = "insert into player (username, password, elo) values (%s, %s, 1500)"
-
-            #print(quer, self.username_info_tuple, self.password_info_tuple)
+            '''quer = "insert into player (username, password, elo) values (%s, %s, 1500)"
 
             with self.my_connect.cursor() as cursor:
                 cursor.execute(quer, self.info_tuple)
                 result = cursor.fetchall()
                 self.my_connect.commit()
                 for row in result:
-                    print(row)
+                    print(row)'''
 
-            # insert into player (username, password, elo) values (usernameInput, passwordInput, 1500);
+            register = DatabaseRegister(self.info_tuple)
+            register.connect_to_database()
+            register.execute_query()
 
             self.username_entry_register.delete(0, tk.END)
             self.password_entry_register.delete(0, tk.END)

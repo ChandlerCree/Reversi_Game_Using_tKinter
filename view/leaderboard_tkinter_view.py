@@ -1,6 +1,7 @@
-from calendar import c
 import tkinter as tk
 from tkinter import ttk
+
+from controller.database_leaderboard import DatabaseLeaderboard
 #from main_menu_view import MainMenu
 
 bg_1 = "#E0FBFC"
@@ -11,10 +12,10 @@ fg_1 = "#253237"
 
 
 class LeaderboardView(tk.Toplevel):
-    def __init__(self, parent, my_connect):
+    def __init__(self, parent):
         super().__init__(parent)
 
-        self.my_connect = my_connect
+        '''self.my_connect = my_connect'''
 
         self.title('Reversi')
         self.resizable
@@ -35,8 +36,6 @@ class LeaderboardView(tk.Toplevel):
         #style.configure("mystyle.Treeview", font=("Calibri", 12), bg=bg_1, fg=fg_1)
         #style.configure("mystyle.Treeview.Heading", font=("Calibri", 14, "Bold"))
 
-        leaderboard_query = "Select username, elo from player order by elo desc limit 10;"
-
         self.leaderboard = ttk.Treeview(self.frame) #, style="mystyle.Treeview"
 
         self.leaderboard['columns'] = ('rank', 'player_Name', 'elo')
@@ -50,12 +49,25 @@ class LeaderboardView(tk.Toplevel):
         self.leaderboard.heading("player_Name", text="Player Name", anchor=tk.CENTER)
         self.leaderboard.heading("elo", text="ELO", anchor=tk.CENTER)
 
+        '''leaderboard_query = "Select username, elo from player order by elo desc limit 10;"
+
         with self.my_connect.cursor() as cursor:
             cursor.execute(leaderboard_query)
             result = cursor.fetchall()
             self.my_connect.commit()
             count = 0
             for row in result:
+                self.leaderboard.insert(parent='', index='end', iid=count, text='',
+                                values=(str(count + 1), str(row[0]), str(row[1])))
+                count += 1
+                print(row)'''
+
+        leaderboard = DatabaseLeaderboard()
+        leaderboard.connect_to_database()
+        leaderboard_top_10 = leaderboard.execute_query()
+
+        count = 0
+        for row in leaderboard_top_10:
                 self.leaderboard.insert(parent='', index='end', iid=count, text='',
                                 values=(str(count + 1), str(row[0]), str(row[1])))
                 count += 1
