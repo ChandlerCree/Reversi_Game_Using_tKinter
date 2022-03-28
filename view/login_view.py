@@ -4,6 +4,7 @@ from getpass import getpass
 import tkinter as tk
 from controller.database_login import DatabaseLogin
 from controller.database_register import DatabaseRegister
+from model.user import User
 
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
@@ -125,11 +126,14 @@ class LoginView(tk.Toplevel):
 
         login = DatabaseLogin(self.username_login_tuple, self.password_login)
         login.connect_to_database()
+        
         user_temp, self.master.logged_elo, pass_temp = login.execute_query()
-    
+
 
         if user_temp == 1:
             print("username found")
+            self.master.user_logged_in.update_username(self.username_login)
+            self.master.user_logged_in.update_elo(self.master.logged_elo)
             if self.password_login == pass_temp:
                 print("correct password")
                 self.return_successful_login()

@@ -7,6 +7,8 @@ from controller.game_manager import GameManager
 from view.login_view import LoginView
 from view.gui_game_view import GUIView
 
+from model.user import User
+
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
 cor_1 = "#9DB4C0"
@@ -23,6 +25,8 @@ class App(tk.Tk):
     logged_user = ""
     logged_elo = 0
     ng_btn_stat = "disabled"
+
+    user_logged_in = User()
 
 
     def __init__(self):
@@ -83,8 +87,8 @@ class App(tk.Tk):
         game_win = GUIView(self.master, game.board)
         game_win.p1 = self.p1
         game_win.p2 = self.p2
-        controller = GameManager(game, game_win)
-        controller.run_game()
+        controller = GameManager(game, game_win, self.user_logged_in)
+        winner = controller.run_game()
         game_win.focus_force()
         self.withdraw()
 
@@ -94,15 +98,11 @@ class App(tk.Tk):
         self.withdraw()
 
     def open_leaderboard(self):
-        '''login_controller = ConnectorController()
-        self.my_conn = login_controller.connect_mysql()'''
         leaderboard_win = LeaderboardView(self.master)
         leaderboard_win.focus_force()
         self.withdraw()
 
     def open_login(self):
-        '''login_controller = ConnectorController()
-        self.my_conn = login_controller.connect_mysql()'''
         login_win = LoginView(self.master)
         login_win.focus_force()
         self.withdraw()
