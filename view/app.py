@@ -1,8 +1,14 @@
 import tkinter as tk
 from view.leaderboard_tkinter_view import LeaderboardView
 from view.settings_tkinter_view import SettingsView
+
 from model.game import Game
 from controller.game_manager import GameManager
+
+from model.ai_game import AIGame
+from controller.ai_game_manager import AIGameManager
+from view.board_console_view import BoardConsoleView
+
 
 from view.login_view import LoginView
 from view.gui_game_view import GUIView
@@ -82,13 +88,16 @@ class App(tk.Tk):
 
     def new_game(self):
         print(self.board_size)
-        game = Game(size=int(self.board_size))  # create the game
+        game =AIGame(size=int(self.board_size), diff=2)  # create the game
 
         game_win = GUIView(self.master, game.board)
         game_win.p1 = self.p1
         game_win.p2 = self.p2
+
         controller = GameManager(game, game_win, self.user_logged_in)
         winner = controller.run_game()
+        controller = AIGameManager(game, game_win)
+        controller.run_game()
         game_win.focus_force()
         self.withdraw()
 
