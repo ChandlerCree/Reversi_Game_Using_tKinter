@@ -1,8 +1,9 @@
+from abc import ABC, abstractmethod
 import numpy as np
 import model.player as p
 import random
 
-class Game:
+class Game(ABC):
     def __init__(self, size):
 
         self.bSize = size
