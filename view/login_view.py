@@ -96,34 +96,6 @@ class LoginView(tk.Toplevel):
         
         self.username_login_tuple = (self.username_login,)
 
-        '''quer_user = "SELECT COUNT(1) FROM player WHERE username = %s"
-        quer_elo = "SELECT elo FROM player WHERE username = %s"
-        quer_pass = "SELECT password FROM player WHERE username = %s"
-
-        print(quer_user, self.username_login_tuple)
-
-        with self.my_connect.cursor(buffered=True) as cursor:
-            cursor.execute(quer_user, self.username_login_tuple)
-            result = cursor.fetchall()
-            for row in result:
-                print(row)
-                user_temp = row[0]
-
-
-        with self.my_connect.cursor(buffered=True) as cursor:
-            cursor.execute(quer_elo, self.username_login_tuple)
-            result_elo = cursor.fetchall()
-            for row in result_elo:
-                print(row)
-                user_elo = row[0]
-                self.master.logged_elo = user_elo
-
-        with self.my_connect.cursor(buffered=True) as cursor:
-            cursor.execute(quer_pass, self.username_login_tuple)
-            result = cursor.fetchall()
-            for row in result:
-                pass_temp = row[0]'''
-
         login = DatabaseLogin(self.username_login_tuple, self.password_login)
         login.connect_to_database()
         
@@ -203,15 +175,6 @@ class LoginView(tk.Toplevel):
             self.password_info = self.password_register.get()
 
             self.info_tuple = (self.username_info, self.password_info)
-
-            '''quer = "insert into player (username, password, elo) values (%s, %s, 1500)"
-
-            with self.my_connect.cursor() as cursor:
-                cursor.execute(quer, self.info_tuple)
-                result = cursor.fetchall()
-                self.my_connect.commit()
-                for row in result:
-                    print(row)'''
 
             register = DatabaseRegister(self.info_tuple)
             register.connect_to_database()

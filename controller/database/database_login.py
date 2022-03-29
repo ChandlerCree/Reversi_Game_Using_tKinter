@@ -17,21 +17,21 @@ class DatabaseLogin(DatabaseAbstract):
             cursor.execute(self.quer_user, self.entry_username)
             result = cursor.fetchall()
             for row in result:
-                print(row)
+                #print(row)
                 self.corr_user_bool = row[0]
 
         with self.my_connect.cursor(buffered=True) as cursor:
             cursor.execute(self.quer_elo, self.entry_username)
             result_elo = cursor.fetchall()
             for row in result_elo:
-                print(row)
+                #print(row)
                 self.user_elo = row[0]
 
         with self.my_connect.cursor(buffered=True) as cursor:
             cursor.execute(self.quer_matches, self.entry_username)
             result_matches = cursor.fetchall()
             for row in result_matches:
-                print(row)
+                #print(row)
                 self.user_matches = row[0]
 
         with self.my_connect.cursor(buffered=True) as cursor:
@@ -40,6 +40,6 @@ class DatabaseLogin(DatabaseAbstract):
             for row in result:
                 self.pass_temp = row[0]
 
-        print(self.corr_user_bool, self.user_elo, self.pass_temp)
+        print(self.corr_user_bool, self.user_elo, self.user_matches, self.pass_temp)
 
         return self.corr_user_bool, self.user_elo, self.user_matches, self.pass_temp
