@@ -11,7 +11,10 @@ class User:
     def update_elo(self, elo):
         self.userelo = elo
 
-    def update_matches(self):
+    def update_matches(self, matches):
+        self.total_matches_played = matches
+
+    def increase_matches(self):
         self.total_matches_played += 1
 
     def get_username(self):

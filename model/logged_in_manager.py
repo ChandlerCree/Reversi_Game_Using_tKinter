@@ -5,5 +5,7 @@ class LoggedInManager():
         print("Checking if user is logged in...")
         username = user.get_username()
         if username != "guest":
+            print("Username = " + username)
+            print("Confirmed.")
             return True
         return False

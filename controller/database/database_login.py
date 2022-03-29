@@ -4,6 +4,7 @@ class DatabaseLogin(DatabaseAbstract):
     def __init__(self, entry_username, entry_password):
         self.quer_user = "SELECT COUNT(1) FROM player WHERE username = %s"
         self.quer_elo = "SELECT elo FROM player WHERE username = %s"
+        self.quer_matches = "SELECT matches FROM player where username = %s"
         self.quer_pass = "SELECT password FROM player WHERE username = %s"
 
         self.entry_username = entry_username
@@ -27,6 +28,13 @@ class DatabaseLogin(DatabaseAbstract):
                 self.user_elo = row[0]
 
         with self.my_connect.cursor(buffered=True) as cursor:
+            cursor.execute(self.quer_matches, self.entry_username)
+            result_matches = cursor.fetchall()
+            for row in result_matches:
+                print(row)
+                self.user_matches = row[0]
+
+        with self.my_connect.cursor(buffered=True) as cursor:
             cursor.execute(self.quer_pass, self.entry_username)
             result = cursor.fetchall()
             for row in result:
@@ -34,4 +42,4 @@ class DatabaseLogin(DatabaseAbstract):
 
         print(self.corr_user_bool, self.user_elo, self.pass_temp)
 
-        return self.corr_user_bool, self.user_elo, self.pass_temp
+        return self.corr_user_bool, self.user_elo, self.user_matches, self.pass_temp

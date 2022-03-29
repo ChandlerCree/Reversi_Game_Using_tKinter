@@ -127,13 +127,14 @@ class LoginView(tk.Toplevel):
         login = DatabaseLogin(self.username_login_tuple, self.password_login)
         login.connect_to_database()
         
-        user_temp, self.master.logged_elo, pass_temp = login.execute_query()
+        user_temp, self.master.logged_elo, self.master.matches_played, pass_temp = login.execute_query()
 
 
         if user_temp == 1:
             print("username found")
             self.master.user_logged_in.update_username(self.username_login)
             self.master.user_logged_in.update_elo(self.master.logged_elo)
+            self.master.user_logged_in.update_matches(self.master.matches_played)
             if self.password_login == pass_temp:
                 print("correct password")
                 self.return_successful_login()
