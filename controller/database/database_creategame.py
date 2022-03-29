@@ -1,5 +1,5 @@
 from numpy import size
-from controller.database_abstract import DatabaseAbstract
+from controller.database.database_abstract import DatabaseAbstract
 
 class DatabaseCreateGame(DatabaseAbstract):
     def __init__(self, player1, player2, curr_player):

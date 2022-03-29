@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from controller.database_leaderboard import DatabaseLeaderboard
+from controller.database.database_leaderboard import DatabaseLeaderboard
 #from main_menu_view import MainMenu
 
 bg_1 = "#E0FBFC"

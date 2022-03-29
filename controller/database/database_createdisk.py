@@ -1,5 +1,5 @@
 from numpy import size
-from controller.database_abstract import DatabaseAbstract
+from controller.database.database_abstract import DatabaseAbstract
 
 class DatabaseCreateDisk(DatabaseAbstract):
     def __init__(self, x_pos, y_pos, game, player):

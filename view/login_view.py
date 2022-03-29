@@ -2,8 +2,8 @@ import tkinter as tk
 from mysql.connector import connect, Error
 from getpass import getpass
 import tkinter as tk
-from controller.database_login import DatabaseLogin
-from controller.database_register import DatabaseRegister
+from controller.database.database_login import DatabaseLogin
+from controller.database.database_register import DatabaseRegister
 from model.user import User
 
 bg_1 = "#E0FBFC"

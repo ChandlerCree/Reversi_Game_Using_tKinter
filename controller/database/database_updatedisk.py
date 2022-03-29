@@ -1,4 +1,4 @@
-from controller.database_abstract import DatabaseAbstract
+from controller.database.database_abstract import DatabaseAbstract
 
 class DatabaseUpdateDisk(DatabaseAbstract):
     def __init__(self, disk, player):
