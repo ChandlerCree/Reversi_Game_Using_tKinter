@@ -5,6 +5,7 @@ import numpy as np
 from model.game import Game
 from model.player import Player
 
+
 class AIGame(Game):
     def __init__(self, size, diff):
         super().__init__(size)

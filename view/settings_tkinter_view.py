@@ -89,7 +89,7 @@ class SettingsView(tk.Toplevel):
         self.rdobtn_frame.pack()
 
         # Submit button for board size entry
-        self.board_size_button = tk.Button(self.frame, width="6", text='Apply', command=lambda: [self.set_board_size, self.open_main(), 
+        self.board_size_button = tk.Button(self.frame, width="6", text='Apply', command=lambda: [self.open_main(), 
                                                                         self.master.change_newgame_state()], font=('Calibri', 14, "bold"), 
                                                                         bg=bg_2, fg=fg_1, activebackground=cor_1, state='disabled')
         
@@ -106,8 +106,8 @@ class SettingsView(tk.Toplevel):
         self.master.board_size = self.board_size_temp.get()
         self.board_size_bool = True
         self.enable_apply()
-        print(str(self.board_size_bool) + "size=true")
-        print(self.master.board_size)
+        #print(str(self.board_size_bool) + "size=true")
+        print("Board size selected = " + str(self.master.board_size))
 
     def set_board_size(self):
         #number = self.entry.get()

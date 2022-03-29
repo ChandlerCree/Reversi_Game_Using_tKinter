@@ -1,6 +1,7 @@
 from copy import deepcopy
 from model.game import Game
 from view.game_view import GameView
+import time
 
 
 class AIGameManager:
