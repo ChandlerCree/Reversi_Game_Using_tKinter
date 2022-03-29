@@ -3,7 +3,7 @@ from controller.database.database_abstract import DatabaseAbstract
 
 class DatabaseCreateDisk(DatabaseAbstract):
     def __init__(self, x_pos, y_pos, game, player):
-        self.register_quer = "insert into disk (game, player) values (%s, %s, %s, %s)"
+        self.register_quer = "insert into disk (x_pos, y_pos, game, player) values (%s, %s, %s, %s)"
 
         self.create_disk = (x_pos, y_pos, game, player)
 
