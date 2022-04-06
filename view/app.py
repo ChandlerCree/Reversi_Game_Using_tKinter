@@ -58,7 +58,11 @@ class App(tk.Tk):
 
         self.username_label = tk.Label(self.frame, text="Welcome {}!\nCurrent Elo: {}".format(self.default_username, str(self.default_elo)), height="2", font=("Calibri", 12, "italic"), 
                                             bg=bg_1, fg=fg_1)
-        self.username_label.pack(pady=8)
+        self.username_label.pack(pady=(8, 0))
+
+        self.eligible_label = tk.Label(self.frame, text="Ineligible for AI.", height="2", font=("Calibri", 12, "italic"), 
+                                            bg=bg_1, fg=fg_1)
+        self.eligible_label.pack()
 
         self.new_game_button = tk.Button(self.frame, text="Local Game", height="1", width="12", command=self.new_game,
                                             bg=bg_2, fg=fg_1, font=("Calibri", 18, "bold"), activebackground=cor_1, state="disabled")
@@ -92,11 +96,15 @@ class App(tk.Tk):
         else:
             self.login_button.configure(text="Login")
 
+    def change_eligible_label(self):
+        self.eligible_label.configure(text="AI Eligible.")
+
     def change_newgame_state(self):
         eligible = EligibleChecker()
         is_user_eligible = eligible.is_elegible_for_ranked(self.user_logged_in)
 
         if is_user_eligible:
+            self.change_eligible_label()
             self.new_ai_game_button.configure(stat="normal")
 
         self.new_game_button.configure(state="normal")
@@ -112,6 +120,7 @@ class App(tk.Tk):
 
         controller = GameManager(game, game_win, self.user_logged_in)
         winner = controller.run_game()
+        self.matches_played += 1
         controller.run_game()
         game_win.focus_force()
         self.withdraw()
@@ -125,6 +134,7 @@ class App(tk.Tk):
         game_win.p2 = self.p2
 
         controller = AIGameManager(game, game_win)
+        self.matches_played += 1
         controller.run_game()
         game_win.focus_force()
         self.withdraw()

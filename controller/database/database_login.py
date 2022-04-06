@@ -17,7 +17,7 @@ class DatabaseLogin(DatabaseAbstract):
             cursor.execute(self.quer_user, self.entry_username)
             result = cursor.fetchall()
             for row in result:
-                print(row)
+                #print(row)
                 self.corr_user_bool = row[0]
 
         if self.corr_user_bool == 1:
@@ -48,5 +48,6 @@ class DatabaseLogin(DatabaseAbstract):
             self.pass_temp = "error"
 
         #print(self.corr_user_bool, self.user_elo, self.pass_temp)
+
 
         return self.corr_user_bool, self.user_elo, self.user_matches, self.pass_temp

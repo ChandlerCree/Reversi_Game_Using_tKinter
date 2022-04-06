@@ -5,13 +5,11 @@ import numpy as np
 from model.game import Game
 from model.player import Player
 
+
 class AIGame(Game):
     def __init__(self, size, diff):
         super().__init__(size)
         self.AIDifficulty = diff
-            
-        # "nodes" that hold the value of moves
-        boardStates = dict()
 
     def evalfunc(self,board):
         num2 = 0
@@ -44,7 +42,7 @@ class AIGame(Game):
         if search_depth == 0:
             return self.evalfunc(board)
 
-        if player:
+        if player == 2:
             best_val = float("-inf") 
             moveFlips = self.generate_legal_moves(board,player)
             for m in moveFlips["valid_moves"]:
