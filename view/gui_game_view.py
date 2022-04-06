@@ -117,4 +117,4 @@ class GUIView(tk.Toplevel, GameView):
 
     def open_main(self):
         self.destroy()
-        self.master.deiconify()
+        #self.master.deiconify()
