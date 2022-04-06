@@ -1,9 +1,10 @@
-import os
 import tkinter as tk
-from tkinter import ttk
 from mysql.connector import connect, Error
 from getpass import getpass
 import tkinter as tk
+from controller.database.database_login import DatabaseLogin
+from controller.database.database_register import DatabaseRegister
+from model.user import User
 
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
@@ -13,14 +14,12 @@ fg_1 = "#253237"
 
 
 class LoginView(tk.Toplevel):
-    def __init__(self, parent, my_connect):
+    def __init__(self, parent):
         super().__init__(parent)
 
         # init function called when new object LoginView is created
         self.first_attempt = True
         self.successful_login = False
-        self.my_connect = my_connect
-
         
         #self.geometry("300x250")
         self.title("Reversi")
@@ -81,7 +80,7 @@ class LoginView(tk.Toplevel):
         self.password_entry_login.pack(pady=8)
 
         self.login_button = tk.Button(self.login_screen, text="Login", width=12, height=1, fg=fg_1, bg=bg_2, font=("Calibri", 18, "bold"),
-                  command=lambda: [self.remove_verify_text(), self.login_verify()], activebackground=cor_1)
+                  command=lambda: [self.remove_verify_text(), self.login_verify(), self.open_main()], activebackground=cor_1)
         self.login_button.pack(pady=(8, 24))
 
 
@@ -97,37 +96,17 @@ class LoginView(tk.Toplevel):
         
         self.username_login_tuple = (self.username_login,)
 
-        quer_user = "SELECT COUNT(1) FROM player WHERE username = %s"
-        quer_elo = "SELECT elo FROM player WHERE username = %s"
-        quer_pass = "SELECT password FROM player WHERE username = %s"
+        login = DatabaseLogin(self.username_login_tuple, self.password_login)
+        login.connect_to_database()
+        
+        user_temp, self.master.logged_elo, self.master.matches_played, pass_temp = login.execute_query()
 
-        print(quer_user, self.username_login_tuple)
-
-        with self.my_connect.cursor(buffered=True) as cursor:
-            cursor.execute(quer_user, self.username_login_tuple)
-            result = cursor.fetchall()
-            for row in result:
-                print(row)
-                user_temp = row[0]
-
-
-        with self.my_connect.cursor(buffered=True) as cursor:
-            cursor.execute(quer_elo, self.username_login_tuple)
-            result_elo = cursor.fetchall()
-            for row in result_elo:
-                print(row)
-                user_elo = row[0]
-                self.master.logged_elo = user_elo
-
-        with self.my_connect.cursor(buffered=True) as cursor:
-            cursor.execute(quer_pass, self.username_login_tuple)
-            result = cursor.fetchall()
-            for row in result:
-                pass_temp = row[0]
-    
 
         if user_temp == 1:
             print("username found")
+            self.master.user_logged_in.update_username(self.username_login)
+            self.master.user_logged_in.update_elo(self.master.logged_elo)
+            self.master.user_logged_in.update_matches(self.master.matches_played)
             if self.password_login == pass_temp:
                 print("correct password")
                 self.return_successful_login()
@@ -197,20 +176,9 @@ class LoginView(tk.Toplevel):
 
             self.info_tuple = (self.username_info, self.password_info)
 
-
-            #print("insert into player (username, password, elo) values (%s, %s, 1500);"
-            quer = "insert into player (username, password, elo) values (%s, %s, 1500)"
-
-            #print(quer, self.username_info_tuple, self.password_info_tuple)
-
-            with self.my_connect.cursor() as cursor:
-                cursor.execute(quer, self.info_tuple)
-                result = cursor.fetchall()
-                self.my_connect.commit()
-                for row in result:
-                    print(row)
-
-            # insert into player (username, password, elo) values (usernameInput, passwordInput, 1500);
+            register = DatabaseRegister(self.info_tuple)
+            register.connect_to_database()
+            register.execute_query()
 
             self.username_entry_register.delete(0, tk.END)
             self.password_entry_register.delete(0, tk.END)
@@ -238,3 +206,7 @@ class LoginView(tk.Toplevel):
             self.result_label.config(text="")
             self.result_label.after(0, self.result_label.destroy())
         self.first_attempt = False
+
+    def open_main(self):
+        self.destroy()
+        self.master.deiconify()

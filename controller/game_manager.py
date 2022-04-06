@@ -1,11 +1,13 @@
 from model.game import Game
 from view.game_view import GameView
+from model.user import User
 
 
 class GameManager:
-    def __init__(self, model: Game, view: GameView):
+    def __init__(self, model: Game, view: GameView, user: User):
         self.model = model
         self.view = view
+        self.user = user
         self.starting_player = self.model.curPlayer.symbol
 
 
@@ -54,6 +56,12 @@ class GameManager:
                         self.model.playerTwoCount,
                         self.starting_player,
                     )
+                    if winner.symbol == 'X':
+                        print('hello')
+                        return 'X'
+                    elif winner.symbol == 'O':
+                        print('bye')
+                        return 'O'
                     self.view.display_winner(winner)
 
                 self.model.update_score()
@@ -72,4 +80,8 @@ class GameManager:
                         self.model.playerTwoCount,
                         self.starting_player,
                     )
+                    if winner.symbol == 'X':
+                        return 'X'
+                    elif winner.symbol == 'O':
+                        return 'O'
                     self.view.display_winner(winner)
