@@ -80,7 +80,7 @@ class LoginView(tk.Toplevel):
         self.password_entry_login.pack(pady=8)
 
         self.login_button = tk.Button(self.login_screen, text="Login", width=12, height=1, fg=fg_1, bg=bg_2, font=("Calibri", 18, "bold"),
-                  command=lambda: [self.remove_verify_text(), self.login_verify(), self.open_main()], activebackground=cor_1)
+                  command=lambda: [self.remove_verify_text(), self.login_verify()], activebackground=cor_1)
         self.login_button.pack(pady=(8, 24))
 
 
@@ -107,14 +107,22 @@ class LoginView(tk.Toplevel):
             self.master.user_logged_in.update_username(self.username_login)
             self.master.user_logged_in.update_elo(self.master.logged_elo)
             self.master.user_logged_in.update_matches(self.master.matches_played)
+
+            print('test')
+            print(self.password_login)
+            print(pass_temp)
+
             if self.password_login == pass_temp:
                 print("correct password")
+
                 self.return_successful_login()
+
             else:
                 self.result_label = tk.Label(self.login_screen, font=("Calibri", 12), fg='red', bg=bg_1,
                                              text="Password not recognized")
                 self.result_label.pack()
         else:
+            print("check")
             self.result_label = tk.Label(self.login_screen, font=("Calibri", 12), fg='red', bg=bg_1,
                                          text="User not found")
             self.result_label.pack()
@@ -126,6 +134,7 @@ class LoginView(tk.Toplevel):
         self.master.logged_user = self.username_login
         #self.master.logged_elo = self.logged_user_elo
         self.master.change_username_label()
+        self.master.change_account_info_state()
 
         self.login_screen.destroy()
         self.frame.destroy()
