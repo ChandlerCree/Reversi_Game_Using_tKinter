@@ -1,5 +1,7 @@
 from re import I
 import tkinter as tk
+
+from matchmaker_view import MatchmakerView
 from model.eligible_checker import EligibleChecker
 from view.leaderboard_tkinter_view import LeaderboardView
 from view.settings_tkinter_view import SettingsView
@@ -71,6 +73,11 @@ class App(tk.Tk):
         self.new_ai_game_button = tk.Button(self.frame, text="AI Game", height="1", width="12", command=self.new_ai_game,
                                             bg=bg_2, fg=fg_1, font=("Calibri", 18, "bold"), activebackground=cor_1, state="disabled")
         self.new_ai_game_button.pack(pady=8)
+        self.new_online_game_button = tk.Button(self.frame, text="Online Game", height="1", width="12",
+                                            command=self.open_matchmake,
+                                            bg=bg_2, fg=fg_1, font=("Calibri", 18, "bold"), activebackground=cor_1,
+                                            state="disabled")
+        self.new_online_game_button.pack(pady=8)
 
         self.settings_button = tk.Button(self.frame, text="Game Settings", height="1", width="12",
                                             command=self.open_settings, bg=bg_2, fg=fg_1,
@@ -108,6 +115,7 @@ class App(tk.Tk):
             self.new_ai_game_button.configure(stat="normal")
 
         self.new_game_button.configure(state="normal")
+        self.new_online_game_button.configure(state="normal")
         #self.new_ai_game_button.configure(stat="normal")
 
     def new_game(self):
@@ -135,6 +143,22 @@ class App(tk.Tk):
 
         controller = AIGameManager(game, game_win)
         self.matches_played += 1
+        controller.run_game()
+        game_win.focus_force()
+        self.withdraw()
+
+    def open_matchmake(self):
+        matchmake_win = MatchmakerView(self.master)
+        matchmake_win.focus_force()
+        self.withdraw()
+
+    def open_online_game(self):
+        game = AIGame(size=int(self.board_size), diff=2)  # create the game
+        game_win = GUIView(self.master, game.board)
+        game_win.p1 = self.p1
+        game_win.p2 = self.p2
+
+        controller = AIGameManager(game, game_win)
         controller.run_game()
         game_win.focus_force()
         self.withdraw()
