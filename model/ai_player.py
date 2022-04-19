@@ -16,11 +16,62 @@ class AIPlayer(Player):
             num1 = 0
             for i in range(self.bSize):
                 for j in range(self.bSize):
+
+                    if self.is_corner(i,j):
+                        if board[i][j] == 2:
+                            num2 += 75
+                        if board[i][j] == 1:
+                            num1 += 75
+
+                    if self.is_next_to_corner(i,j):
+                        if board[i][j] == 2:
+                            num2 -= 50
+                        if board[i][j] == 1:
+                            num1 -= 50
+
                     if board[i][j] == 1:
                         num1 += 1
+
                     if board[i][j] == 2:
                         num2 += 1
             return num2 - num1
+    
+    def is_corner(self,i,j):
+        return (i == 0 and j ==0) or (i == 0 and j == self.bSize-1) or (i == self.bSize-1 and j == self.bSize-1) or (i == self.bSize-1 and j == 0)
+
+    def is_next_to_corner(self,i,j):
+        # check top left corner
+        if(i == 0 and j - 1 == 0 ):
+            return True
+        if(i - 1 == 0 and j == 0 ):
+            return True
+        if(i - 1 == 0 and j - 1 == 0 ):
+            return True
+
+        # check top right corner
+        if(i == 0 and j + 1 == self.bSize-1 ):
+            return True
+        if(i - 1 == 0 and j == self.bSize-1 ):
+            return True
+        if(i - 1 == 0 and j + 1 == self.bSize-1 ):
+            return True
+
+        # check bottom left corner
+        if(i == self.bSize-1 and j - 1 == 0 ):
+            return True
+        if(i + 1 == self.bSize-1 and j == 0 ):
+            return True
+        if(i + 1 == self.bSize-1 and j - 1 == 0 ):
+            return True
+
+        # check bottom right corner
+        if(i == self.bSize-1 and j + 1 == self.bSize-1 ):
+            return True
+        if(i + 1 == self.bSize-1 and j == self.bSize-1 ):
+            return True
+        if(i + 1 == self.bSize-1 and j + 1 == self.bSize-1 ):
+            return True
+
 
     def minimax_value(self, board, player, search_depth, alpha, beta):
 
