@@ -25,20 +25,21 @@ class AIGameManager:
                 self.model.playerTwoCount,
                 self.starting_player,
             )
-        
+
+            """""
             if self.model.curPlayer.x == 1:
                 row, col = self.view.get_move()
                 move = [row, col]
+            """    
+            # self.model.reset_board()
+            move = self.model.select_move(deepcopy(self.model.board))
+            self.view.move = move
 
-                # make sure move is valid
-                while move not in moveFlipMap["valid_moves"]:
-                    self.view.display_illegal_moves()
-                    row, col = self.view.get_move()
-                    move = [row, col]
-            else:
-                self.model.reset_board()
-                move = self.model.select_move(deepcopy(self.model.board))
-                self.view.move = move
+            # make sure move is valid
+            while move not in moveFlipMap["valid_moves"]:
+                self.view.display_illegal_moves()
+                row, col = self.view.get_move()
+                move = [row, col]
 
             # make move
             i = moveFlipMap["valid_moves"].index(move)
@@ -81,3 +82,6 @@ class AIGameManager:
 
         if not self.model.is_board_full() and not game_terminated:
             self.run_game()
+    
+    def select_move(self, board):
+        return self.view.get_move()

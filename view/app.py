@@ -164,7 +164,9 @@ from view.leaderboard_tkinter_view import LeaderboardView
 from view.settings_tkinter_view import SettingsView
 
 from model.game import Game
-from controller.game_manager import GameManager
+from model.player import Player
+from model.human_player import HumanPlayer
+from model.ai_player import AIPlayer
 
 from model.ai_game import AIGame
 from controller.ai_game_manager import AIGameManager
@@ -277,13 +279,17 @@ class App(tk.Tk):
 
     def new_game(self):
         print(self.board_size)
-        game =AIGame(size=int(self.board_size), diff=2)  # create the game
+        player1 = HumanPlayer(1)
+        player2 = HumanPlayer(2)
+        game =Game(size=int(self.board_size), player1= player1, player2= player2)  # create the game
 
         game_win = GUIView(self.master, game.board)
         game_win.p1 = self.p1
         game_win.p2 = self.p2
 
-        controller = GameManager(game, game_win, self.user_logged_in)
+        controller = AIGameManager(game, game_win)
+        player1.controller = controller
+        player2.controller = controller
         winner = controller.run_game()
         controller.run_game()
         game_win.focus_force()
@@ -291,13 +297,17 @@ class App(tk.Tk):
 
     def new_ai_game(self):
         print(self.board_size)
-        game =AIGame(size=int(self.board_size), diff=2)  # create the game
+        player1 = HumanPlayer(1)
+        player2 = AIPlayer(2,2)
+        game =Game(size=int(self.board_size),  player1= player1, player2= player2)  # create the game
 
         game_win = GUIView(self.master, game.board)
         game_win.p1 = self.p1
         game_win.p2 = self.p2
 
         controller = AIGameManager(game, game_win)
+        player1.controller = controller
+        player2.controller = controller
         controller.run_game()
         game_win.focus_force()
         self.withdraw()

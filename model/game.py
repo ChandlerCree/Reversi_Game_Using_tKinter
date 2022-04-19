@@ -4,7 +4,7 @@ import model.player as p
 import random
 
 class Game(ABC):
-    def __init__(self, size):
+    def __init__(self, size, player1, player2):
 
         self.bSize = size
         if int(size) % 2 != 0:
@@ -12,8 +12,8 @@ class Game(ABC):
 
         # initialize empty board and players
         self.board = np.zeros((size, size), dtype=int)
-        self.player1 = p.Player(1)
-        self.player2 = p.Player(2)
+        self.player1 = player1
+        self.player2 = player2
 
         # determine who the first player is randomly
         if self.player1.x == self.who_goes_first():
@@ -202,3 +202,6 @@ class Game(ABC):
 
     def get_score(self):
         return (self.playerOneCount, self.playerTwoCount)
+    
+    def select_move(self, board):
+        return self.curPlayer.select_move(board)
