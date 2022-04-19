@@ -168,7 +168,6 @@ from model.player import Player
 from model.human_player import HumanPlayer
 from model.ai_player import AIPlayer
 
-from model.ai_game import AIGame
 from controller.ai_game_manager import AIGameManager
 from view.board_console_view import BoardConsoleView
 
