@@ -1,5 +1,6 @@
 from copy import deepcopy
 from shutil import which
+from time import sleep
 import numpy as np
 from model.game import Game
 from model.human_player import HumanPlayer
@@ -130,6 +131,7 @@ class AIPlayer(Player):
             if testMove > bestVal:
                 bestMove = m
                 bestVal = testMove
+        sleep(1)
         return bestMove
 
     def winner_value(self, board):

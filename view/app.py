@@ -175,6 +175,7 @@ from view.board_console_view import BoardConsoleView
 from view.login_view import LoginView
 from view.gui_game_view import GUIView
 from view.account_settings_view import AccountSettingsView
+import threading
 
 from model.user import User
 
@@ -289,10 +290,8 @@ class App(tk.Tk):
         controller = AIGameManager(game, game_win)
         player1.controller = controller
         player2.controller = controller
-        winner = controller.run_game()
-        controller.run_game()
+        self.open_thread(controller.run_game)
         game_win.focus_force()
-        self.withdraw()
 
     def new_ai_game(self):
         print(self.board_size)
@@ -307,9 +306,9 @@ class App(tk.Tk):
         controller = AIGameManager(game, game_win)
         player1.controller = controller
         player2.controller = controller
-        controller.run_game()
+        self.open_thread(controller.run_game)
         game_win.focus_force()
-        self.withdraw()
+        
 
     def open_settings(self):
         matches = self.user_logged_in.get_total_matches()
@@ -332,3 +331,7 @@ class App(tk.Tk):
         login_win = LoginView(self.master)
         login_win.focus_force()
         self.withdraw()
+
+    def open_thread(self, function):
+        thread = threading.Thread(target=function)
+        thread.start()
