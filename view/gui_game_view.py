@@ -39,7 +39,7 @@ class GUIView(tk.Toplevel, GameView):
         self.game_frame = tk.Frame(self)
         self.reversi_label = tk.Label(self.frame, text="REVERSI", bg=bg_2, height="1" , font=("Calibri", 24, "bold"), fg=fg_1, borderwidth=4, relief="groove", pady="10")
         self.reversi_label.grid(row=0, column=0, sticky='ew')
-        self.main_button = tk.Button(self.game_frame, text='Main Menu', command=self.open_main, bg=bg_2, fg=fg_1, activebackground=cor_1, font=("Calibri", 12, "bold"))
+        self.main_button = tk.Button(self.game_frame, text='Exit Game', command=self.open_main, bg=bg_2, fg=fg_1, activebackground=cor_1, font=("Calibri", 12, "bold"))
         self.main_button.grid(row=self.boardSize * 3 + 1, columnspan=self.boardSize, sticky='ew')
         self.player1Label = tk.Label(self.game_frame, text="Player 1's score is: 2", padx=10, pady=10,
                                      font=("Calibri", 12, "bold"), bg=bg_1, fg=fg_1)
@@ -117,4 +117,4 @@ class GUIView(tk.Toplevel, GameView):
 
     def open_main(self):
         self.destroy()
-        #self.master.deiconify()
+        self.master.deiconify()

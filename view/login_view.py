@@ -51,6 +51,7 @@ class LoginView(tk.Toplevel):
         # builds the login screen from the toplevel main screen
         # displays the information for the login screen and the general structure of the page
         # the entry values will be passed to the login_verify() function when the button is pressed
+        self.withdraw()
         self.login_screen = tk.Toplevel(self.frame)
         self.login_screen.title("Login")
         #self.login_screen.geometry("300x350")
