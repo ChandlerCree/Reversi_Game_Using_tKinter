@@ -5,7 +5,7 @@ import tkinter as tk
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
 cor_1 = "#9DB4C0"
-incor_1 = "#5C6B73"
+incor_1 = "#5C6B73" 
 fg_1 = "#253237"
 
 
@@ -13,6 +13,7 @@ class SettingsView(tk.Toplevel):
     color_p1_bool = False
     color_p2_bool = False
     board_size_bool = False
+    ai_diff_bool = False
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -85,8 +86,38 @@ class SettingsView(tk.Toplevel):
         self.radiobttn_8.grid(row=1, column=2, padx=(8,0))
         self.radiobttn_10.grid(row=1, column=3, padx=(8,0))
 
+        self.rdobtn_aidifflbl = tk.Frame(self.frame)
+        self.rdobtn_aidifflbl.configure(bg=bg_1)
+        self.rdobtn_aidiffframe = tk.Frame(self.frame)
+        self.rdobtn_aidiffframe.configure(bg=bg_1)
+
+        self.aidiff_easy = tk.Label(self.rdobtn_aidifflbl, text="Easy", font=("Calibri"), bg=bg_1, fg=fg_1)
+        self.aidiff_medium = tk.Label(self.rdobtn_aidifflbl, text="Medium", font=("Calibri"), bg=bg_1, fg=fg_1)
+        self.aidiff_hard = tk.Label(self.rdobtn_aidifflbl, text="Hard", font=("Calibri"), bg=bg_1, fg=fg_1)
+        self.aidiff_expert = tk.Label(self.rdobtn_aidifflbl, text="Expert", font=("Calibri"), bg=bg_1, fg=fg_1)
+
+        self.ai_difficulty_level = tk.IntVar()
+
+        self.radiobttn_easy = tk.Radiobutton(self.rdobtn_aidiffframe, variable=self.ai_difficulty_level, value=2, bg=bg_1, command=self.set_ai_difficulty)
+        self.radiobttn_medium = tk.Radiobutton(self.rdobtn_aidiffframe, variable=self.ai_difficulty_level, value=3, bg=bg_1, command=self.set_ai_difficulty)
+        self.radiobttn_hard = tk.Radiobutton(self.rdobtn_aidiffframe, variable=self.ai_difficulty_level, value=4, bg=bg_1, command=self.set_ai_difficulty)
+        self.radiobttn_expert = tk.Radiobutton(self.rdobtn_aidiffframe, variable=self.ai_difficulty_level, value=5, bg=bg_1, command=self.set_ai_difficulty)
+
+        self.aidiff_easy.grid(row=0, column=0)
+        self.aidiff_medium.grid(row=0, column=1)
+        self.aidiff_hard.grid(row=0, column=2)
+        self.aidiff_expert.grid(row=0, column=3)
+
+        self.radiobttn_easy.grid(row=1, column=0, padx=(8,0))
+        self.radiobttn_medium.grid(row=1, column=1, padx=(8,0))
+        self.radiobttn_hard.grid(row=1, column=2, padx=(8,0))
+        self.radiobttn_expert.grid(row=1, column=3, padx=(8,0))
+
+
         self.rdobtn_lblframe.pack() 
         self.rdobtn_frame.pack()
+        self.rdobtn_aidifflbl.pack()
+        self.rdobtn_aidiffframe.pack()
 
         # Submit button for board size entry
         self.board_size_button = tk.Button(self.frame, width="6", text='Apply', command=lambda: [self.open_main(), 
@@ -109,11 +140,18 @@ class SettingsView(tk.Toplevel):
         #print(str(self.board_size_bool) + "size=true")
         print("Board size selected = " + str(self.master.board_size))
 
-    def set_board_size(self):
+    def set_ai_difficulty(self):
+        self.master.ai_difficulty = self.ai_difficulty_level.get()
+        self.ai_diff_bool = True
+        self.enable_apply()
+        print("AI difficulty level selected = " + str(self.master.ai_difficulty))
+
+
+    '''    def set_board_size(self):
         #number = self.entry.get()
         #self.master.board_size = int(number)
         #self.entry.delete(0, 'end')
-        pass
+        pass'''
 
     def p1_color_selected(self, event):
         selected_index = self.p1_listbox.curselection()[0]
@@ -132,7 +170,8 @@ class SettingsView(tk.Toplevel):
         print(str(self.color_p2_bool) + "p2=true")
 
     def enable_apply(self):
-        if self.color_p1_bool and self.color_p2_bool and self.board_size_bool == True:
+        print(self.color_p1_bool, self.color_p2_bool, self.board_size_bool, self.ai_diff_bool)
+        if self.color_p1_bool and self.color_p2_bool and self.board_size_bool == True and self.ai_diff_bool == True:
             print(self.master.p1 + self.master.p2)
             if self.master.p1 != self.master.p2:          
                 self.board_size_button.configure(state='normal')

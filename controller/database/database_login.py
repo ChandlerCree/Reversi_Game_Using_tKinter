@@ -9,6 +9,7 @@ class DatabaseLogin(DatabaseAbstract):
 
         self.entry_username = entry_username
         self.entry_password = entry_password
+        print(self.entry_username)
 
 
 
