@@ -42,6 +42,8 @@ class App(tk.Tk):
     logged_elo = 0
     matches_played = 0
     ng_btn_stat = "disabled"
+    guest_elo = 1500
+    guest_username = "Guest"
 
     user_logged_in = User()
 
