@@ -118,8 +118,8 @@ class App(tk.Tk):
         game = Game(size=int(self.board_size))  # create the game
 
         game_win = GUIView(self.master, game.board)
-        game_win.p1 = self.p1
-        game_win.p2 = self.p2
+        game_win.p1 = self.p1 #'Red'
+        game_win.p2 = self.p2 #'Blue'
 
         controller = GameManager(game, game_win, self.user_logged_in)
 

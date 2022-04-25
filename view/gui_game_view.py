@@ -1,6 +1,7 @@
 import tkinter as tk
 from view.board_view import BoardView
 from view.game_view import GameView
+from PIL import Image, ImageTk
 
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
@@ -35,6 +36,15 @@ class GUIView(tk.Toplevel, GameView):
         self.makeBoard()
 
     def makeBoard(self):
+
+        image = Image.open('C:/Users/chand/Documents/Northeastern/SoftwareEngineering/eece4520group4/blackDisk.png')
+
+        img_resize = image.resize((75,75))
+
+        self.background_image = tk.PhotoImage(img_resize)
+        #self.background_image = self.background_image.resize((100, 75))
+        #self.background_image = ImageTk.PhotoImage(blackDisk)
+
         # main labels
         self.game_frame = tk.Frame(self)
         self.reversi_label = tk.Label(self.frame, text="REVERSI", bg=bg_2, height="1" , font=("Calibri", 24, "bold"), fg=fg_1, borderwidth=4, relief="groove", pady="10")
@@ -59,11 +69,15 @@ class GUIView(tk.Toplevel, GameView):
         # buttons
         for i in range(self.boardSize):  # row variable
             for j in range(self.boardSize):  # column variable
-                self.buttons[i * self.boardSize + j] = tk.Button(self.game_frame, width=5, height=1,
+                self.buttons[i * self.boardSize + j] = tk.Button(self.game_frame,
                                                                  command=lambda arg=(i, j): [self.set_row(arg[0]),
                                                                                              self.set_col(arg[1])],
-                                                                 font=("Calibri", 12, "bold"), bg=bg_2, fg=fg_1)
+                                                                 font=("Calibri", 12, "bold"), fg=fg_1, 
+                                                                 bg=bg_1)
                 self.buttons[i * self.boardSize + j].grid(row=(i + self.boardSize - 1), column=j)
+
+        self.button = tk.Button(self.frame, image = self.background_image)
+        self.button.grid(row=1, column=0)
 
     def set_row(self, row):
         self.move[0] = row
@@ -77,7 +91,7 @@ class GUIView(tk.Toplevel, GameView):
                 if self.board[i, j] == 1:
                     self.buttons[i * self.boardSize + j]['bg'] = self.p1
                 elif self.board[i, j] == 2:
-                    self.buttons[i * self.boardSize + j]['bg'] = self.p2
+                    self.buttons[i * self.boardSize + j]['image'] = self.p2
                 elif self.board[i, j] == 3:
                     self.buttons[i * self.boardSize + j]['bg'] = avail_move
                 else:
