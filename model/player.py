@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 class Player(ABC):
     def __init__(self, whatPlayer):
         self.x = whatPlayer
+        self.username = "guest"
         # symbol for corresponding values
         if whatPlayer == 1:
             self.symbol = "X"

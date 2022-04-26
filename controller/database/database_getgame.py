@@ -9,7 +9,7 @@ class DatabaseGetGame(DatabaseAbstract):
 
     def execute_query(self):
         with self.my_connect.cursor() as cursor:
-            cursor.execute(self.quer_game, self.create_game)
+            cursor.execute(self.quer_game, self.get_game)
             result = cursor.fetchall()
             self.my_connect.commit()
-            self.game_id = result[0]
+            self.game_id = str(result[0])

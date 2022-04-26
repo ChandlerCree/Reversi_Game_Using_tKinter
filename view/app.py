@@ -123,6 +123,7 @@ class App(tk.Tk):
     def new_game(self):
         print(self.board_size)
         player1 = HumanPlayer(1)
+        player1.username = self.username_label
         player2 = HumanPlayer(2)
         game =Game(size=int(self.board_size), player1= player1, player2= player2)  # create the game
 
