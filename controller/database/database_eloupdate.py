@@ -1,13 +1,92 @@
 from controller.database.database_abstract import DatabaseAbstract
 
+
 class DatabaseEloupdate(DatabaseAbstract):
-    def __init__(self, logged_user, updated_elo):
-        self.quer_eloupdate = "UPDATE player SET elo = %s WHERE username = %s"
-        
-        self.update_tuple = (updated_elo, logged_user)
+    def __init__(self, player1, player2):
+        # updated def such that player2 stats are also updated with one function run
+        self.user1 = player1
+        self.user2 = player2
+        self.quer_eloupdate_win = "UPDATE player SET elo = elo + %s WHERE username = %s"
+        self.quer_eloupdate_loss = "UPDATE player SET elo = elo - %s WHERE username = %s"
+        self.quer_elo = "SELECT elo FROM player WHERE username = %s"
+        self.quer_matchupdate = "UPDATE player SET matches = matches + %s WHERE username = %s"
+        self.winner_change = 10
+        self.loser_change = 10
 
+        # assume higher elo wins until elo_change() is run with player1 as winner, and player2 as loser
+        self.higher_elo_win = True
+        self.winner = player1
+        self.loser = player2
 
-    def execute_query(self):
+    def get_elo_dif(self, player1, player2, winner):
+        self.user1 = player1
+        self.user2 = player2
+
+        if self.user1 != "guest":
+            with self.my_connect.cursor(buffered=True) as cursor:
+                cursor.execute(self.quer_elo, (self.user1,))
+                result1_elo = cursor.fetchall()
+
+            user1_elo = result1_elo[0][0]
+            cursor.close()
+        else:
+            user1_elo = 1000
+
+        if self.user2 != "guest":
+            with self.my_connect.cursor(buffered=True) as cursor2:
+                cursor2.execute(self.quer_elo, (self.user2,))
+                result2_elo = cursor2.fetchall()
+
+            user2_elo = result2_elo[0][0]
+            cursor2.close()
+        else:
+            user2_elo = 1000
+
+        if user1_elo > user2_elo:
+            if player1 == winner:
+                self.higher_elo_win = True
+            elif player2 == winner:
+                self.higher_elo_win = False
+        elif user2_elo > user1_elo:
+            if player1 == winner:
+                self.higher_elo_win = False
+            elif player2 == winner:
+                self.higher_elo_win = True
+        x = user2_elo - user1_elo
+        return abs(x)
+
+    def elo_change(self, player1, player2, winner):
+        difference = self.get_elo_dif(player1, player2, winner)
+        if difference <= 150:
+            self.winner_change = 10
+            self.loser_change = 10
+        elif 150 < difference <= 350 and self.higher_elo_win == True:
+            self.winner_change = 5
+            self.loser_change = 5
+        elif 150 < difference <= 350 and self.higher_elo_win == False:
+            self.winner_change = 15
+            self.loser_change = 20
+        elif difference > 350 and self.higher_elo_win == True:
+            self.winner_change = 2
+            self.loser_change = 4
+        elif difference > 350 and self.higher_elo_win == False:
+            self.winner_change = 20
+            self.loser_change = 25
+
+    def execute_query(self, winner):
+        if winner == self.user1:
+            self.winner = self.user1
+            self.loser = self.user2
+        elif winner == self.user2:
+            self.winner = self.user2
+            self.loser = self.user1
+
+        self.elo_change(self.user1, self.user2, winner)
         with self.my_connect.cursor() as cursor:
-            cursor.execute(self.quer_eloupdate, self.update_tuple)
+            if self.winner != "guest":
+                cursor.execute(self.quer_eloupdate_win, (self.winner_change, self.winner))
+                cursor.execute(self.quer_matchupdate, (1, self.winner))
+            if self.loser != "guest":
+                cursor.execute(self.quer_eloupdate_loss, (self.loser_change, self.loser))
+                cursor.execute(self.quer_matchupdate, (1, self.loser))
             self.my_connect.commit()
