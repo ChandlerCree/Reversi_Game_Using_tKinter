@@ -151,7 +151,7 @@ class App(tk.Tk):
         player2 = AIPlayer(2, self.ai_difficulty)
         game = Game(size=int(self.board_size), player1=player1, player2=player2)  # create the game
 
-        game_win = GUIView(self.master, game.board, self.logged_user, "guest")
+        game_win = GUIView(self.master, game.board, self.logged_user, self.ai_difficulty)
         game_win.p1 = self.p1
         game_win.p2 = self.p2
 
