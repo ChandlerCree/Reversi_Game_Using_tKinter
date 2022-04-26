@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from controller.database.database_leaderboard import DatabaseLeaderboard
+from tkinter import messagebox
 
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
@@ -86,3 +87,6 @@ class MatchmakerView(tk.Toplevel):
     def on_double_click(self, event):
         item = self.leaderboard.selection()[0]
         print("you clicked on", self.leaderboard.item(item))
+        response = messagebox.askquestion('Challenge', 'Do you want to challenge?')
+        if response == 'yes':
+            print('Send challenge')
