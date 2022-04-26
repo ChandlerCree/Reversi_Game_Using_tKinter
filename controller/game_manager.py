@@ -4,7 +4,7 @@ from view.game_view import GameView
 import time
 
 
-class AIGameManager:
+class GameManager:
     def __init__(self, model: Game, view: GameView):
         self.model = model
         self.view = view

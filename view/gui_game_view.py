@@ -12,13 +12,20 @@ bc_grnd = '#404040'
 
 
 class GUIView(tk.Toplevel, GameView):
+    #Player color/ name
     p1 = '#000000'
     p2 = '#FFFFFF'
+    p1_username = 'guest'
+    p2_username = 'guest'
 
-    def __init__(self, parent, board):
+    def __init__(self, parent, board, p1_user, p2_user):
         super().__init__(parent)
+
+        self.p1_username = p1_user
+        self.p2_username = p2_user
+
         self.title('Reversi')
-        #self.geometry('300x350')
+        # self.geometry('300x350')
         self.configure(bg=bg_1)
         self.frame = tk.Frame(self)
         self.resizable(False, False)
@@ -37,9 +44,11 @@ class GUIView(tk.Toplevel, GameView):
     def makeBoard(self):
         # main labels
         self.game_frame = tk.Frame(self)
-        self.reversi_label = tk.Label(self.frame, text="REVERSI", bg=bg_2, height="1" , font=("Calibri", 24, "bold"), fg=fg_1, borderwidth=4, relief="groove", pady="10")
+        self.reversi_label = tk.Label(self.frame, text="REVERSI", bg=bg_2, height="1", font=("Calibri", 24, "bold"),
+                                      fg=fg_1, borderwidth=4, relief="groove", pady="10")
         self.reversi_label.grid(row=0, column=0, sticky='ew')
-        self.main_button = tk.Button(self.game_frame, text='Main Menu', command=self.open_main, bg=bg_2, fg=fg_1, activebackground=cor_1, font=("Calibri", 12, "bold"))
+        self.main_button = tk.Button(self.game_frame, text='Main Menu', command=self.open_main, bg=bg_2, fg=fg_1,
+                                     activebackground=cor_1, font=("Calibri", 12, "bold"))
         self.main_button.grid(row=self.boardSize * 3 + 1, columnspan=self.boardSize, sticky='ew')
         self.player1Label = tk.Label(self.game_frame, text="Player 1's score is: 2", padx=10, pady=10,
                                      font=("Calibri", 12, "bold"), bg=bg_1, fg=fg_1)
@@ -50,7 +59,8 @@ class GUIView(tk.Toplevel, GameView):
         self.player2Label.grid(row=self.boardSize * 3, columnspan=self.boardSize, sticky='ew')
 
         # current player
-        self.curPlayerLabel = tk.Label(self.game_frame, text="The current player is Player 1", font=("Calibri", 12, "bold"),
+        self.curPlayerLabel = tk.Label(self.game_frame, text="The current player is Player 1",
+                                       font=("Calibri", 12, "bold"),
                                        bg=bg_1, fg=fg_1)
         self.curPlayerLabel.grid(row=0, columnspan=self.boardSize, sticky='ew')
         self.frame.grid(row=0, column=0)
@@ -84,9 +94,9 @@ class GUIView(tk.Toplevel, GameView):
                     self.buttons[i * self.boardSize + j]['bg'] = bc_grnd
 
     def display_curr_player(self, player):
-        if player.symbol =='X':
+        if player.symbol == 'X':
             self.curPlayerLabel.config(text="The current Player is {}".format(self.p1))
-        elif player.symbol =='O':
+        elif player.symbol == 'O':
             self.curPlayerLabel.config(text="The current Player is {}".format(self.p2))
         else:
             pass
@@ -106,6 +116,8 @@ class GUIView(tk.Toplevel, GameView):
         pass
 
     def display_winner(self, winner):
+        print(self.p1_username)
+        print(self.p2_username)
         if winner.symbol == 'X':
             self.curPlayerLabel.configure(text="THE WINNER IS {}".format(self.p1))
         elif winner.symbol == 'O':
@@ -113,8 +125,6 @@ class GUIView(tk.Toplevel, GameView):
         else:
             pass
 
-
-
     def open_main(self):
         self.destroy()
-        #self.master.deiconify()
+        # self.master.deiconify()

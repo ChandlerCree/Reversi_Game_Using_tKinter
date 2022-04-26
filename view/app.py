@@ -11,7 +11,7 @@ from model.player import Player
 from model.human_player import HumanPlayer
 from model.ai_player import AIPlayer
 
-from controller.ai_game_manager import AIGameManager
+from controller.game_manager import GameManager
 from view.board_console_view import BoardConsoleView
 
 from view.login_view import LoginView
@@ -136,11 +136,11 @@ class App(tk.Tk):
         player2 = HumanPlayer(2)
         game = Game(size=int(self.board_size), player1=player1, player2=player2)  # create the game
 
-        game_win = GUIView(self.master, game.board)
+        game_win = GUIView(self.master, game.board, self.logged_user, "guest")
         game_win.p1 = self.p1
         game_win.p2 = self.p2
 
-        controller = AIGameManager(game, game_win)
+        controller = GameManager(game, game_win)
         player1.controller = controller
         player2.controller = controller
         self.open_thread(controller.run_game)
@@ -151,11 +151,11 @@ class App(tk.Tk):
         player2 = AIPlayer(2, self.ai_difficulty)
         game = Game(size=int(self.board_size), player1=player1, player2=player2)  # create the game
 
-        game_win = GUIView(self.master, game.board)
+        game_win = GUIView(self.master, game.board, self.logged_user, "guest")
         game_win.p1 = self.p1
         game_win.p2 = self.p2
 
-        controller = AIGameManager(game, game_win)
+        controller = GameManager(game, game_win)
         player1.controller = controller
         player2.controller = controller
         self.open_thread(controller.run_game)
@@ -194,11 +194,11 @@ class App(tk.Tk):
         player2 = AIPlayer(2, self.ai_difficulty)
         game = Game(size=int(self.board_size), player1=player1, player2=player2)  # create the game
 
-        game_win = GUIView(self.master, game.board)
+        game_win = GUIView(self.master, game.board, self.logged_user, "guest")
         game_win.p1 = self.p1
         game_win.p2 = self.p2
 
-        controller = AIGameManager(game, game_win)
+        controller = GameManager(game, game_win)
         player1.controller = controller
         player2.controller = controller
         self.open_thread(controller.run_game)
