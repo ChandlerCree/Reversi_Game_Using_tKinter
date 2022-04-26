@@ -2,6 +2,7 @@ import tkinter as tk
 from view.board_view import BoardView
 from view.game_view import GameView
 from controller.database.database_eloupdate import DatabaseEloupdate
+from controller.database.database_login import DatabaseLogin
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
 cor_1 = "#9DB4C0"
@@ -130,5 +131,12 @@ class GUIView(tk.Toplevel, GameView):
             pass
 
     def open_main(self):
+        login = DatabaseLogin(self.master.username_login_tup, self.master.password_log)
+        login.connect_to_database()
+
+        user_temp, self.master.logged_elo, self.master.matches_played, pass_temp = login.execute_query()
+
+        self.master.change_username_label()
+
         self.destroy()
         # self.master.deiconify()

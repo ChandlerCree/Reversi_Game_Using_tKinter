@@ -101,6 +101,8 @@ class LoginView(tk.Toplevel):
         self.password_entry_login.delete(0, tk.END)
 
         self.username_login_tuple = (self.username_login,)
+        self.master.username_login_tup = self.username_login_tuple
+        self.master.password_log = self.password_login
 
         login = DatabaseLogin(self.username_login_tuple, self.password_login)
         login.connect_to_database()

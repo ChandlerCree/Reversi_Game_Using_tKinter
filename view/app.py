@@ -47,6 +47,8 @@ class App(tk.Tk):
     guest_username = "Guest"
 
     user_logged_in = User()
+    username_login_tup = ('x',)
+    password_log = 'x'
 
     def __init__(self):
         super().__init__()
