@@ -1,19 +1,31 @@
-from shutil import move
-import socket
+
 import pickle
-from server.exercise import Exercise
+from server.network import Network
 
 from model.disk import Disk
 
 class ReversiClient:
-    def __init__(self, host='127.0.0.1', port=1234, buffer_size=1024):
-        self.host = host
-        self.port = port
-        self.buffer_size = buffer_size
+    def __init__(self):
+        run = True
+        n = Network()
+        player = int(n.getP())
+        print("You are player", player)
 
-    def start_client(self):
-        with socket.socket() as my_socket:
-            my_socket.connect((self.host, self.port))
-            print('Client connected.')
+        while run:
+            try:
+                game = n.send("get")
+
+            except:
+                run = False
+                print("Couldn't get game")
+                break
+
+            if game.playerWent():
+                ##redraw window
+
+                
+
+
+
 
 
