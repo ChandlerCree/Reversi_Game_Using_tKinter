@@ -17,7 +17,7 @@ from view.board_console_view import BoardConsoleView
 from view.login_view import LoginView
 from view.gui_game_view import GUIView
 from view.account_settings_view import AccountSettingsView
-from matchmaker_view import MatchmakerView
+from view.matchmaker_view import MatchmakerView
 import threading
 
 from model.user import User

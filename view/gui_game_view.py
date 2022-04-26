@@ -1,7 +1,7 @@
 import tkinter as tk
 from view.board_view import BoardView
 from view.game_view import GameView
-from database.database_eloupdate import DatabaseEloupdate
+from controller.database.database_eloupdate import DatabaseEloupdate
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
 cor_1 = "#9DB4C0"
@@ -40,6 +40,7 @@ class GUIView(tk.Toplevel, GameView):
         self.parent = parent
         self.move = [-1, -1]
         self.currgame = DatabaseEloupdate(self.p1_username, self.p2_username)
+        self.currgame.connect_to_database()
         self.makeBoard()
 
     def makeBoard(self):
