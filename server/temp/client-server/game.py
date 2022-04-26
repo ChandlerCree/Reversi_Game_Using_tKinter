@@ -24,7 +24,7 @@ class Game:
 
     def connected(self):
         return self.ready
-
+ 
     def bothWent(self):
         return self.p1Went and self.p2Went
 
