@@ -1,0 +1,38 @@
+Index: .idea/eece4520group4.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"PYTHON_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\">\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/controller\" isTestSource=\"false\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/model\" isTestSource=\"false\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/view\" isTestSource=\"false\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n  </component>\r\n  <component name=\"PyDocumentationSettings\">\r\n    <option name=\"renderExternalDocumentation\" value=\"true\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/eece4520group4.iml b/.idea/eece4520group4.iml
+--- a/.idea/eece4520group4.iml	(revision ae04935517792fe8647ca711e1013087d00aa3f9)
++++ b/.idea/eece4520group4.iml	(date 1650928526045)
+@@ -5,8 +5,9 @@
+       <sourceFolder url="file://$MODULE_DIR$/controller" isTestSource="false" />
+       <sourceFolder url="file://$MODULE_DIR$/model" isTestSource="false" />
+       <sourceFolder url="file://$MODULE_DIR$/view" isTestSource="false" />
++      <excludeFolder url="file://$MODULE_DIR$/venv" />
+     </content>
+-    <orderEntry type="inheritedJdk" />
++    <orderEntry type="jdk" jdkName="Python 3.8 (eece4520group4)" jdkType="Python SDK" />
+     <orderEntry type="sourceFolder" forTests="false" />
+   </component>
+   <component name="PyDocumentationSettings">
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" project-jdk-name=\"Python 3.9\" project-jdk-type=\"Python SDK\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision ae04935517792fe8647ca711e1013087d00aa3f9)
++++ b/.idea/misc.xml	(date 1650928526061)
+@@ -1,4 +1,4 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9" project-jdk-type="Python SDK" />
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.8 (eece4520group4)" project-jdk-type="Python SDK" />
+ </project>
+\ No newline at end of file
