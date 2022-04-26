@@ -22,7 +22,6 @@ class DatabaseEloupdate(DatabaseAbstract):
         self.winner_change = 10
         self.loser_change = 10
 
-
         self.higher_elo_win = True
         self.winner = None
         self.loser = None

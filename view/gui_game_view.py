@@ -139,4 +139,4 @@ class GUIView(tk.Toplevel, GameView):
         self.master.change_username_label()
 
         self.destroy()
-        # self.master.deiconify()
+        self.master.deiconify()
