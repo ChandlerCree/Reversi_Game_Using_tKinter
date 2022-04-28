@@ -13,6 +13,7 @@ from model.ai_player import AIPlayer
 
 from controller.game_manager import GameManager
 from view.board_console_view import BoardConsoleView
+from controller.database.database_creategame import DatabaseCreateGame
 
 from view.login_view import LoginView
 from view.gui_game_view import GUIView
@@ -137,6 +138,10 @@ class App(tk.Tk):
         player1 = HumanPlayer(1)
         player2 = HumanPlayer(2)
         game = Game(size=int(self.board_size), player1=player1, player2=player2)  # create the game
+
+        self.create_game = DatabaseCreateGame(self.logged_user, "guest", self.logged_user)
+        self.create_game.connect_to_database()
+        self.create_game.execute_query()
 
         game_win = GUIView(self.master, game.board, self.logged_user, "guest")
         game_win.p1 = self.p1

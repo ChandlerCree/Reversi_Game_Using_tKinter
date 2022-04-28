@@ -25,13 +25,6 @@ class Game(ABC):
         else:
             self.curPlayer = self.player2
 
-        '''self.gameDB = DatabaseCreateGame(self.player1, self.player2, self.curPlayer)
-        self.gameDB.connect_to_database()
-        self.gameID = DatabaseGetGame(self.player1, self.player2)
-        self.gameID.connect_to_database()
-        #print(self.gameID.game_id)
-        print(1)'''
-
         # create initial disks at middle corners
 
         # first person to move will always go in top left and bottom right of middle
@@ -46,31 +39,6 @@ class Game(ABC):
         self.playerOneCount = 2
         self.playerTwoCount = 2
 
-        # check who's the current player to determine initial disks
-        if self.curPlayer == self.player1:
-            # place initial disks
-            '''print(2)
-            self.placeDisk = DatabaseCreateDisk(int((self.bSize / 2) - 1), int((self.bSize / 2) - 1), self.gameID, self.player2)
-            self.placeDisk.connect_to_database()
-            self.placeDisk = DatabaseCreateDisk(int(self.bSize / 2), int(self.bSize / 2), self.gameID, self.player2)
-            self.placeDisk.connect_to_database()
-            self.placeDisk = DatabaseCreateDisk(int((self.bSize / 2) - 1), int(self.bSize / 2), self.gameID, self.player1)
-            self.placeDisk.connect_to_database()
-            self.placeDisk = DatabaseCreateDisk(int(self.bSize / 2), int((self.bSize / 2) - 1), self.gameID, self.player1)
-            self.placeDisk.connect_to_database()'''
-
-        else:
-            # place initial disks
-            ''' print(3)
-            self.placeDisk = DatabaseCreateDisk(int((self.bSize / 2) - 1), int((self.bSize / 2) - 1), self.gameID, self.player1)
-            self.placeDisk.connect_to_database()
-            self.placeDisk = DatabaseCreateDisk(int(self.bSize / 2), int(self.bSize / 2), self.gameID, self.player1)
-            self.placeDisk.connect_to_database()
-            self.placeDisk = DatabaseCreateDisk(int((self.bSize / 2) - 1), int(self.bSize / 2), self.gameID, self.player2)
-            self.placeDisk.connect_to_database()
-            self.placeDisk = DatabaseCreateDisk(int(self.bSize / 2), int((self.bSize / 2) - 1), self.gameID, self.player2)
-            self.placeDisk.connect_to_database()'''
-
     # coin flip for who goes first
     def who_goes_first(self):
         return random.randint(1, 2)
@@ -82,30 +50,8 @@ class Game(ABC):
         if self.curPlayer.x == 1:
             self.curPlayer = self.player2
 
-            # place initial disks
-            '''print(4)
-            self.placeDisk = DatabaseCreateDisk(int((self.bSize / 2) - 1), int((self.bSize / 2) - 1), self.gameID, self.player2)
-            self.placeDisk.connect_to_database()
-            self.placeDisk = DatabaseCreateDisk(int(self.bSize / 2), int(self.bSize / 2), self.gameID, self.player2)
-            self.placeDisk.connect_to_database()
-            self.placeDisk = DatabaseCreateDisk(int((self.bSize / 2) - 1), int(self.bSize / 2), self.gameID, self.player1)
-            self.placeDisk.connect_to_database()
-            self.placeDisk = DatabaseCreateDisk(int(self.bSize / 2), int((self.bSize / 2) - 1), self.gameID, self.player1)
-            self.placeDisk.connect_to_database()'''
-
         else:
             self.curPlayer = self.player1
-
-            # place initial disks
-            '''print(5)
-            self.placeDisk = DatabaseCreateDisk(int((self.bSize / 2) - 1), int((self.bSize / 2) - 1), self.gameID, self.player1)
-            self.placeDisk.connect_to_database()
-            self.placeDisk = DatabaseCreateDisk(int(self.bSize / 2), int(self.bSize / 2), self.gameID, self.player1)
-            self.placeDisk.connect_to_database()
-            self.placeDisk = DatabaseCreateDisk(int((self.bSize / 2) - 1), int(self.bSize / 2), self.gameID, self.player2)
-            self.placeDisk.connect_to_database()
-            self.placeDisk = DatabaseCreateDisk(int(self.bSize / 2), int((self.bSize / 2) - 1), self.gameID, self.player2)
-            self.placeDisk.connect_to_database()'''
 
     # checks if this location is on the board
     def in_bounds(self, x, y):
@@ -208,14 +154,6 @@ class Game(ABC):
     # make move and then flip corresponding. Assumes move is legal
     def make_move(self, flipPieces):
         for x, y in flipPieces:
-            '''if self.board[x][y] != self.player1.x | self.board[x][y] != self.player2.x:
-                print(6)
-                self.placeDisk = DatabaseCreateDisk(x,y,self.gameID,self.curPlayer)
-                self.placeDisk.connect_to_database()'''
-            '''else:
-                print(7)
-                self.updateDisk = DatabaseUpdateDisk([x, y],self.gameID,self.curPlayer)
-                self.updateDisk.connect_to_database()'''
             self.board[x][y] = self.curPlayer.x
 
     # find if any empty pieces

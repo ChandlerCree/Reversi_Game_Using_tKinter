@@ -3,6 +3,12 @@ from controller.database.database_abstract import DatabaseAbstract
 
 class DatabaseCreateGame(DatabaseAbstract):
     def __init__(self, player1, player2, curr_player):
+        print("Player 1:")
+        print(player1)
+        print("Player 2:")
+        print(player2)
+        print("Player Curr:")
+        print(curr_player)
         self.quer_game = "insert into game (player1, player2, curr_player) values (%s, %s, %s)"
         self.create_game = (player1, player2, curr_player)
 
