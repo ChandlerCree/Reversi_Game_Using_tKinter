@@ -107,8 +107,11 @@ class App(tk.Tk):
 
         self.login_button = tk.Button(self.frame, text="Login", height="1", width="14", command=self.open_login,
                                       bg=bg_2, fg=fg_1, font=("Calibri", 18, "bold"), activebackground=cor_1)
-        self.login_button.grid(row=4, column=0, columnspan=2, padx=4, pady=(4, 12))
+        self.login_button.grid(row=4, column=1, columnspan=1, padx=(4, 8), pady=4)
 
+        self.resume_button = tk.Button(self.frame, text="Resume Game", height="1", width="14", command=self.open_login,
+                                       bg=bg_2, fg=fg_1, font=("Calibri", 18, "bold"), activebackground=cor_1)
+        self.resume_button.grid(row=4, column=0, padx=(8, 4), pady=4)
         # show the frame on the container
         self.frame.pack()
 
