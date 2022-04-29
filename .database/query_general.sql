@@ -28,9 +28,9 @@ Create Table participant(
 Create Table disk(
     x_pos int,
     y_pos int,
-    primary key (x_pos, y_pos),
     player varchar(32),
     game int,
+    primary key (x_pos, y_pos, game),
     foreign key (game) references game(id) on update cascade on delete cascade,
     foreign key (player) references player(username) on update cascade on delete cascade
     );

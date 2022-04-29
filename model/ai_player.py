@@ -135,7 +135,7 @@ class AIPlayer(Player):
         return bestMove
 
     def winner_value(self, board):
-        gameCheck = Game(self.bSize, HumanPlayer(1), HumanPlayer(2))
+        gameCheck = Game(self.bSize, HumanPlayer(1), HumanPlayer(2), "Guest", "AI", True)
         gameCheck.board = deepcopy(board)
         #print(gameCheck.board)
         return self.who_wins_2(gameCheck)
@@ -175,7 +175,7 @@ class AIPlayer(Player):
     def generate_game_copy(self, board, player):
         firstPlayer = HumanPlayer(1)
         secondPlayer = HumanPlayer(2)
-        game_piece = Game(self.bSize, firstPlayer, secondPlayer)
+        game_piece = Game(self.bSize, firstPlayer, secondPlayer, "Guest", "AI" ,True)
         game_piece.board = deepcopy(board)
 
         if player == 1:

@@ -40,7 +40,7 @@ class App(tk.Tk):
     p2 = '#FFFFFF'
     default_username = "Guest"
     default_elo = 0
-    logged_user = ""
+    logged_user = "Guest"
     logged_elo = 0
     matches_played = 0
     ng_btn_stat = "disabled"
@@ -137,11 +137,9 @@ class App(tk.Tk):
     def new_game(self):
         player1 = HumanPlayer(1)
         player2 = HumanPlayer(2)
-        game = Game(size=int(self.board_size), player1=player1, player2=player2)  # create the game
 
-        self.create_game = DatabaseCreateGame(self.logged_user, "guest", self.logged_user)
-        self.create_game.connect_to_database()
-        self.create_game.execute_query()
+        game = Game(size=int(self.board_size), player1=player1, player2=player2, player1_username=self.logged_user,
+                    player2_username="guest", is_copy=False)  # create the game
 
         game_win = GUIView(self.master, game.board, self.logged_user, "guest")
         game_win.p1 = self.p1
@@ -156,7 +154,8 @@ class App(tk.Tk):
     def new_ai_game(self):
         player1 = HumanPlayer(1)
         player2 = AIPlayer(2, self.ai_difficulty)
-        game = Game(size=int(self.board_size), player1=player1, player2=player2)  # create the game
+        game = Game(size=int(self.board_size), player1=player1, player2=player2, player1_username=self.logged_user,
+                    player2_username="AI", is_copy=False)  # create the game
 
         game_win = GUIView(self.master, game.board, self.logged_user, self.ai_difficulty)
         game_win.p1 = self.p1

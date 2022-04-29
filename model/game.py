@@ -2,13 +2,16 @@ from abc import ABC, abstractmethod
 import numpy as np
 import model.player as p
 import random
+
 from controller.database.database_creategame import DatabaseCreateGame
 from controller.database.database_createdisk import DatabaseCreateDisk
 from controller.database.database_updatedisk import DatabaseUpdateDisk
 from controller.database.database_getgame import DatabaseGetGame
+from controller.database.database_deletegame import DatabaseDeleteGame
 
 class Game(ABC):
-    def __init__(self, size, player1, player2):
+
+    def __init__(self, size, player1, player2, player1_username, player2_username, is_copy):
 
         self.bSize = size
         if int(size) % 2 != 0:
@@ -18,12 +21,23 @@ class Game(ABC):
         self.board = np.zeros((size, size), dtype=int)
         self.player1 = player1
         self.player2 = player2
+        self.player1_username = player1_username
+        self.player2_username = player2_username
+        self.is_copy = is_copy
 
         # determine who the first player is randomly
         if self.player1.x == self.who_goes_first():
             self.curPlayer = self.player1
+            self.currplayer_username = self.player1_username
         else:
             self.curPlayer = self.player2
+            self.currplayer_username = self.player2_username
+
+        if not is_copy:
+            self.delete_game_db(self.player1_username)
+            self.create_game_db(self.player1_username, self.player2_username, self.currplayer_username)
+            self.game_id = self.get_game_db(self.player1_username,self.player2_username)
+            print(self.game_id)
 
         # create initial disks at middle corners
 
@@ -39,6 +53,20 @@ class Game(ABC):
         self.playerOneCount = 2
         self.playerTwoCount = 2
 
+        if self.curPlayer == self.player1 and not is_copy:
+            # place initial disks in DB
+            self.create_disk_db(int((self.bSize/2)-1), int((self.bSize/2)-1), self.game_id, self.player2_username)
+            self.create_disk_db(int(self.bSize/2), int(self.bSize/2), self.game_id, self.player2_username)
+            self.create_disk_db(int((self.bSize/2)-1), int(self.bSize/2), self.game_id, self.player1_username)
+            self.create_disk_db(int(self.bSize/2), int((self.bSize/2)-1), self.game_id, self.player1_username)
+
+        elif self.curPlayer == self.player2 and not is_copy:
+            # place initial disks in DB
+            self.create_disk_db(int((self.bSize/2)-1), int((self.bSize/2)-1), self.game_id, self.player1_username)
+            self.create_disk_db(int(self.bSize/2), int(self.bSize/2), self.game_id, self.player1_username)
+            self.create_disk_db(int((self.bSize/2)-1), int(self.bSize/2), self.game_id, self.player2_username)
+            self.create_disk_db(int(self.bSize/2), int((self.bSize/2)-1), self.game_id, self.player2_username)
+
     # coin flip for who goes first
     def who_goes_first(self):
         return random.randint(1, 2)
@@ -49,9 +77,11 @@ class Game(ABC):
         # check who's the current player before changing
         if self.curPlayer.x == 1:
             self.curPlayer = self.player2
+            self.currplayer_username = self.player2_username
 
         else:
             self.curPlayer = self.player1
+            self.currplayer_username = self.player1_username
 
     # checks if this location is on the board
     def in_bounds(self, x, y):
@@ -154,6 +184,11 @@ class Game(ABC):
     # make move and then flip corresponding. Assumes move is legal
     def make_move(self, flipPieces):
         for x, y in flipPieces:
+            if self.board[x][y] != self.player1.x and self.board[x][y] != self.player2.x and not self.is_copy:
+                self.create_disk_db(x, y, self.game_id, self.currplayer_username)
+            elif not self.is_copy:
+                self.update_disk_db(x, y, self.game_id, self.currplayer_username)
+
             self.board[x][y] = self.curPlayer.x
 
     # find if any empty pieces
@@ -211,3 +246,29 @@ class Game(ABC):
     
     def select_move(self, board):
         return self.curPlayer.select_move(board)
+
+    def create_game_db(self, player1_name, player2_name, currplayer_name):
+        self.create_game = DatabaseCreateGame(player1_name, player2_name, currplayer_name)
+        self.create_game.connect_to_database()
+        self.create_game.execute_query()
+
+    def delete_game_db(self, player1_name):
+        self.delete_game = DatabaseDeleteGame(player1_name)
+        self.delete_game.connect_to_database()
+        self.delete_game.execute_query()
+
+    def get_game_db(self, player1_name, player2_name):
+        self.get_game = DatabaseGetGame(player1_name, player2_name)
+        self.get_game.connect_to_database()
+        self.get_game.execute_query()
+        return self.get_game.game_id
+
+    def create_disk_db(self, x_pos, y_pos, player, game):
+        self.create_disk = DatabaseCreateDisk(x_pos, y_pos, player, game)
+        self.create_disk.connect_to_database()
+        self.create_disk.execute_query()
+
+    def update_disk_db(self, x_pos, y_pos, game, player):
+        self.update_disk = DatabaseUpdateDisk(x_pos, y_pos, game, player)
+        self.update_disk.connect_to_database()
+        self.update_disk.execute_query()

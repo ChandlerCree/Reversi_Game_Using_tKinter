@@ -3,9 +3,9 @@ from controller.database.database_abstract import DatabaseAbstract
 
 class DatabaseCreateDisk(DatabaseAbstract):
     def __init__(self, x_pos, y_pos, game, player):
-        self.register_quer = "insert into disk (x_pos, y_pos, game, player) values (%s, %s, %s, %s)"
+        self.register_quer = "insert into disk (x_pos, y_pos, player, game) values (%s, %s, %s, %s)"
 
-        self.create_disk = (x_pos, y_pos, game, player)
+        self.create_disk = (x_pos, y_pos, player, game)
 
 
     def execute_query(self):
@@ -15,5 +15,3 @@ class DatabaseCreateDisk(DatabaseAbstract):
             self.my_connect.commit()
             for row in result:
                 print(row)
-
-        print("disk: " + self.create_disk[0] + " created successfully.")
