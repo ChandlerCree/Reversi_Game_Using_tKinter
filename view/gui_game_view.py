@@ -3,6 +3,7 @@ from view.board_view import BoardView
 from view.game_view import GameView
 from controller.database.database_eloupdate import DatabaseEloupdate
 from controller.database.database_login import DatabaseLogin
+
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
 cor_1 = "#9DB4C0"
@@ -13,7 +14,10 @@ bc_grnd = '#404040'
 
 
 class GUIView(tk.Toplevel, GameView):
-    #Player color/ name
+    """
+    This class is the view of the game and the board in tkinter
+    """
+    # Player color/ name
     p1 = '#000000'
     p2 = '#FFFFFF'
     p1_username = 'guest'
@@ -42,9 +46,14 @@ class GUIView(tk.Toplevel, GameView):
         self.move = [-1, -1]
         self.currgame = DatabaseEloupdate(self.p1_username, self.p2_username)
         self.currgame.connect_to_database()
-        self.makeBoard()
+        self.make_board()
 
-    def makeBoard(self):
+    def make_board(self):
+        """
+        This function creates a frame with a grid layout. The grid is filled with buttons equal to the board size
+        :param
+        :return
+        """
         # main labels
         self.game_frame = tk.Frame(self)
         self.reversi_label = tk.Label(self.frame, text="REVERSI", bg=bg_2, height="1", font=("Calibri", 24, "bold"),
@@ -79,12 +88,27 @@ class GUIView(tk.Toplevel, GameView):
                 self.buttons[i * self.boardSize + j].grid(row=(i + self.boardSize - 1), column=j)
 
     def set_row(self, row):
+        """
+        This function set the row value of the move equal to the row of the button where the user clicked
+        :param row - the row value
+        :return
+        """
         self.move[0] = row
 
     def set_col(self, col):
+        """
+        This function set the column value of the move equal to the column of the button where the user clicked
+        :param col - the column value
+        :return
+        """
         self.move[1] = col
 
     def display_board(self):
+        """
+        This function is adds changes the buttons in the grid to match the board model object
+        :param
+        :return
+        """
         for i in range(self.boardSize):  # row variable
             for j in range(self.boardSize):
                 if self.board[i, j] == 1:
@@ -97,6 +121,11 @@ class GUIView(tk.Toplevel, GameView):
                     self.buttons[i * self.boardSize + j]['bg'] = bc_grnd
 
     def display_curr_player(self, player):
+        """
+        This function changes the label at the top of the game view to display who's turn it is
+        :param player - the name of who is going next
+        :return
+        """
         if player.symbol == 'X':
             self.curPlayerLabel.config(text="The current Player is {}".format(self.p1))
         elif player.symbol == 'O':
@@ -105,22 +134,51 @@ class GUIView(tk.Toplevel, GameView):
             pass
 
     def display_curr_score(self, p1_score, p2_score, startingPlayer):
+        """
+        This function is not used in the tkinter gui but was part of the initial game view design for console
+        :param p1_score - player 1's score, p2_score - player 2's score, starting player - the player that goes first
+        :return
+        """
+
+        # Does this function need the starting Player parameter ??????????????????????????????????????????????????????
         self.player1Label.config(text="{}'s score is: {}".format(self.p1, p1_score))
         self.player2Label.config(text="{}'s score is: {}".format(self.p2, p2_score))
 
     def show_legal_moves(self):
+        """
+        This function is not used in the tkinter gui but was part of the initial game view design for console
+        :param
+        :return
+        """
         pass
 
     def get_move(self):
+        """
+        This function gets the move from the UI where the user clicked and returns it for the model's use
+        :param
+        :return self.move
+        """
         self.update()
         return self.move
 
     def display_illegal_moves(self):
+        """
+        This function is not used in the tkinter gui but was part of the initial game view design for console
+        :param
+        :return
+        """
         pass
 
     def display_winner(self, winner):
+        """
+        This function updates the elo of the players in the game and displays the winner at the top of the game
+        window
+        :param winner - player object that won the game
+        :return
+        """
         print(self.p1_username)
         print(self.p2_username)
+        # DOES THIS UPDATE THE LOSER'S ELO TOO??????????????????????????????????????????????????????
         if winner.symbol == 'X':
             self.curPlayerLabel.configure(text="THE WINNER IS {}".format(self.p1))
             self.currgame.execute_query(self.p1_username)
@@ -131,6 +189,12 @@ class GUIView(tk.Toplevel, GameView):
             pass
 
     def open_main(self):
+        """
+        This function destroys the current window and reopens the main menu. Additionally, it updates the label at the
+        top of the main menu.
+        :param
+        :return
+        """
         login = DatabaseLogin(self.master.username_login_tup, self.master.password_log)
         login.connect_to_database()
 

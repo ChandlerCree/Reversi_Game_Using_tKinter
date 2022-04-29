@@ -14,6 +14,9 @@ fg_1 = "#253237"
 
 
 class LoginView(tk.Toplevel):
+    """
+    This class is a tkinter gui for logging in and registering a user
+    """
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -203,7 +206,6 @@ class LoginView(tk.Toplevel):
         self.master.change_username_label()
         self.destroy()
         self.master.deiconify()
-        print('You have successfully logged in as a guest.')
 
     def remove_verify_text(self):
         # function removes the text "Password not recognized" or "User not found"

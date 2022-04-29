@@ -12,7 +12,11 @@ cor_1 = "#9DB4C0"
 incor_1 = "#5C6B73"
 fg_1 = "#253237"
 
+
 class AccountSettingsView(tk.Toplevel):
+    """
+    The account settings view is the gui tkinter view where delete user from database is available
+    """
     def __init__(self, parent):
         super().__init__(parent)
         self.title('Reversi')
@@ -26,34 +30,46 @@ class AccountSettingsView(tk.Toplevel):
                                           pady="10")
         self.leaderboard_title.pack()
 
-        self.main_button = tk.Button(self.frame, width="12", text='Main Menu', command=self.open_main, font=('Calibri', 18, "bold"), 
-                                        bg=bg_2, fg=fg_1, activebackground=cor_1)
+        self.main_button = tk.Button(self.frame, width="12", text='Main Menu', command=self.open_main,
+                                     font=('Calibri', 18, "bold"),
+                                     bg=bg_2, fg=fg_1, activebackground=cor_1)
         self.main_button.pack(pady=8)
 
-        self.delete_caution = tk.Label(self.frame, text="If you would like to delete your account\ntype your username below and press\n'Delete Account'\nNote this is a permanent action\n and all accountinformation\nwill be lost",
-                                            bg=bg_1, fg='red', font=("Calibri", 12, 'bold italic'))
+        self.delete_caution = tk.Label(self.frame,
+                                       text="If you would like to delete your account\ntype your username below and press\n'Delete Account'\nNote this is a permanent action\n and all accountinformation\nwill be lost",
+                                       bg=bg_1, fg='red', font=("Calibri", 12, 'bold italic'))
         self.delete_caution.pack(pady=8)
 
         self.username_entry = tk.StringVar()
 
-        self.username_confirmation = tk.Entry(self.frame, width="16", textvariable=self.username_entry, bg=bg_2, fg='red', font=("Calibri", 16))
+        self.username_confirmation = tk.Entry(self.frame, width="16", textvariable=self.username_entry, bg=bg_2,
+                                              fg='red', font=("Calibri", 16))
         self.username_confirmation.pack(pady=8)
 
         self.username_confirmation.insert(0, 'username')
 
-        self.delete_account_button = tk.Button(self.frame, width = "12", text='Delete Account', command=self.delete_account, font=('Calibri', 18, 'bold'),
-                                        bg=bg_2, fg='red', activebackground=cor_1)
-        self.delete_account_button.pack(pady=(8,16))
+        self.delete_account_button = tk.Button(self.frame, width="12", text='Delete Account',
+                                               command=self.delete_account, font=('Calibri', 18, 'bold'),
+                                               bg=bg_2, fg='red', activebackground=cor_1)
+        self.delete_account_button.pack(pady=(8, 16))
 
         self.frame.pack()
 
-    
     def open_main(self):
+        """
+        This function destroys the current window and reopens the main menu
+        :param
+        :return
+        """
         self.destroy()
         self.master.deiconify()
 
-    
     def delete_account(self):
+        """
+        This function removes the currently logged in user from the database
+        :param
+        :return
+        """
         self.username = self.username_entry.get()
 
         if self.username == self.master.logged_user:
@@ -74,7 +90,3 @@ class AccountSettingsView(tk.Toplevel):
 
             self.destroy()
             self.master.deiconify()
-
-
-
-

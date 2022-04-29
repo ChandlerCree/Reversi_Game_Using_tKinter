@@ -12,9 +12,9 @@ font = "Calibri"
 
 
 class MatchmakerView(tk.Toplevel):
-    color_p1_bool = False
-    color_p2_bool = False
-    board_size_bool = False
+    """
+    This class is a tkinter gui that displays a table of player data for choosing an opponent to challenge
+    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -65,8 +65,6 @@ class MatchmakerView(tk.Toplevel):
         # show the frame on the container
         self.frame.pack()
 
-
-
         # Add a Button to start a game
         self.main_button = tk.Button(self.frame, width="12", text='Start Game', command=self.open_online,
                                      font=(font, 14, "bold"),
@@ -77,14 +75,30 @@ class MatchmakerView(tk.Toplevel):
         self.frame.pack()
 
     def open_main(self):
+        """
+        This function destroys the current window and reopens the main menu
+        :param
+        :return
+        """
         self.destroy()  # close this frame
         self.master.deiconify()  # open the minimized main menu
 
     def open_online(self):
+        """
+        This function calls the open online game from the app class while closing this window.
+        :param
+        :return
+        """
         self.destroy()  # close this frame
         self.master.open_online_game()  # open the online game screen from the main menu
 
     def on_double_click(self, event):
+        """
+        This function allows the user to challenge an opponent when an item in the Treeview is double clicked. The
+        user then has a messagebox pop up to confirm that they would like to challenge.
+        :param event - in this case it would be a double click on the listbox
+        :return
+        """
         item = self.leaderboard.selection()[0]
         print("you clicked on", self.leaderboard.item(item))
         response = messagebox.askquestion('Challenge', 'Do you want to challenge?')

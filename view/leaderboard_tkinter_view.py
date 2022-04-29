@@ -1,8 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-
 from controller.database.database_leaderboard import DatabaseLeaderboard
-#from main_menu_view import MainMenu
+
 
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
@@ -12,6 +11,9 @@ fg_1 = "#253237"
 
 
 class LeaderboardView(tk.Toplevel):
+    """
+    This gui view of the leaderboard
+    """
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -99,5 +101,10 @@ class LeaderboardView(tk.Toplevel):
         self.frame.pack()
 
     def open_main(self):
+        """
+        This function closes this window and returns to the main menu
+        :param
+        :return
+        """
         self.destroy()
         self.master.deiconify()

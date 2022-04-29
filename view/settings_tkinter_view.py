@@ -10,6 +10,9 @@ fg_1 = "#253237"
 
 
 class SettingsView(tk.Toplevel):
+    """
+    This class is a tkinter gui for changing the game settings menu
+    """
     color_p1_bool = False
     color_p2_bool = False
     board_size_bool = False
@@ -18,7 +21,6 @@ class SettingsView(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title('Reversi')
-        #self.geometry('300x600')
         self.configure(bg=bg_1)
         self.resizable(False, False)
         self.frame = tk.Frame(self)
@@ -71,10 +73,10 @@ class SettingsView(tk.Toplevel):
 
         self.board_size_temp = tk.IntVar()
 
-        self.radiobttn_4 = tk.Radiobutton(self.rdobtn_lblframe, variable=self.board_size_temp, value=4, bg=bg_1, command=self.set_board_sizez)
-        self.radiobttn_6 = tk.Radiobutton(self.rdobtn_lblframe, variable=self.board_size_temp, value=6, bg=bg_1, command=self.set_board_sizez)
-        self.radiobttn_8 = tk.Radiobutton(self.rdobtn_lblframe, variable=self.board_size_temp, value=8, bg=bg_1, command=self.set_board_sizez)
-        self.radiobttn_10 = tk.Radiobutton(self.rdobtn_lblframe, variable=self.board_size_temp, value=10, bg=bg_1, command=self.set_board_sizez)
+        self.radiobttn_4 = tk.Radiobutton(self.rdobtn_lblframe, variable=self.board_size_temp, value=4, bg=bg_1, command=self.set_board_size)
+        self.radiobttn_6 = tk.Radiobutton(self.rdobtn_lblframe, variable=self.board_size_temp, value=6, bg=bg_1, command=self.set_board_size)
+        self.radiobttn_8 = tk.Radiobutton(self.rdobtn_lblframe, variable=self.board_size_temp, value=8, bg=bg_1, command=self.set_board_size)
+        self.radiobttn_10 = tk.Radiobutton(self.rdobtn_lblframe, variable=self.board_size_temp, value=10, bg=bg_1, command=self.set_board_size)
 
         self.boardsize_4.grid(row=0, column=0)
         self.boardsize_6.grid(row=0, column=1)
@@ -130,17 +132,30 @@ class SettingsView(tk.Toplevel):
         self.frame.pack()
 
     def open_main(self):
+        """
+        This function destroys the current window and reopens the main menu
+        :param
+        :return
+        """
         self.destroy()
         self.master.deiconify()
 
-    def set_board_sizez(self):
+    def set_board_size(self):
+        """
+        This function sets the board size parameter in the master class
+        :param
+        :return
+        """
         self.master.board_size = self.board_size_temp.get()
         self.board_size_bool = True
         self.enable_apply()
-        #print(str(self.board_size_bool) + "size=true")
-        print("Board size selected = " + str(self.master.board_size))
 
     def set_ai_difficulty(self):
+        """
+        This function sets the AI difficulty in the master class
+        :param
+        :return
+        """
         self.master.ai_difficulty = self.ai_difficulty_level.get()
         self.ai_diff_bool = True
         self.enable_apply()
@@ -154,25 +169,36 @@ class SettingsView(tk.Toplevel):
         pass'''
 
     def p1_color_selected(self, event):
+        """
+        This function listens for the color selected in the first list box
+        :param
+        :return
+        """
         selected_index = self.p1_listbox.curselection()[0]
         color = self.p1_listbox.get(selected_index)
         self.master.p1 = color
         self.color_p1_bool = True
         self.enable_apply()
-        print(str(self.color_p1_bool) + "p1=true")
 
     def p2_color_selected(self, event):
+        """
+        This function listens for the color selected in the second list box
+        :param
+        :return
+        """
         selected_index = self.p2_listbox.curselection()[0]
         color = self.p2_listbox.get(selected_index)
         self.master.p2 = color
         self.color_p2_bool = True
         self.enable_apply()
-        print(str(self.color_p2_bool) + "p2=true")
 
     def enable_apply(self):
-        print(self.color_p1_bool, self.color_p2_bool, self.board_size_bool, self.ai_diff_bool)
+        """
+        This function enables the apply button when all settings have been selected
+        :param
+        :return
+        """
         if self.color_p1_bool and self.color_p2_bool and self.board_size_bool == True and self.ai_diff_bool == True:
-            print(self.master.p1 + self.master.p2)
             if self.master.p1 != self.master.p2:          
                 self.board_size_button.configure(state='normal')
             else:

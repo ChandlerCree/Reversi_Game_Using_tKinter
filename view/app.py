@@ -52,6 +52,7 @@ class App(tk.Tk):
     password_log = 'x'
 
     def __init__(self):
+
         super().__init__()
 
         self.title('Reversi')
@@ -84,7 +85,7 @@ class App(tk.Tk):
         self.new_ai_game_button.grid(row=2, column=0, padx=(8, 4), pady=4)
 
         self.new_online_game_button = tk.Button(self.frame, text="Online Game", height="1", width="14",
-                                                command=self.open_matchmake,
+                                                command=self.open_matchmaker,
                                                 bg=bg_2, fg=fg_1, font=("Calibri", 18, "bold"), activebackground=cor_1,
                                                 state="disabled")
         self.new_online_game_button.grid(row=3, column=0, padx=(8, 4), pady=4)
@@ -112,6 +113,11 @@ class App(tk.Tk):
         self.frame.pack()
 
     def change_username_label(self):
+        """
+        This function updates the text at the top of the main menu that shows the username and the user's elo
+        :param
+        :return
+        """
         self.username_label.configure(
             text="Welcome {}!\nCurrent Elo: {}\nMatches Played: {}".format(self.logged_user, self.logged_elo,
                                                                            self.matches_played))
@@ -121,6 +127,11 @@ class App(tk.Tk):
             self.login_button.configure(text="Login")
 
     def change_newgame_state(self):
+        """
+        This function checks to see which game options are available and enables the corresponding buttons
+        :param
+        :return
+        """
         eligible = EligibleChecker()
         is_user_eligible = eligible.is_elegible_for_ranked(self.user_logged_in)
 
@@ -132,9 +143,20 @@ class App(tk.Tk):
         # self.new_ai_game_button.configure(stat="normal")
 
     def change_account_info_state(self):
+        """
+        This function enables the account settings button, it's called when a user logs in
+        :param
+        :return
+        """
         self.account_settings_button.configure(state="normal")
 
     def new_game(self):
+        """
+        This function creates a new game object using two human players, and then passes the game instance to the
+        gui game class. The controller class receives the model and the view.
+        :param
+        :return
+        """
         player1 = HumanPlayer(1)
         player2 = HumanPlayer(2)
 
@@ -152,6 +174,12 @@ class App(tk.Tk):
         game_win.focus_force()
 
     def new_ai_game(self):
+        """
+        This function creates a new game object using one human player and one AI player. MVC structure is initialized
+        in the same way as regular new game function.
+        :param
+        :return
+        """
         player1 = HumanPlayer(1)
         player2 = AIPlayer(2, self.ai_difficulty)
         game = Game(size=int(self.board_size), player1=player1, player2=player2, player1_username=self.logged_user,
@@ -168,27 +196,52 @@ class App(tk.Tk):
         game_win.focus_force()
 
     def open_settings(self):
+        """
+        This function opens the settings menu for game settings and minimizes the main menu window
+        :param
+        :return
+        """
         matches = self.user_logged_in.get_total_matches()
         settings_win = SettingsView(self.master)
         settings_win.focus_force()
         self.withdraw()
 
     def open_account_settings(self):
+        """
+        This function opens the settings menu for account settings and minimizes the main menu window
+        :param
+        :return
+        """
         account_settings_win = AccountSettingsView(self.master)
         account_settings_win.focus_force()
         self.withdraw()
 
     def open_leaderboard(self):
+        """
+        This function opens the leaderboard view and minimizes the main menu window
+        :param
+        :return
+        """
         leaderboard_win = LeaderboardView(self.master)
         leaderboard_win.focus_force()
         self.withdraw()
 
     def open_login(self):
+        """
+        This function opens the login view and minimizes the main menu window
+        :param
+        :return
+        """
         login_win = LoginView(self.master)
         login_win.focus_force()
         self.withdraw()
 
-    def open_matchmake(self):
+    def open_matchmaker(self):
+        """
+        This function opens the matchmaker view and minimizes the main menu window
+        :param
+        :return
+        """
         client = ReversiClient()
         client.start_client()
         matchmake_win = MatchmakerView(self.master)
@@ -196,6 +249,11 @@ class App(tk.Tk):
         self.withdraw()
 
     def open_online_game(self):
+        """
+        This function creates a new game object using one Human Player and one online player.
+        :param
+        :return
+        """
         player1 = HumanPlayer(1)
         player2 = AIPlayer(2, self.ai_difficulty)
         game = Game(size=int(self.board_size), player1=player1, player2=player2)  # create the game
@@ -211,5 +269,10 @@ class App(tk.Tk):
         game_win.focus_force()
 
     def open_thread(self, function):
+        """
+        This function creates a thread
+        :param function
+        :return
+        """
         thread = threading.Thread(target=function)
         thread.start()
