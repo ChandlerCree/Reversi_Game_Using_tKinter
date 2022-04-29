@@ -10,19 +10,21 @@ from model.game import Game
 from model.player import Player
 from model.human_player import HumanPlayer
 from model.ai_player import AIPlayer
+from model.user import User
+from model.eligible_checker import EligibleChecker
 
 from controller.game_manager import GameManager
-from view.board_console_view import BoardConsoleView
+
 
 from view.login_view import LoginView
 from view.gui_game_view import GUIView
 from view.account_settings_view import AccountSettingsView
 from view.matchmaker_view import MatchmakerView
+from view.board_console_view import BoardConsoleView
+from controller.database.database_getgame import DatabaseGetGame
 import threading
 
-from model.user import User
 
-from model.eligible_checker import EligibleChecker
 
 bg_1 = "#E0FBFC"
 bg_2 = "#C2DFE3"
@@ -105,8 +107,11 @@ class App(tk.Tk):
 
         self.login_button = tk.Button(self.frame, text="Login", height="1", width="14", command=self.open_login,
                                       bg=bg_2, fg=fg_1, font=("Calibri", 18, "bold"), activebackground=cor_1)
-        self.login_button.grid(row=4, column=0, columnspan=2, padx=4, pady=(4, 12))
+        self.login_button.grid(row=4, column=1, columnspan=1, padx=(4, 8), pady=4)
 
+        self.resume_button = tk.Button(self.frame, text="Resume Game", height="1", width="14", command=self.open_login,
+                                      bg=bg_2, fg=fg_1, font=("Calibri", 18, "bold"), activebackground=cor_1)
+        self.resume_button.grid(row=4, column=0, padx=(8, 4), pady=4)
         # show the frame on the container
         self.frame.pack()
 
