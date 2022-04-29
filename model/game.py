@@ -8,6 +8,7 @@ from controller.database.database_createdisk import DatabaseCreateDisk
 from controller.database.database_updatedisk import DatabaseUpdateDisk
 from controller.database.database_getgame import DatabaseGetGame
 from controller.database.database_deletegame import DatabaseDeleteGame
+from controller.database.database_getdisks import DatabaseGetDisks
 
 class Game(ABC):
 
@@ -35,7 +36,7 @@ class Game(ABC):
 
         if not is_copy:
             self.delete_game_db(self.player1_username)
-            self.create_game_db(self.player1_username, self.player2_username, self.currplayer_username)
+            self.create_game_db(self.player1_username, self.player2_username, self.currplayer_username, self.bSize)
             self.game_id = self.get_game_db(self.player1_username,self.player2_username)
             print(self.game_id)
 
@@ -247,8 +248,8 @@ class Game(ABC):
     def select_move(self, board):
         return self.curPlayer.select_move(board)
 
-    def create_game_db(self, player1_name, player2_name, currplayer_name):
-        self.create_game = DatabaseCreateGame(player1_name, player2_name, currplayer_name)
+    def create_game_db(self, player1_name, player2_name, currplayer_name, size):
+        self.create_game = DatabaseCreateGame(player1_name, player2_name, currplayer_name, size)
         self.create_game.connect_to_database()
         self.create_game.execute_query()
 
@@ -272,3 +273,16 @@ class Game(ABC):
         self.update_disk = DatabaseUpdateDisk(x_pos, y_pos, game, player)
         self.update_disk.connect_to_database()
         self.update_disk.execute_query()
+
+    def restore_game(self):
+        self.game_id = self.get_game_db(self.player1_username, self.player2_username)
+
+        self.player1_disks = DatabaseGetDisks(self.player1_username, self.game_id)
+        self.player1_disks.connect_to_database()
+        self.player1_disks.execute_query()
+
+        self.player2_disks = DatabaseGetDisks(self.player2_username, self.game_id)
+        self.player2_disks.connect_to_database()
+        self.player2_disks.execute_query()
+
+        #for x, y in self.player1_disks:

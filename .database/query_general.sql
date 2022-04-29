@@ -11,6 +11,8 @@ Create Table game(
     id int primary key auto_increment,
     player1 varchar(32),
     player2 varchar(32),
+    curr_player varchar(32),
+    size int,
     foreign key (player1) references player(username) on update cascade on delete cascade,
     foreign key (player2) references player(username) on update cascade on delete cascade
     );
