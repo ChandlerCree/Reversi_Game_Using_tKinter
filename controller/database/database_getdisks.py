@@ -9,7 +9,7 @@ class DatabaseGetDisks(DatabaseAbstract):
 
     def execute_query(self):
         with self.my_connect.cursor() as cursor:
-            cursor.execute(self.quer_disks, self.get_disk)
+            cursor.execute(self.quer_disks, self.get_disks)
             result = cursor.fetchall()
             self.my_connect.commit()
-            self.disks = result[0]
+            self.disks = result

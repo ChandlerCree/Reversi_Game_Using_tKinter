@@ -235,6 +235,7 @@ class Game(ABC):
         self.update_score()
 
         # if one player has more disks than the other, they win. draw otherwise
+        self.delete_game_db(self.player1_username)
         if self.playerOneCount > self.playerTwoCount:
             return True, self.player1
         elif self.playerOneCount < self.playerTwoCount:
@@ -285,4 +286,15 @@ class Game(ABC):
         self.player2_disks.connect_to_database()
         self.player2_disks.execute_query()
 
-        #for x, y in self.player1_disks:
+        print("player1 disks: ")
+        print(self.player2_disks.disks)
+        print("player2 disks: ")
+        print(self.player2_disks.disks)
+
+        for x, y in self.player1_disks.disks:
+            self.board[x][y] = self.player1.x
+
+        for x, y in self.player2_disks.disks:
+            self.board[x][y] = self.player2.x
+
+        self.is_copy = False

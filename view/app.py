@@ -14,6 +14,7 @@ from model.ai_player import AIPlayer
 from controller.game_manager import GameManager
 from view.board_console_view import BoardConsoleView
 from controller.database.database_creategame import DatabaseCreateGame
+from controller.database.database_getplayer2 import DatabaseGetPlayer2
 
 from view.login_view import LoginView
 from view.gui_game_view import GUIView
@@ -109,7 +110,7 @@ class App(tk.Tk):
                                       bg=bg_2, fg=fg_1, font=("Calibri", 18, "bold"), activebackground=cor_1)
         self.login_button.grid(row=4, column=1, columnspan=1, padx=(4, 8), pady=4)
 
-        self.resume_button = tk.Button(self.frame, text="Resume Game", height="1", width="14", command=self.open_login,
+        self.resume_button = tk.Button(self.frame, text="Resume Game", height="1", width="14", command=self.resume_game,
                                        bg=bg_2, fg=fg_1, font=("Calibri", 18, "bold"), activebackground=cor_1)
         self.resume_button.grid(row=4, column=0, padx=(8, 4), pady=4)
         # show the frame on the container
@@ -197,6 +198,51 @@ class App(tk.Tk):
         player2.controller = controller
         self.open_thread(controller.run_game)
         game_win.focus_force()
+
+    def resume_game(self):
+        self.get_player2 = DatabaseGetPlayer2(self.logged_user)
+        self.get_player2.connect_to_database()
+        self.get_player2.execute_query()
+
+        if self.get_player2.player_id == "guest":
+            player1 = HumanPlayer(1)
+            player2 = HumanPlayer(2)
+
+            game = Game(size=int(self.board_size), player1=player1, player2=player2, player1_username=self.logged_user,
+                        player2_username="guest", is_copy=True)  # create the game
+
+            game.restore_game()
+
+            game_win = GUIView(self.master, game.board, self.logged_user, "guest")
+            game_win.p1 = self.p1
+            game_win.p2 = self.p2
+
+            controller = GameManager(game, game_win)
+            player1.controller = controller
+            player2.controller = controller
+            self.open_thread(controller.run_game)
+            game_win.focus_force()
+
+        elif self.get_player2.player_id == "AI":
+            player1 = HumanPlayer(1)
+            player2 = AIPlayer(2, self.ai_difficulty)
+            game = Game(size=int(self.board_size), player1=player1, player2=player2, player1_username=self.logged_user,
+                        player2_username="AI", is_copy=True)  # create the game
+
+            game.restore_game()
+
+            game_win = GUIView(self.master, game.board, self.logged_user, self.ai_difficulty)
+            game_win.p1 = self.p1
+            game_win.p2 = self.p2
+
+            controller = GameManager(game, game_win)
+            player1.controller = controller
+            player2.controller = controller
+            self.open_thread(controller.run_game)
+            game_win.focus_force()
+
+        else:
+            print("test")
 
     def open_settings(self):
         """
